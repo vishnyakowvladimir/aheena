@@ -1,0 +1,3 @@
+[submodule "aheena-dependency-versions"]
+	path = aheena-dependency-versions
+	url = git@github.com:vishnyakowvladimir/aheena-dependency-versions.git

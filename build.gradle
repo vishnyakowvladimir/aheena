@@ -1,0 +1,20 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        appRootPath = { path ->
+            return "$rootProject.projectDir/$path"
+        }
+    }
+
+    dependencies {
+        apply from: appRootPath("aheena-dependency-versions/dependencyVersions.gradle")
+        apply from: appRootPath("aheena-dependency-versions/dependencies.gradle")
+        apply from: appRootPath("aheena-dependency-versions/common_module_methods.gradle")
+        apply from: appRootPath("aheena-dependency-versions/ktlint_settings.gradle")
+    }
+}
+
+plugins {
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+}
