@@ -90,7 +90,7 @@ dependencies {
     implementation(platform(anndroidXComposePlatform))
     implementation kotlinX
 
-    implementation(project(":aheena-lib-ui"))
+    implementation(project(":ui:aheena-lib-ui"))
 
 //    implementation("androidx.core:core-ktx:1.13.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")

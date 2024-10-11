@@ -21,5 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "aheena"
 include(":app")
-include(":aheena-lib-ui")
- 
+
+apply(from = "teamDirectory.gradle.kts")
+
