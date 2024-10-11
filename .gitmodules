@@ -1,3 +1,6 @@
 [submodule "aheena-dependency-versions"]
 	path = aheena-dependency-versions
 	url = git@github.com:vishnyakowvladimir/aheena-dependency-versions.git
+[submodule "aheena-lib-ui"]
+	path = aheena-lib-ui
+	url = git@github.com:vishnyakowvladimir/aheena-lib-ui.git

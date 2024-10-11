@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "aheena"
 include(":app")
+include(":aheena-lib-ui")
  

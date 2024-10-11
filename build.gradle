@@ -15,6 +15,8 @@ buildscript {
 }
 
 plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    id "com.android.application" version "$agpVersionExt" apply false
+    id "org.jetbrains.kotlin.android" version "$kotlinVersionExt" apply false
 }
+
+applyKtlint(this)
