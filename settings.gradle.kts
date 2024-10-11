@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "aheena"
 include(":app")
 
-apply(from = "teamDirectory.gradle.kts")
+apply(from = "team-directory.gradle.kts")
 
