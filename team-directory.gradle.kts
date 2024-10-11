@@ -32,7 +32,7 @@ fun ModuleSettings.buildPath(
 
 val excludedProjects = setOf("app", "build", "src", ".gradle", ".idea", "coverage")
 
-fun includeRecursive(files: Array<java.io.File>?, parentsChain: String) {
+fun includeRecursive(files: Array<java.io.File>?) {
     if (files == null) return
     files.forEach { file ->
         if (file.isDirectory && !excludedProjects.contains(file.name)) {
@@ -40,35 +40,26 @@ fun includeRecursive(files: Array<java.io.File>?, parentsChain: String) {
                 child.name == "build.gradle"
             }
             if (buildScript != null) {
-                moveToTeamDirectory(file, parentsChain)
+                moveToTeamDirectory(file)
             } else {
-                includeRecursive(file.listFiles(), "$parentsChain:${file.name}")
+                includeRecursive(file.listFiles())
             }
         }
     }
 }
 
-fun moveToTeamDirectory(file: java.io.File, parentChain: String) {
-    println("check111 file.name: ${file.name}")   // mylibrary
-    println("check111 parentChain: $parentChain")   // :aheena
+fun moveToTeamDirectory(file: java.io.File) {
     val team = modules[file.name]
-    println("check111 team: $team")
 
     if (team != null) {
-        val baseDirectory = parentChain.split(":").first { it.isNotEmpty() }   // aheena
-        println("check111 baseDirectory: $baseDirectory")
-        val modulePath = team.buildPath(file.name, ":", ":")   // :aheena:ui:mylibrary
-        println("check111 modulePath: $modulePath")
-        println("check111 settingsDir: $settingsDir")  // /Users/vladimir/projects/aheena
-        println("check111 team.buildPath(): ${team.buildPath()}")   // aheena/ui
-        val teamFile =
-            File(settingsDir, team.buildPath())   // /Users/vladimir/projects/aheena/aheena/ui
-        println("check111 teamFile: $teamFile")
+        val modulePath = team.buildPath(file.name, ":", ":")
+        val teamFile = File(settingsDir, team.buildPath())
+
         if (!teamFile.exists()) {
             teamFile.mkdirs()
         }
+
         include(modulePath)
-        println("check111 project(modulePath).projectDir: ${project(modulePath).projectDir}")   // /Users/vladimir/projects/aheena/ui/mylibrary
         project(modulePath).projectDir = file(file)
     } else {
         include("${file.name}")
@@ -76,8 +67,4 @@ fun moveToTeamDirectory(file: java.io.File, parentChain: String) {
 }
 
 val children: Array<java.io.File>? = rootProject.projectDir.listFiles()
-
-children?.forEach { file ->
-    println("check111 children: ${file.name}")
-}
-includeRecursive(children, ":aheena")
+includeRecursive(children)
