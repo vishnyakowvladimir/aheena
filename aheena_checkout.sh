@@ -1,7 +1,7 @@
 #!/bin/bash
 
 branch="main"
-is_need_update=false
+is_need_update=true
 is_new=false
 
 # Reading arguments with getopts options
