@@ -42,7 +42,7 @@ fi
 
 root=$(pwd)
 
-for (( counter=0; counter<=12; counter++ ))
+for (( counter=0; counter<=2; counter++ ))
 do
 path=path_$counter
 root_branch=root_branch_$counter
