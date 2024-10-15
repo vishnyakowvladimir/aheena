@@ -1,11 +1,13 @@
 package com.example.aheena.di
 
+import android.content.Context
 import com.example.aheena.di.modules.NavigationModule
 import com.example.aheena.di.modules.UtilsModule
+import com.example.aheena.presentation.MainActivity
 import com.example.core.di.DaggerComponent
 import com.example.core.di.scope.ApplicationScope
-import com.example.core.presentation.base.BaseActivity
 import com.example.core.presentation.base.BaseApplication
+import dagger.BindsInstance
 import dagger.Component
 
 @ApplicationScope
@@ -26,7 +28,10 @@ internal interface AppComponent : DaggerComponent {
             val dependencies = AppComponentDependencies(app)
             return DaggerAppComponent
                 .factory()
-                .create(dependencies)
+                .create(
+                    dependencies = dependencies,
+                    context = app,
+                )
         }
     }
 
@@ -35,8 +40,9 @@ internal interface AppComponent : DaggerComponent {
 
         fun create(
             dependencies: AppComponentDependencies,
+            @BindsInstance context: Context,
         ): AppComponent
     }
 
-    fun inject(activity: BaseActivity)
+    fun inject(activity: MainActivity)
 }
