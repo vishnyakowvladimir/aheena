@@ -1,8 +1,10 @@
 package com.example.aheena.di
 
+import com.example.aheena.di.modules.NavigationModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.core.di.DaggerComponent
 import com.example.core.di.scope.ApplicationScope
+import com.example.core.presentation.base.BaseActivity
 import com.example.core.presentation.base.BaseApplication
 import dagger.Component
 
@@ -11,6 +13,7 @@ import dagger.Component
     dependencies = [AppComponentDependencies::class],
     modules = [
         UtilsModule::class,
+        NavigationModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent {
@@ -34,4 +37,6 @@ internal interface AppComponent : DaggerComponent {
             dependencies: AppComponentDependencies,
         ): AppComponent
     }
+
+    fun inject(activity: BaseActivity)
 }

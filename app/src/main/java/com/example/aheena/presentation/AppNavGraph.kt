@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-internal fun AppNavGraph() {
-    val navController = rememberNavController()
+internal fun AppNavGraph(navController: NavHostController) {
+
     CompositionLocalProvider(LocalNavController provides navController) {
         Text(text = "Hello")
 //        NavHost(
