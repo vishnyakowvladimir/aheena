@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -89,6 +90,8 @@ dependencies {
     implementation anndroidXNavigation
     implementation(platform(anndroidXComposePlatform))
     implementation kotlinX
+    implementation dagger
+    kapt daggerKapt
 
     implementation project(":ui:aheena-lib-ui")
     implementation project(':core')
@@ -112,4 +115,9 @@ dependencies {
 //    implementation("androidx.compose.material3:material3-android:1.3.0")
 //    implementation("com.google.android.material:material:1.12.0")
 //    implementation("io.coil-kt:coil-compose:2.7.0")
+//    implementation("com.google.dagger:dagger:2.47")
+//    implementation("com.google.dagger:dagger-android:2.47")
+//    implementation("com.google.dagger:dagger-android-support:2.47")
+//    kapt("com.google.dagger:dagger-compiler:2.47")
+//    kapt("com.google.dagger:dagger-android-processor:2.47")
 }
