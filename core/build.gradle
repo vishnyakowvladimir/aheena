@@ -4,8 +4,18 @@ applyAndroidConfiguration(this, "com.example.core")
 applyCompose(this, KotlinCompile)
 
 dependencies {
+    implementation anndroidXCore
+    implementation anndroidXLifecycle
+    implementation anndroidXActivity
+    implementation anndroidXComposeUi
+    implementation anndroidXComposeMaterial3
     implementation anndroidXAppCompat
-    implementation androidMaterial
+    implementation anndroidXNavigation
+    implementation(platform(anndroidXComposePlatform))
     implementation kotlinX
-    implementation coil
+    implementation dagger
+    kapt daggerKapt
+    implementation multidex
+    implementation lifecycle
+    implementation network
 }
