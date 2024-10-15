@@ -1,5 +1,6 @@
 package com.example.aheena.presentation
 
+import androidx.compose.material.navigation.bottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
@@ -20,7 +21,7 @@ internal fun AppNavGraph(navController: NavHostController) {
             composable("test1") {
                 Test1()
             }
-            composable("test2") {
+            bottomSheet("test2") {
                 Test2()
             }
         }
