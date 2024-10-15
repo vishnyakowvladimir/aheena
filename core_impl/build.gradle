@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-applyAndroidConfiguration(this, "com.example.core")
-applyCompose(this, KotlinCompile)
+applyAndroidConfiguration(this, "com.example.core_api")
 
 dependencies {
     implementation anndroidXCore
@@ -18,4 +17,6 @@ dependencies {
     implementation multidex
     implementation lifecycle
     implementation network
+
+    api project(':core_api')
 }

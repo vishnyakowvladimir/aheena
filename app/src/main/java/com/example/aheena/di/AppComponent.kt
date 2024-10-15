@@ -1,5 +1,6 @@
 package com.example.aheena.di
 
+import com.example.aheena.di.modules.UtilsModule
 import com.example.core.di.DaggerComponent
 import com.example.core.di.scope.ApplicationScope
 import com.example.core.presentation.base.BaseApplication
@@ -8,6 +9,9 @@ import dagger.Component
 @ApplicationScope
 @Component(
     dependencies = [AppComponentDependencies::class],
+    modules = [
+        UtilsModule::class,
+    ],
 )
 internal interface AppComponent : DaggerComponent {
 
