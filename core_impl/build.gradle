@@ -1,22 +1,2 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-applyAndroidConfiguration(this, "com.example.core_api")
-
-dependencies {
-    implementation anndroidXCore
-    implementation anndroidXLifecycle
-    implementation anndroidXActivity
-    implementation anndroidXComposeUi
-    implementation anndroidXComposeMaterial3
-    implementation anndroidXAppCompat
-    implementation anndroidXNavigation
-    implementation(platform(anndroidXComposePlatform))
-    implementation kotlinX
-    implementation dagger
-    kapt daggerKapt
-    implementation multidex
-    implementation lifecycle
-    implementation network
-
-    api project(':core_api')
-}
+applyAndroidConfiguration(this, "com.example.core_impl")
+applyDagger(this)
