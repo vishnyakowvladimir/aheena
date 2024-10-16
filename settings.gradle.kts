@@ -25,3 +25,4 @@ include(":app")
 apply(from = "team-directory.gradle.kts")
 
 include(":core_impl")
+include(":feature_authentication_impl")
