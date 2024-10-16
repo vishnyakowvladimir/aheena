@@ -18,6 +18,7 @@ plugins {
     id "com.android.application" version "$agpVersionExt" apply false
     id 'com.android.library' version "$agpVersionExt" apply false
     id "org.jetbrains.kotlin.android" version "$kotlinVersionExt" apply false
+    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinVersionExt" apply false
 }
 
 applyKtlint(this)

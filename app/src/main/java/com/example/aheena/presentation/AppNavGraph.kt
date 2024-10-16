@@ -6,8 +6,10 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.example.aheena.presentation.screens.ProfileScreen
 import com.example.aheena.presentation.screens.Test1
-import com.example.aheena.presentation.screens.Test2
+import com.example.aheena.test.Profile
 
 @Composable
 internal fun AppNavGraph(navController: NavHostController) {
@@ -20,8 +22,9 @@ internal fun AppNavGraph(navController: NavHostController) {
             composable("test1") {
                 Test1()
             }
-            composable("test2") {
-                Test2()
+            composable<Profile>() { backStackEntry ->
+                val profile = backStackEntry.toRoute<Profile>()
+                ProfileScreen(profile)
             }
         }
     }

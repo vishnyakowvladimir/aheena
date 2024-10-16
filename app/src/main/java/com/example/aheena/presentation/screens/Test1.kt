@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.aheena.presentation.LocalNavController
+import com.example.aheena.test.Profile
 
 @Composable
 fun Test1() {
@@ -13,19 +14,20 @@ fun Test1() {
     Text(
         text = "Go",
         modifier = Modifier.clickable {
-            navController.navigate("test2")
+//            navController.navigate(Test2NavigationEntry.Main.getNavigationRoute("Hello1", "Hello2"))
+            navController.navigate(Profile("Hellp vova"))
         }
     )
 }
 
 @Composable
-fun Test2() {
+fun ProfileScreen(profile: Profile) {
     val navController = LocalNavController.current
 
     Text(
-        text = "Back",
+        text = profile.id,
         modifier = Modifier.clickable {
             navController.popBackStack()
-        }
+        },
     )
 }
