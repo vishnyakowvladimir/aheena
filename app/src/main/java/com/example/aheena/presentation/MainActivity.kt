@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.FeatureComposablesHolder
+import com.example.aheena.presentation.compose.MainContainer
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
-import com.example.lib_ui.containers.MainContainer
-import com.example.lib_ui.theme.AppThemeMode
-import com.example.lib_ui.theme.typography.ViewScale
 import javax.inject.Inject
 
 internal class MainActivity : BaseActivity() {
@@ -25,26 +23,19 @@ internal class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
+    private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
-
         super.onCreate(savedInstanceState)
-        setContent {
-            val viewScale = ViewScale.M
-            val themeMode = AppThemeMode.LIGHT
 
+        setContent {
             MainContainer(
-                activity = this,
-                viewScale = viewScale,
-                themeMode = themeMode,
-            ) {
-                AppNavGraph(
-                    navController = navController,
-                    composablesHolder = composablesHolder,
-                )
-            }
+                viewModelFactory = viewModelFactory,
+                navController = navController,
+                composablesHolder = composablesHolder,
+                mainViewModel = mainViewModel,
+            )
         }
     }
 }
