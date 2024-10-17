@@ -31,7 +31,6 @@ internal class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val uiEvent = MutableSharedFlow<MainEvent>(
         replay = 1,
-        extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
