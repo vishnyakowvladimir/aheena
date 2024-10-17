@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import com.example.aheena.di.AppComponent
-import com.example.aheena.navigation.FeatureComposableHolder
+import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
 import com.example.lib_ui.containers.MainContainer
@@ -18,7 +18,7 @@ internal class MainActivity : BaseActivity() {
     lateinit var navController: NavHostController
 
     @Inject
-    lateinit var mediatorsHolder: FeatureComposableHolder
+    lateinit var mediatorsHolder: FeatureComposablesHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
@@ -35,7 +35,7 @@ internal class MainActivity : BaseActivity() {
             ) {
                 AppNavGraph(
                     navController = navController,
-                    mediatorsHolder = mediatorsHolder,
+                    composablesHolder = mediatorsHolder,
                 )
             }
         }

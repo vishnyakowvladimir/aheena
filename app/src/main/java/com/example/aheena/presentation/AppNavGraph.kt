@@ -5,25 +5,21 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.aheena.navigation.FeatureComposableHolder
-import com.example.aheena.presentation.screens.Test1
+import com.example.aheena.navigation.FeatureComposablesHolder
+import com.example.core.navigation.feature_destination.AuthenticationDestination
 
 @Composable
 internal fun AppNavGraph(
     navController: NavHostController,
-    mediatorsHolder: FeatureComposableHolder,
+    composablesHolder: FeatureComposablesHolder,
 ) {
 
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = "test1",
+            startDestination = AuthenticationDestination(),
         ) {
-            composable("test1") {
-                Test1()
-            }
-            mediatorsHolder.mediators.forEach { mediator ->
+            composablesHolder.composables.forEach { mediator ->
                 mediator.featureComposable(navGraphBuilder = this)
             }
         }

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
-import com.example.aheena.navigation.FeatureComposableHolder
+import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ class NavigationModule {
 
     @ApplicationScope
     @Provides
-    fun provideMediatorsHolder(): FeatureComposableHolder {
-        return FeatureComposableHolder()
+    fun provideMediatorsHolder(): FeatureComposablesHolder {
+        return FeatureComposablesHolder()
     }
 }
