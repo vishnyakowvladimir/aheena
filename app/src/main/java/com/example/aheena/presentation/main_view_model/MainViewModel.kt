@@ -2,9 +2,9 @@ package com.example.aheena.presentation.main_view_model
 
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.aheena.presentation.main_view_model.mvi.MainCommandHandler
-import com.example.aheena.presentation.main_view_model.mvi.MainReducer
-import com.example.aheena.presentation.main_view_model.mvi.MainSideEffectHandler
+import com.example.aheena.presentation.main_view_model.mvi.handler.MainCommandHandler
+import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
+import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand

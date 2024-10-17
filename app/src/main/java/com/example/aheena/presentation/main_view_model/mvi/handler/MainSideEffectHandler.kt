@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.main_view_model.mvi
+package com.example.aheena.presentation.main_view_model.mvi.handler
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand

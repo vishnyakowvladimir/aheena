@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.main_view_model.mvi
+package com.example.aheena.presentation.main_view_model.mvi.handler
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainCommand
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class MainCommandHandler @Inject constructor(): CommandHandler<MainEvent, MainCommand> {
+internal class MainCommandHandler @Inject constructor() : CommandHandler<MainEvent, MainCommand> {
     private val commandSharedFlow = MutableSharedFlow<MainCommand>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<MainEvent> {
@@ -39,7 +39,6 @@ internal class MainCommandHandler @Inject constructor(): CommandHandler<MainEven
         }
             .map(MainEvent.Domain::OnAppThemeLoaded)
     }
-
 }
 
 internal data class ThemeData(

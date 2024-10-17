@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.main_view_model.mvi
+package com.example.aheena.presentation.main_view_model.mvi.reducer
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainCommand
 import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState

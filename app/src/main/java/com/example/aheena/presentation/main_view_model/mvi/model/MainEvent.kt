@@ -1,6 +1,6 @@
 package com.example.aheena.presentation.main_view_model.mvi.model
 
-import com.example.aheena.presentation.main_view_model.mvi.ThemeData
+import com.example.aheena.presentation.main_view_model.mvi.handler.ThemeData
 
 internal sealed interface MainEvent {
 
