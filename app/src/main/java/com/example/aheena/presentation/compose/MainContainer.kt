@@ -1,5 +1,6 @@
 package com.example.aheena.presentation.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -8,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.aheena.presentation.main_view_model.MainViewModel
+import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.lib_ui.containers.ThemeContainer
 
 @Composable
@@ -18,6 +20,10 @@ internal fun MainContainer(
     mainViewModel: MainViewModel,
 ) {
     val state = mainViewModel.uiState.collectAsStateWithLifecycle()
+
+    BackHandler {
+        mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)
+    }
 
     val themeState = state.value.themeState
     if (themeState != null) {
