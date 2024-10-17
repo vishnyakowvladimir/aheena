@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.aheena.navigation.FeatureComposablesHolder
-import com.example.aheena.presentation.MainViewModel
+import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.lib_ui.containers.ThemeContainer
-import com.example.lib_ui.theme.AppThemeMode
-import com.example.lib_ui.theme.typography.ViewScale
 
 @Composable
 internal fun MainContainer(
@@ -21,14 +19,12 @@ internal fun MainContainer(
 ) {
     val state = mainViewModel.uiState.collectAsStateWithLifecycle()
 
-    if (state.value) {
-        val viewScale = ViewScale.M
-        val themeMode = AppThemeMode.LIGHT
-
+    val themeState = state.value.themeState
+    if (themeState != null) {
         ThemeContainer(
             activity = LocalContext.current as AppCompatActivity,
-            viewScale = viewScale,
-            themeMode = themeMode,
+            viewScale = themeState.viewScale,
+            themeMode = themeState.themeMode,
         ) {
             AppNavGraph(
                 navController = navController,

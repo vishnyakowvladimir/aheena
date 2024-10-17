@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.aheena.presentation.compose.MainContainer
+import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
 import javax.inject.Inject

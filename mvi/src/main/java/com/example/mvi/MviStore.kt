@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
-internal class MviStore<Event, State, SideEffect, Command>(
+class MviStore<Event, State, SideEffect, Command>(
     private val stateMachine: StateMachine<Event, State, SideEffect, Command>,
     private val commandHandler: CommandHandler<Event, Command>,
     private val transitionListener: TransitionListener<Event, State, SideEffect, Command>? = null
