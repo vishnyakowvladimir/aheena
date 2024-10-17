@@ -2,8 +2,8 @@ package com.example.core.di.extension
 
 import android.app.Activity
 import android.app.Application
-import com.example.core.di.ComponentLifecycle
-import com.example.core.di.DaggerComponent
+import com.example.core.di.component.ComponentLifecycle
+import com.example.core.di.component.DaggerComponent
 
 @Throws
 inline fun <reified T : DaggerComponent> T.throwDaggerWrongComponent(): Nothing {

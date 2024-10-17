@@ -1,4 +1,6 @@
-package com.example.core.di
+package com.example.core.di.component
+
+import com.example.core.di.component.DaggerComponent
 
 interface FactoryProvider {
 

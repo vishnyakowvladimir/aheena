@@ -1,12 +1,12 @@
 package com.example.aheena.di
 
 import com.example.aheena.di.component_builder.factory.ApplicationFactory
-import com.example.core.di.ComponentLifecycle
-import com.example.core.di.CompositeKey
-import com.example.core.di.DaggerComponent
-import com.example.core.di.FactoryProvider
-import com.example.core.di.clearComponentByKey
-import com.example.core.di.createFactoryKey
+import com.example.core.di.component.ComponentLifecycle
+import com.example.core.di.component.CompositeKey
+import com.example.core.di.component.DaggerComponent
+import com.example.core.di.component.FactoryProvider
+import com.example.core.di.component.clearComponentByKey
+import com.example.core.di.component.createFactoryKey
 import kotlin.reflect.KClass
 
 internal class ApplicationComponentHolder(appComponent: AppComponent) : ComponentLifecycle {

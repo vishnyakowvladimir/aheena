@@ -1,4 +1,4 @@
-package com.example.core.di
+package com.example.core.di.component
 
 class CompositeKey(
     val factoryKey: String,

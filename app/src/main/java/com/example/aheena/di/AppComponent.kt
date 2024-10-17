@@ -3,8 +3,9 @@ package com.example.aheena.di
 import android.content.Context
 import com.example.aheena.di.modules.NavigationModule
 import com.example.aheena.di.modules.UtilsModule
+import com.example.aheena.di.modules.ViewModelsModule
 import com.example.aheena.presentation.MainActivity
-import com.example.core.di.DaggerComponent
+import com.example.core.di.component.DaggerComponent
 import com.example.core.di.scope.ApplicationScope
 import com.example.core.presentation.base.BaseApplication
 import dagger.BindsInstance
@@ -16,6 +17,7 @@ import dagger.Component
     modules = [
         UtilsModule::class,
         NavigationModule::class,
+        ViewModelsModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent {

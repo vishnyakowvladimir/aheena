@@ -1,2 +1,6 @@
 applyAndroidConfiguration(this, "com.example.core_impl")
 applyDagger(this)
+
+dependencies {
+    api project(':core_api')
+}

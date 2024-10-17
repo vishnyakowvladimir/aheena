@@ -2,8 +2,8 @@ package com.example.aheena.presentation
 
 import com.example.aheena.di.AppComponent
 import com.example.aheena.di.ApplicationComponentHolder
-import com.example.core.di.ComponentLifecycle
-import com.example.core.di.DaggerComponent
+import com.example.core.di.component.ComponentLifecycle
+import com.example.core.di.component.DaggerComponent
 import com.example.core.presentation.base.BaseApplication
 import kotlin.reflect.KClass
 

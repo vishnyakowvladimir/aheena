@@ -1,4 +1,4 @@
-package com.example.core.di
+package com.example.core.di.component
 
 import android.util.Log
 import com.example.core.di.extension.throwDaggerWrongComponent

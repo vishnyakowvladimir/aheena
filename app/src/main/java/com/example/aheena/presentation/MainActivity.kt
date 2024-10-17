@@ -2,6 +2,8 @@ package com.example.aheena.presentation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.FeatureComposablesHolder
@@ -18,7 +20,12 @@ internal class MainActivity : BaseActivity() {
     lateinit var navController: NavHostController
 
     @Inject
-    lateinit var mediatorsHolder: FeatureComposablesHolder
+    lateinit var composablesHolder: FeatureComposablesHolder
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
@@ -35,7 +42,7 @@ internal class MainActivity : BaseActivity() {
             ) {
                 AppNavGraph(
                     navController = navController,
-                    composablesHolder = mediatorsHolder,
+                    composablesHolder = composablesHolder,
                 )
             }
         }
