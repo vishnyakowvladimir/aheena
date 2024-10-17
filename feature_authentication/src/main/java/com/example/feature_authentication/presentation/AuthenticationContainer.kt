@@ -1,4 +1,4 @@
-package com.example.feature_authorization.presentation
+package com.example.feature_authentication.presentation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

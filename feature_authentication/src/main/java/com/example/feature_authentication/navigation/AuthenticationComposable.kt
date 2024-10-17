@@ -1,10 +1,10 @@
-package com.example.feature_authorization.navigation
+package com.example.feature_authentication.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.core.navigation.base.FeatureComposable
 import com.example.core.navigation.feature_destination.AuthenticationDestination
-import com.example.feature_authorization.presentation.AuthenticationContainer
+import com.example.feature_authentication.presentation.AuthenticationContainer
 
 class AuthenticationComposable : FeatureComposable {
 

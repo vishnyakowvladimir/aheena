@@ -100,7 +100,7 @@ dependencies {
     api project(":ui:aheena-lib-ui")
     api project(':core_api')
     api project(':feature_authentication_api')
-    api project(':feature_authentication_impl')
+    api project(':feature_authentication')
 
 //    implementation("androidx.core:core-ktx:1.13.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")

@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-applyAndroidConfiguration(this, "com.example.feature_authentication_impl")
+applyAndroidConfiguration(this, "com.example.feature_authentication")
 applyCompose(this, KotlinCompile)
 
 dependencies {
