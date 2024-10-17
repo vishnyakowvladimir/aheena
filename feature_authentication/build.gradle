@@ -7,5 +7,5 @@ dependencies {
     implementation androidXAppCompat
 
     api project(':core_api')
-    api project(':feature_authentication_api')
+//    api project(':feature_authentication_api')
 }

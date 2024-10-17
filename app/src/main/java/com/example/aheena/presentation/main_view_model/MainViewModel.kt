@@ -2,15 +2,17 @@ package com.example.aheena.presentation.main_view_model
 
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.aheena.presentation.main_view_model.mapper.MainMapper
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainCommandHandler
-import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
-import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
+import com.example.core.extensions.mapData
 import com.example.core.presentation.base.BaseViewModel
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,15 +23,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class MainViewModel @Inject constructor(
+    private val mapper: MainMapper,
     private val sideEffectHandler: MainSideEffectHandler,
     private val commandHandler: MainCommandHandler,
     private val reducer: MainReducer,
     private val navController: NavHostController,
 ) : BaseViewModel() {
-    private val uiEvent = MutableSharedFlow<MainEvent>()
-    
-    private val _uiState = MutableStateFlow(MainDomainState())
-    val uiState = _uiState.asStateFlow()
+    private val uiEvent = MutableSharedFlow<MainEvent>(
+        replay = 1,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+
+    private val _uiState = MutableStateFlow(reducer.getInitialState())
+    val uiState = _uiState.asStateFlow().mapData(
+        coroutineScope = viewModelScope,
+        mapper = { domainState -> mapper.map(domainState) },
+    )
 
     init {
         createMvi()
