@@ -2,7 +2,6 @@ package com.example.aheena.presentation.main_view_model
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.example.aheena.presentation.main_view_model.mapper.MainMapper
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
@@ -25,12 +24,9 @@ internal class MainViewModel @Inject constructor(
     private val mapper: MainMapper,
     private val sideEffectHandler: MainSideEffectHandler,
     private val reducer: MainReducer,
-    private val navController: NavHostController,
 ) : BaseViewModel() {
-    private val uiEvent = MutableSharedFlow<MainEvent>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST,
-    )
+
+    private val uiEvent = MutableSharedFlow<MainEvent>(replay = Int.MAX_VALUE)
 
     private val _uiState = MutableStateFlow(reducer.getInitialState())
     val uiState = _uiState.asStateFlow().mapData(
@@ -121,9 +117,7 @@ internal class MainViewModel @Inject constructor(
             actionState = { state ->
                 _uiState.update { state }
             },
-            actionUiCommand = { uiCommand ->
-
-            }
+            actionUiCommand = {},
         )
 
         uiEvent

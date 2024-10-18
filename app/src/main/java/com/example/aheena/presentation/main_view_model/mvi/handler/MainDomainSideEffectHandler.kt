@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class MainDomainSideEffectHandler @Inject constructor() : SideEffectHandler<MainEvent, MainSideEffect.Domain> {
+internal class MainDomainSideEffectHandler @Inject constructor() :
+    SideEffectHandler<MainEvent, MainSideEffect.Domain> {
+
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<MainEvent> {
