@@ -31,6 +31,36 @@ data class Update<State, SideEffect, UiCommand> internal constructor(
                 uiCommands = uiCommands,
             )
 
+        fun <State, SideEffect, UiCommand> stateWithSideEffects(
+            state: State,
+            sideEffects: List<SideEffect>,
+        ) =
+            Update<State, SideEffect, UiCommand>(
+                state = state,
+                sideEffects = sideEffects,
+                uiCommands = null,
+            )
+
+        fun <State, SideEffect, UiCommand> stateWithUiCommands(
+            state: State,
+            uiCommands: List<UiCommand>,
+        ) =
+            Update<State, SideEffect, UiCommand>(
+                state = state,
+                sideEffects = null,
+                uiCommands = uiCommands,
+            )
+
+        fun <State, SideEffect, UiCommand> sideEffectsWithUiCommands(
+            sideEffects: List<SideEffect>,
+            uiCommands: List<UiCommand>,
+        ) =
+            Update<State, SideEffect, UiCommand>(
+                state = null,
+                sideEffects = sideEffects,
+                uiCommands = uiCommands,
+            )
+
         fun <State, SideEffect, UiCommand> stateWithSideEffectsWithUiCommands(
             state: State,
             sideEffects: List<SideEffect>,
