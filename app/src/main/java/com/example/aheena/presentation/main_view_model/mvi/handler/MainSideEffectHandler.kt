@@ -1,14 +1,28 @@
 package com.example.aheena.presentation.main_view_model.mvi.handler
 
+import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
-import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.mvi.SideEffectHandler
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-internal class MainSideEffectHandler @Inject constructor() {
+internal class MainSideEffectHandler @Inject constructor(
+    private val uiHandler: MainUiSideEffectHandler,
+    private val domainHandler: MainDomainSideEffectHandler,
+) : SideEffectHandler<MainEvent, MainSideEffect> {
 
-    fun createUiSideEffect(sideEffect: MainSideEffect): MainUiCommand {
-        return when (sideEffect) {
-            is MainSideEffect.Back -> MainUiCommand.Navigation.Back
+    override fun getEventSource(): Flow<MainEvent> {
+        return merge(
+            uiHandler.getEventSource(),
+            domainHandler.getEventSource(),
+        )
+    }
+
+    override suspend fun onSideEffect(sideEffect: MainSideEffect) {
+        when (sideEffect) {
+            is MainSideEffect.Ui -> uiHandler.onSideEffect(sideEffect)
+            is MainSideEffect.Domain -> domainHandler.onSideEffect(sideEffect)
         }
     }
 }

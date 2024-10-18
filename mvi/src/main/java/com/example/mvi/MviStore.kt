@@ -7,10 +7,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
-class MviStore<Event, State, SideEffect, Command>(
-    private val stateMachine: StateMachine<Event, State, SideEffect, Command>,
-    private val commandHandler: CommandHandler<Event, Command>,
-    private val transitionListener: TransitionListener<Event, State, SideEffect, Command>? = null
+class MviStore<Event, State, SideEffect>(
+    private val stateMachine: StateMachine<Event, State, SideEffect>,
+    private val sideEffectHandler: SideEffectHandler<Event, SideEffect>,
+//    private val uiSideEffectHandlerHandler: SideEffectHandler<Event, UiSideEffect>,
+//    private val domainSideEffectHandlerHandler: SideEffectHandler<Event, DomainSideEffect>,
+    private val transitionListener: TransitionListener<Event, State, SideEffect>? = null
 ) {
     private val eventSharedFlow = MutableSharedFlow<Event>()
 
@@ -21,19 +23,23 @@ class MviStore<Event, State, SideEffect, Command>(
     fun start(
         coroutineScope: CoroutineScope,
         actionState: suspend (State) -> Unit,
-        actionSideEffect: suspend (SideEffect) -> Unit,
+//        actionUiCommand: suspend (UiCommand) -> Unit,
     ) {
         getStateSource()
             .onEach(actionState)
             .launchIn(coroutineScope)
 
         stateMachine.getSideEffectSource()
-            .onEach(actionSideEffect)
+            .onEach(sideEffectHandler::onSideEffect)
             .launchIn(coroutineScope)
 
-        stateMachine.getCommandSource()
-            .onEach(commandHandler::onCommand)
-            .launchIn(coroutineScope)
+//        stateMachine.getSideEffectSource()
+//            .onEach(actionUiCommand)
+//            .launchIn(coroutineScope)
+
+//        stateMachine.getCommandSource()
+//            .onEach(domainSideEffectHandlerHandler::onSideEffect)
+//            .launchIn(coroutineScope)
 
         if (transitionListener != null) {
             stateMachine.getTransitionSource()
@@ -48,6 +54,6 @@ class MviStore<Event, State, SideEffect, Command>(
     }
 
     private fun createEventsSource(): Flow<Event> {
-        return merge(eventSharedFlow, commandHandler.getEventSource())
+        return merge(eventSharedFlow, sideEffectHandler.getEventSource())
     }
 }

@@ -1,40 +1,35 @@
 package com.example.mvi.model
 
-data class Update<State, SideEffect, Command> internal constructor(
+data class Update<State, SideEffect> internal constructor(
     val state: State?,
     val sideEffects: List<SideEffect>?,
-    val commands: List<Command>?
 ) {
     companion object {
-        fun <State, SideEffect, Command> nothing(): Update<State, SideEffect, Command> = Update(null, null, null)
+        fun <State, SideEffect> nothing(): Update<State, SideEffect> =
+            Update(null, null)
 
-        fun <State, SideEffect, Command> state(state: State) =
-            Update<State, SideEffect, Command>(state = state, sideEffects = null, commands = null)
-
-        fun <State, SideEffect, Command> sideEffects(vararg sideEffects: SideEffect) =
-            Update<State, SideEffect, Command>(
-                state = null,
-                sideEffects = sideEffects.ifEmpty { null }?.toList(),
-                commands = null
+        fun <State, SideEffect> state(state: State) =
+            Update<State, SideEffect>(
+                state = state,
+                sideEffects = null,
             )
 
-        fun <State, SideEffect, Command> sideEffects(sideEffects: List<SideEffect>) =
-            Update<State, SideEffect, Command>(state = null, sideEffects = sideEffects, commands = null)
+        fun <State, SideEffect> sideEffects(vararg sideEffects: SideEffect) =
+            Update<State, SideEffect>(
+                state = null,
+                sideEffects = sideEffects.ifEmpty { null }?.toList(),
+            )
 
-        fun <State, SideEffect, Command> commands(vararg commands: Command) = Update<State, SideEffect, Command>(
-            state = null,
-            sideEffects = null,
-            commands = commands.ifEmpty { null }?.toList()
-        )
+        fun <State, SideEffect> sideEffects(sideEffects: List<SideEffect>) =
+            Update<State, SideEffect>(
+                state = null,
+                sideEffects = sideEffects,
+            )
 
-        fun <State, SideEffect, Command> commands(commands: List<Command>) =
-            Update<State, SideEffect, Command>(state = null, sideEffects = null, commands = commands)
-
-        fun <State, SideEffect, Command> stateWithSideEffectsWithCommands(
+        fun <State, SideEffect> stateWithSideEffects(
             state: State? = null,
             sideEffects: List<SideEffect>? = null,
-            commands: List<Command>? = null
-        ) = Update(state = state, sideEffects = sideEffects, commands = commands)
+        ) = Update(state = state, sideEffects = sideEffects)
     }
 }
 

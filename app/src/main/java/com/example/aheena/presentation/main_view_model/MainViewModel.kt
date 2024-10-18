@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.aheena.presentation.main_view_model.mapper.MainMapper
-import com.example.aheena.presentation.main_view_model.mvi.handler.MainCommandHandler
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
-import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
 import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
 import com.example.core.extensions.mapData
 import com.example.core.presentation.base.BaseViewModel
@@ -26,7 +24,6 @@ import javax.inject.Inject
 internal class MainViewModel @Inject constructor(
     private val mapper: MainMapper,
     private val sideEffectHandler: MainSideEffectHandler,
-    private val commandHandler: MainCommandHandler,
     private val reducer: MainReducer,
     private val navController: NavHostController,
 ) : BaseViewModel() {
@@ -117,29 +114,17 @@ internal class MainViewModel @Inject constructor(
                 reducer,
                 reducer.getInitialState(),
             ),
-            commandHandler = commandHandler,
+            sideEffectHandler = sideEffectHandler,
         )
         mviStore.start(
             coroutineScope = viewModelScope,
             actionState = { state ->
                 _uiState.update { state }
             },
-            actionSideEffect = { sideEffect ->
-                when (val uiSideEffect = sideEffectHandler.createUiSideEffect(sideEffect)) {
-                    is MainUiCommand.Command -> {}
-                    is MainUiCommand.Navigation -> handleNavigation(uiSideEffect)
-                }
-            }
         )
 
         uiEvent
             .onEach(mviStore::onEvent)
             .launchIn(viewModelScope)
-    }
-
-    private fun handleNavigation(navigationCommand: MainUiCommand.Navigation) {
-        when (navigationCommand) {
-            MainUiCommand.Navigation.Back -> navController.popBackStack()
-        }
     }
 }

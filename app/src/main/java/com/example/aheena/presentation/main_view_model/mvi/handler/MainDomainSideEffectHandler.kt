@@ -1,10 +1,10 @@
 package com.example.aheena.presentation.main_view_model.mvi.handler
 
-import com.example.aheena.presentation.main_view_model.mvi.model.MainCommand
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
+import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.lib_ui.theme.AppThemeMode
 import com.example.lib_ui.theme.typography.ViewScale
-import com.example.mvi.CommandHandler
+import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,21 +14,21 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class MainCommandHandler @Inject constructor() : CommandHandler<MainEvent, MainCommand> {
-    private val commandSharedFlow = MutableSharedFlow<MainCommand>(Int.MAX_VALUE)
+internal class MainDomainSideEffectHandler @Inject constructor() : SideEffectHandler<MainEvent, MainSideEffect.Domain> {
+    private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<MainEvent> {
         return postListCommandHandler()
     }
 
-    override suspend fun onCommand(command: MainCommand) {
-        commandSharedFlow.emit(command)
+    override suspend fun onSideEffect(sideEffect: MainSideEffect.Domain) {
+        sideEffectSharedFlow.emit(sideEffect)
     }
 
     private fun postListCommandHandler(): Flow<MainEvent> {
-        return commandSharedFlow.flatMapMerge { command ->
+        return sideEffectSharedFlow.flatMapMerge { command ->
             when (command) {
-                is MainCommand.LoadAppTheme -> handleLoadAppTheme()
+                is MainSideEffect.Domain.LoadAppTheme -> handleLoadAppTheme()
             }
         }
     }

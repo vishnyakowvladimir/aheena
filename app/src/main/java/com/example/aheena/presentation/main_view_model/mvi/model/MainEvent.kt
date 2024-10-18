@@ -5,11 +5,12 @@ import com.example.aheena.presentation.main_view_model.mvi.handler.ThemeData
 internal sealed interface MainEvent {
 
     sealed interface Ui : MainEvent {
+        data object None : Ui
         data object OnBackPressed : Ui
     }
 
     sealed interface Domain : MainEvent {
         data object OnLoadAppThemeNeeded : Domain
-        data class OnAppThemeLoaded(val data: ThemeData): Domain
+        data class OnAppThemeLoaded(val data: ThemeData) : Domain
     }
 }
