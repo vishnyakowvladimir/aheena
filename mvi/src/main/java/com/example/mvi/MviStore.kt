@@ -7,11 +7,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
-class MviStore<Event, State, SideEffect>(
-    private val stateMachine: StateMachine<Event, State, SideEffect>,
+class MviStore<Event, State, SideEffect, UiCommand>(
+    private val stateMachine: StateMachine<Event, State, SideEffect, UiCommand>,
     private val sideEffectHandler: SideEffectHandler<Event, SideEffect>,
-//    private val uiSideEffectHandlerHandler: SideEffectHandler<Event, UiSideEffect>,
-//    private val domainSideEffectHandlerHandler: SideEffectHandler<Event, DomainSideEffect>,
     private val transitionListener: TransitionListener<Event, State, SideEffect>? = null
 ) {
     private val eventSharedFlow = MutableSharedFlow<Event>()
@@ -23,7 +21,7 @@ class MviStore<Event, State, SideEffect>(
     fun start(
         coroutineScope: CoroutineScope,
         actionState: suspend (State) -> Unit,
-//        actionUiCommand: suspend (UiCommand) -> Unit,
+        actionUiCommand: suspend (UiCommand) -> Unit,
     ) {
         getStateSource()
             .onEach(actionState)
@@ -33,13 +31,9 @@ class MviStore<Event, State, SideEffect>(
             .onEach(sideEffectHandler::onSideEffect)
             .launchIn(coroutineScope)
 
-//        stateMachine.getSideEffectSource()
-//            .onEach(actionUiCommand)
-//            .launchIn(coroutineScope)
-
-//        stateMachine.getCommandSource()
-//            .onEach(domainSideEffectHandlerHandler::onSideEffect)
-//            .launchIn(coroutineScope)
+        stateMachine.getUiCommandSource()
+            .onEach(actionUiCommand)
+            .launchIn(coroutineScope)
 
         if (transitionListener != null) {
             stateMachine.getTransitionSource()

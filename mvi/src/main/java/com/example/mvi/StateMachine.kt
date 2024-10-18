@@ -13,19 +13,19 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.scan
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class StateMachine<Event, State, SideEffect>(
-    private val stateUpdater: Reducer<Event, State, SideEffect>,
+class StateMachine<Event, State, SideEffect, UiCommand>(
+    private val stateUpdater: Reducer<Event, State, SideEffect, UiCommand>,
     private val initialState: State,
 ) {
-    //    private val commandsSharedFlow = MutableSharedFlow<List<Command>>()
+    private val commandsSharedFlow = MutableSharedFlow<List<UiCommand>>()
     private val sideEffectsSharedFlow = MutableSharedFlow<List<SideEffect>>()
     private val transitionSharedFlow =
         MutableSharedFlow<Transition<Event, State, SideEffect>>(extraBufferCapacity = Int.MAX_VALUE)
 
     fun getStateSource(eventSource: Flow<Event>): Flow<State> {
         return eventSource.scan(initialState) { state, message ->
-            val (newState, effects) = stateUpdater.update(state, message)
-//            commands?.let { commandsSharedFlow.emit(it) }
+            val (newState, effects, uiCommands) = stateUpdater.update(state, message)
+            uiCommands?.let { commandsSharedFlow.emit(it) }
             effects?.let { sideEffectsSharedFlow.emit(it) }
             sendTransition(state, message, newState, effects)
             newState ?: state
@@ -39,9 +39,9 @@ class StateMachine<Event, State, SideEffect>(
             .flatMapMerge { it.asFlow().cancellable() }
     }
 
-//    fun getCommandSource(): Flow<Command> {
-//        return commandsSharedFlow.flatMapMerge { it.asFlow().cancellable() }
-//    }
+    fun getUiCommandSource(): Flow<UiCommand> {
+        return commandsSharedFlow.flatMapMerge { it.asFlow().cancellable() }
+    }
 
     fun getTransitionSource(): Flow<Transition<Event, State, SideEffect>> {
         return transitionSharedFlow

@@ -121,6 +121,9 @@ internal class MainViewModel @Inject constructor(
             actionState = { state ->
                 _uiState.update { state }
             },
+            actionUiCommand = { uiCommand ->
+
+            }
         )
 
         uiEvent
