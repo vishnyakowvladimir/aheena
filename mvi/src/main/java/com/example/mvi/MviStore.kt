@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
 class MviStore<Event, State, SideEffect, UiCommand>(
     private val stateMachine: StateMachine<Event, State, SideEffect, UiCommand>,
     private val sideEffectHandler: SideEffectHandler<Event, SideEffect>,
-    private val transitionListener: TransitionListener<Event, State, SideEffect>? = null
+    private val transitionListener: TransitionListener<Event, State, SideEffect, UiCommand>? = null
 ) {
     private val eventSharedFlow = MutableSharedFlow<Event>()
 
@@ -27,12 +27,12 @@ class MviStore<Event, State, SideEffect, UiCommand>(
             .onEach(actionState)
             .launchIn(coroutineScope)
 
-        stateMachine.getSideEffectSource()
-            .onEach(sideEffectHandler::onSideEffect)
-            .launchIn(coroutineScope)
-
         stateMachine.getUiCommandSource()
             .onEach(actionUiCommand)
+            .launchIn(coroutineScope)
+
+        stateMachine.getSideEffectSource()
+            .onEach(sideEffectHandler::onSideEffect)
             .launchIn(coroutineScope)
 
         if (transitionListener != null) {

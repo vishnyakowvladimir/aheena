@@ -5,6 +5,7 @@ data class Update<State, SideEffect, UiCommand> internal constructor(
     val sideEffects: List<SideEffect>?,
     val uiCommands: List<UiCommand>?,
 ) {
+
     companion object {
         fun <State, SideEffect, UiCommand> nothing(): Update<State, SideEffect, UiCommand> =
             Update(null, null, null)
@@ -30,12 +31,12 @@ data class Update<State, SideEffect, UiCommand> internal constructor(
                 uiCommands = uiCommands,
             )
 
-        fun <State, SideEffect, UiCommand> stateWithSideEffectsWithCommands(
+        fun <State, SideEffect, UiCommand> stateWithSideEffectsWithUiCommands(
             state: State,
             sideEffects: List<SideEffect>,
             uiCommands: List<UiCommand>,
         ) =
-            Update<State, SideEffect, UiCommand>(
+            Update(
                 state = state,
                 sideEffects = sideEffects,
                 uiCommands = uiCommands,

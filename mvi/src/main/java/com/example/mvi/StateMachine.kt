@@ -20,14 +20,14 @@ class StateMachine<Event, State, SideEffect, UiCommand>(
     private val commandsSharedFlow = MutableSharedFlow<List<UiCommand>>()
     private val sideEffectsSharedFlow = MutableSharedFlow<List<SideEffect>>()
     private val transitionSharedFlow =
-        MutableSharedFlow<Transition<Event, State, SideEffect>>(extraBufferCapacity = Int.MAX_VALUE)
+        MutableSharedFlow<Transition<Event, State, SideEffect, UiCommand>>(extraBufferCapacity = Int.MAX_VALUE)
 
     fun getStateSource(eventSource: Flow<Event>): Flow<State> {
-        return eventSource.scan(initialState) { state, message ->
-            val (newState, effects, uiCommands) = stateUpdater.update(state, message)
+        return eventSource.scan(initialState) { state, event ->
+            val (newState, effects, uiCommands) = stateUpdater.update(state, event)
             uiCommands?.let { commandsSharedFlow.emit(it) }
             effects?.let { sideEffectsSharedFlow.emit(it) }
-            sendTransition(state, message, newState, effects)
+            sendTransition(state, event, newState, effects, uiCommands)
             newState ?: state
         }
             .distinctUntilChanged { oldState, newState -> oldState === newState }
@@ -43,7 +43,7 @@ class StateMachine<Event, State, SideEffect, UiCommand>(
         return commandsSharedFlow.flatMapMerge { it.asFlow().cancellable() }
     }
 
-    fun getTransitionSource(): Flow<Transition<Event, State, SideEffect>> {
+    fun getTransitionSource(): Flow<Transition<Event, State, SideEffect, UiCommand>> {
         return transitionSharedFlow
     }
 
@@ -52,12 +52,14 @@ class StateMachine<Event, State, SideEffect, UiCommand>(
         message: Event,
         newState: State?,
         sideEffects: List<SideEffect>?,
+        uiCommands: List<UiCommand>?,
     ) {
         val transition = Transition(
             state = state,
             event = message,
             updatedState = newState ?: state,
             sideEffects = sideEffects.orEmpty(),
+            uiCommands = uiCommands.orEmpty(),
         )
         transitionSharedFlow.emit(transition)
     }
