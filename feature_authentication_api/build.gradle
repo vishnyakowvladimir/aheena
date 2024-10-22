@@ -1,1 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 applyAndroidConfiguration(this, "com.example.feature_authentication_api")
+applyCompose(this, KotlinCompile)
+
+dependencies {
+    implementation androidXAppCompat
+
+    api project(':core_api')
+}

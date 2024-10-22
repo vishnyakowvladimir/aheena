@@ -1,2 +1,6 @@
 applyAndroidConfiguration(this, "com.example.data_sdk_api")
 applyDagger(this)
+
+dependencies {
+    api project(':domain_models')
+}

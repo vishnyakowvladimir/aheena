@@ -9,8 +9,11 @@ import com.example.core_impl.utils.AppViewModelFactory
 import com.example.core_impl.utils.StringProviderImpl
 import com.example.core_impl.utils.shared_preferences.AndroidPreferencesProviderImpl
 import com.example.core_impl.utils.shared_preferences.EncryptedSharedPreferencesProviderImpl
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 
 @Module
 internal interface UtilsModule {
@@ -28,4 +31,9 @@ internal interface UtilsModule {
     @ApplicationScope
     @Binds
     fun provideAndroidPreferencesProvider(provider: AndroidPreferencesProviderImpl): AndroidPreferencesProvider
+
+    companion object {
+        @Provides
+        fun provideGson(): Gson = GsonBuilder().disableHtmlEscaping().setLenient().create()
+    }
 }

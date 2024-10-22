@@ -4,4 +4,5 @@ applyDagger(this)
 dependencies {
     api project(':data_sdk_api')
     api project(':data_source_api')
+    api project(':domain_models')
 }

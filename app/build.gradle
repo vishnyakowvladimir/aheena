@@ -97,10 +97,16 @@ dependencies {
     implementation multidex
     implementation lifecycle
     implementation network
+    implementation gson
 
     api project(":ui:aheena-lib-ui")
     api project(':core_api')
     api project(':core_impl')
+    api project(':domain_models')
+    api project(':data_sdk_api')
+    api project(':data_sdk_impl')
+    api project(':data_source_api')
+    api project(':data_source_impl')
     api project(':mvi')
     api project(':feature_authentication')
     api project(':feature_authentication_api')
@@ -160,4 +166,6 @@ dependencies {
 //    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 //    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 //    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.8.1")
+
+//    implementation("com.google.code.gson:gson:2.10.1")
 }
