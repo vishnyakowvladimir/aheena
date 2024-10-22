@@ -2,6 +2,7 @@ package com.example.data_sdk_impl.interactor
 
 import com.example.data_sdk_api.interactor.ThemeInteractor
 import com.example.data_source_api.repository.theme.ThemeRepository
+import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain
 import javax.inject.Inject
 
@@ -15,5 +16,13 @@ class ThemeInteractorImpl @Inject constructor(
 
     override fun getScale(): ViewScaleDomain {
         return themeRepository.getScale()
+    }
+
+    override fun saveThemeMode(themeMode: AppThemeModeDomain) {
+        themeRepository.saveThemeMode(themeMode)
+    }
+
+    override fun getThemeMode(): AppThemeModeDomain {
+        return themeRepository.getThemeMode()
     }
 }

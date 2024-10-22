@@ -3,8 +3,8 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.data_sdk_api.interactor.ThemeInteractor
+import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain
-import com.example.lib_ui.theme.AppThemeMode
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -43,6 +43,7 @@ internal class MainDomainSideEffectHandler @Inject constructor(
             emit(
                 ThemeData(
                     viewScale = themeInteractor.getScale(),
+                    themeMode = themeInteractor.getThemeMode(),
                 )
             )
         }
@@ -51,6 +52,6 @@ internal class MainDomainSideEffectHandler @Inject constructor(
 }
 
 internal data class ThemeData(
-    val themeMode: AppThemeMode = AppThemeMode.LIGHT,
-    val viewScale: ViewScaleDomain = ViewScaleDomain.M,
+    val themeMode: AppThemeModeDomain,
+    val viewScale: ViewScaleDomain,
 )
