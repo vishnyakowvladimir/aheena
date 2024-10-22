@@ -1,0 +1,7 @@
+applyAndroidConfiguration(this, "com.example.data_sdk_impl")
+applyDagger(this)
+
+dependencies {
+    api project(':data_sdk_api')
+    api project(':data_source_api')
+}

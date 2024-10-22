@@ -1,0 +1,2 @@
+applyAndroidConfiguration(this, "com.example.data_sdk_api")
+applyDagger(this)
