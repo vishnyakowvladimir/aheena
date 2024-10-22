@@ -40,6 +40,8 @@ internal class MainDomainSideEffectHandler @Inject constructor(
 
     private fun handleLoadAppTheme(): Flow<MainEvent.Domain> {
         return flow {
+            themeInteractor.saveThemeMode(AppThemeModeDomain.DARK)
+            kotlinx.coroutines.delay(1000)
             emit(
                 ThemeData(
                     viewScale = themeInteractor.getScale(),

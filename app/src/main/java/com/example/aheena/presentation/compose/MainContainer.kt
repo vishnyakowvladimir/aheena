@@ -12,8 +12,6 @@ import com.example.aheena.presentation.compose.view.Splash
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.lib_ui.containers.ThemeContainer
-import com.example.lib_ui.theme.AppThemeMode
-import com.example.lib_ui.theme.typography.ViewScale
 
 @Composable
 internal fun MainContainer(
@@ -28,16 +26,18 @@ internal fun MainContainer(
         mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)
     }
 
+    val themeState = state.value.themeState
+
     when {
-        state.value.themeState == null -> {
+        themeState == null -> {
             Splash()
         }
 
         else -> {
             ThemeContainer(
                 activity = LocalContext.current as AppCompatActivity,
-                viewScale = ViewScale.M,
-                themeMode = AppThemeMode.LIGHT,
+                viewScale = themeState.viewScale,
+                themeMode = themeState.themeMode,
             ) {
                 AppNavGraph(
                     navController = navController,
