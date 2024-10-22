@@ -2,8 +2,9 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
+import com.example.data_sdk_api.interactor.ThemeInteractor
+import com.example.domain_models.theme.ViewScaleDomain
 import com.example.lib_ui.theme.AppThemeMode
-import com.example.lib_ui.theme.typography.ViewScale
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class MainDomainSideEffectHandler @Inject constructor() :
+internal class MainDomainSideEffectHandler @Inject constructor(
+    private val themeInteractor: ThemeInteractor,
+) :
     SideEffectHandler<MainEvent, MainSideEffect.Domain> {
 
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Domain>(Int.MAX_VALUE)
@@ -37,7 +40,11 @@ internal class MainDomainSideEffectHandler @Inject constructor() :
 
     private fun handleLoadAppTheme(): Flow<MainEvent.Domain> {
         return flow {
-            emit(ThemeData())
+            emit(
+                ThemeData(
+                    viewScale = themeInteractor.getScale(),
+                )
+            )
         }
             .map(MainEvent.Domain::OnAppThemeLoaded)
     }
@@ -45,5 +52,5 @@ internal class MainDomainSideEffectHandler @Inject constructor() :
 
 internal data class ThemeData(
     val themeMode: AppThemeMode = AppThemeMode.LIGHT,
-    val viewScale: ViewScale = ViewScale.M,
+    val viewScale: ViewScaleDomain = ViewScaleDomain.M,
 )
