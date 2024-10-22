@@ -2,5 +2,8 @@ applyAndroidConfiguration(this, "com.example.core_impl")
 applyDagger(this)
 
 dependencies {
+    implementation androidXSecurity
+    implementation androidXPreference
+
     api project(':core_api')
 }
