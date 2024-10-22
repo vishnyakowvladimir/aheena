@@ -11,6 +11,8 @@ import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.lib_ui.containers.ThemeContainer
+import com.example.lib_ui.theme.AppThemeMode
+import com.example.lib_ui.theme.typography.ViewScale
 
 @Composable
 internal fun MainContainer(
@@ -26,17 +28,15 @@ internal fun MainContainer(
     }
 
     val themeState = state.value.themeState
-    if (themeState != null) {
-        ThemeContainer(
-            activity = LocalContext.current as AppCompatActivity,
-            viewScale = themeState.viewScale,
-            themeMode = themeState.themeMode,
-        ) {
-            AppNavGraph(
-                navController = navController,
-                viewModelFactory = viewModelFactory,
-                composablesHolder = composablesHolder,
-            )
-        }
+    ThemeContainer(
+        activity = LocalContext.current as AppCompatActivity,
+        viewScale = ViewScale.M,
+        themeMode = AppThemeMode.LIGHT,
+    ) {
+        AppNavGraph(
+            navController = navController,
+            viewModelFactory = viewModelFactory,
+            composablesHolder = composablesHolder,
+        )
     }
 }
