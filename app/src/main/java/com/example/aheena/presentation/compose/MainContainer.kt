@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.aheena.navigation.FeatureComposablesHolder
+import com.example.aheena.presentation.compose.view.Splash
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.lib_ui.containers.ThemeContainer
@@ -27,16 +28,23 @@ internal fun MainContainer(
         mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)
     }
 
-    val themeState = state.value.themeState
-    ThemeContainer(
-        activity = LocalContext.current as AppCompatActivity,
-        viewScale = ViewScale.M,
-        themeMode = AppThemeMode.LIGHT,
-    ) {
-        AppNavGraph(
-            navController = navController,
-            viewModelFactory = viewModelFactory,
-            composablesHolder = composablesHolder,
-        )
+    when {
+        state.value.themeState == null -> {
+            Splash()
+        }
+
+        else -> {
+            ThemeContainer(
+                activity = LocalContext.current as AppCompatActivity,
+                viewScale = ViewScale.M,
+                themeMode = AppThemeMode.LIGHT,
+            ) {
+                AppNavGraph(
+                    navController = navController,
+                    viewModelFactory = viewModelFactory,
+                    composablesHolder = composablesHolder,
+                )
+            }
+        }
     }
 }
