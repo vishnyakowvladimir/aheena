@@ -1,6 +1,7 @@
 package com.example.aheena.presentation
 
 import android.os.Bundle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.Surface
@@ -10,8 +11,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.FeatureComposablesHolder
-import com.example.aheena.presentation.compose.MainContainer
+import com.example.aheena.presentation.compose.AppNavGraph
 import com.example.aheena.presentation.main_view_model.MainViewModel
+import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
 import com.example.core.utils.extension.collectAsStateLifecycleAware
@@ -83,11 +85,14 @@ private fun SetComposableContent(
 
     AppThemeContainer(viewScale = state.value.themeState.viewScale) {
         Surface {
-            MainContainer(
-                viewModelFactory = viewModelFactory,
+            BackHandler {
+                mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)
+            }
+
+            AppNavGraph(
                 navController = navController,
+                viewModelFactory = viewModelFactory,
                 composablesHolder = composablesHolder,
-                mainViewModel = mainViewModel,
             )
         }
     }
