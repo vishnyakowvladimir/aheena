@@ -12,7 +12,7 @@ class ThemeMapper @Inject constructor() {
         return when (scale) {
             ViewScaleDomain.M -> ViewScaleDto.M
             ViewScaleDomain.L -> ViewScaleDto.L
-            ViewScaleDomain.XL -> ViewScaleDto.L
+            ViewScaleDomain.XL -> ViewScaleDto.XL
         }
     }
 
@@ -20,7 +20,7 @@ class ThemeMapper @Inject constructor() {
         return when (scale) {
             ViewScaleDto.M -> ViewScaleDomain.M
             ViewScaleDto.L -> ViewScaleDomain.L
-            ViewScaleDto.XL -> ViewScaleDomain.L
+            ViewScaleDto.XL -> ViewScaleDomain.XL
         }
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -13,7 +14,7 @@ import com.example.aheena.presentation.compose.MainContainer
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
-import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.core_impl.holder.ActivityHolder
 import com.example.core_impl.holder.NavControllerHolder
 import com.example.lib_ui.theme.AppThemeContainer
@@ -33,9 +34,6 @@ internal class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var themeManager: ThemeManager
-
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,16 +49,12 @@ internal class MainActivity : BaseActivity() {
                 navController = navController,
             )
 
-            AppThemeContainer(viewScale = themeManager.getScale()) {
-                Surface {
-                    MainContainer(
-                        viewModelFactory = viewModelFactory,
-                        navController = navController,
-                        composablesHolder = composablesHolder,
-                        mainViewModel = mainViewModel,
-                    )
-                }
-            }
+            SetComposableContent(
+                mainViewModel = mainViewModel,
+                viewModelFactory = viewModelFactory,
+                composablesHolder = composablesHolder,
+                navController = navController,
+            )
         }
     }
 
@@ -75,5 +69,26 @@ internal class MainActivity : BaseActivity() {
     ) {
         activityHolder.activity = activity
         navControllerHolder.navController = navController
+    }
+}
+
+@Composable
+private fun SetComposableContent(
+    mainViewModel: MainViewModel,
+    viewModelFactory: ViewModelProvider.Factory,
+    composablesHolder: FeatureComposablesHolder,
+    navController: NavHostController,
+) {
+    val state = mainViewModel.uiState.collectAsStateLifecycleAware()
+
+    AppThemeContainer(viewScale = state.value.themeState.viewScale) {
+        Surface {
+            MainContainer(
+                viewModelFactory = viewModelFactory,
+                navController = navController,
+                composablesHolder = composablesHolder,
+                mainViewModel = mainViewModel,
+            )
+        }
     }
 }
