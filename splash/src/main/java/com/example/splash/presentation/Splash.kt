@@ -7,25 +7,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import com.example.lib_ui.theme.AppTheme
 
 @Composable
 internal fun Splash() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White),
+            .background(color = AppTheme.palette.background.primary),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = "Hello",
-            style = TextStyle(
-                fontSize = 24.sp,
-            ),
-            color = Color.Black,
+            style = AppTheme.typography.title1Bold,
+            color = AppTheme.palette.text.primary,
         )
     }
 }

@@ -15,9 +15,23 @@ class ThemeManagerImpl @Inject constructor(
     private val activityHolder: ActivityHolder,
 ) : ThemeManager {
 
-    override fun applyThemeMode(themeMode: Int) {
+    override fun applyThemeModeLight() {
         activityHolder.activity?.let { activity ->
-            AppCompatDelegate.setDefaultNightMode(themeMode)
+            AppCompatDelegate.setDefaultNightMode(AppThemeMode.LIGHT.mode)
+            activity.delegate.applyDayNight()
+        }
+    }
+
+    override fun applyThemeModeDark() {
+        activityHolder.activity?.let { activity ->
+            AppCompatDelegate.setDefaultNightMode(AppThemeMode.DARK.mode)
+            activity.delegate.applyDayNight()
+        }
+    }
+
+    override fun applyThemeModeSystem() {
+        activityHolder.activity?.let { activity ->
+            AppCompatDelegate.setDefaultNightMode(AppThemeMode.SYSTEM.mode)
             activity.delegate.applyDayNight()
         }
     }
@@ -26,24 +40,16 @@ class ThemeManagerImpl @Inject constructor(
         themeInteractor.saveScale(scale.mapToDomain())
     }
 
-    override fun saveScale(scale: ViewScaleDomain) {
-        themeInteractor.saveScale(scale)
-    }
-
     override fun getScale(): ViewScale {
         return themeInteractor.getScale().mapToUi()
     }
 
-    override fun saveThemeMode(themeMode: AppThemeMode) {
-        themeInteractor.saveThemeMode(themeMode.mapToDomain())
-    }
-
-    override fun saveThemeMode(themeMode: AppThemeModeDomain) {
-        themeInteractor.saveThemeMode(themeMode)
-    }
-
     override fun getThemeMode(): AppThemeMode {
         return themeInteractor.getThemeMode().mapToUi()
+    }
+
+    private fun saveThemeMode(themeMode: AppThemeMode) {
+        themeInteractor.saveThemeMode(themeMode.mapToDomain())
     }
 }
 
