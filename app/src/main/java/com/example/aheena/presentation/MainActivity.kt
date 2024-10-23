@@ -48,7 +48,7 @@ internal class MainActivity : BaseActivity() {
             clear()
             setNew(
                 activity = this,
-                navController = navController
+                navController = navController,
             )
 
             AppThemeContainer(viewScale = themeManager.getScale()) {
