@@ -3,8 +3,6 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.presentation.theme_manager.ThemeManager
-import com.example.core.presentation.theme_manager.mapToDomain
-import com.example.core.presentation.theme_manager.mapToUi
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,8 +51,8 @@ internal class MainDomainSideEffectHandler @Inject constructor(
         sideEffect: MainSideEffect.Domain.ChangeViewScale,
     ): Flow<MainEvent.Domain> {
         return flow {
-            themeManager.saveScale(sideEffect.viewScaleDomain.mapToUi())
-            emit(MainEvent.Domain.OnScaleChanged(themeManager.getScale().mapToDomain()))
+            themeManager.saveScale(sideEffect.viewScaleDomain)
+            emit(MainEvent.Domain.OnScaleChanged(themeManager.getScale()))
         }
     }
 }

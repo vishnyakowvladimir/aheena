@@ -2,12 +2,11 @@ package com.example.core_impl.presentation.theme_manager
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.core.presentation.theme_manager.ThemeManager
-import com.example.core.presentation.theme_manager.mapToDomain
-import com.example.core.presentation.theme_manager.mapToUi
 import com.example.core_impl.holder.ActivityHolder
 import com.example.data_sdk_api.interactor.ThemeInteractor
+import com.example.domain_models.theme.AppThemeModeDomain
+import com.example.domain_models.theme.ViewScaleDomain
 import com.example.lib_ui.theme.AppThemeMode
-import com.example.lib_ui.theme.typography.ViewScale
 import javax.inject.Inject
 
 class ThemeManagerImpl @Inject constructor(
@@ -17,7 +16,7 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeLight() {
         activityHolder.activity?.let { activity ->
-            saveThemeMode(AppThemeMode.LIGHT)
+            saveThemeMode(AppThemeModeDomain.LIGHT)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.LIGHT.mode)
             activity.delegate.applyDayNight()
         }
@@ -25,7 +24,7 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeDark() {
         activityHolder.activity?.let { activity ->
-            saveThemeMode(AppThemeMode.DARK)
+            saveThemeMode(AppThemeModeDomain.DARK)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.DARK.mode)
             activity.delegate.applyDayNight()
         }
@@ -33,25 +32,25 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeSystem() {
         activityHolder.activity?.let { activity ->
-            saveThemeMode(AppThemeMode.SYSTEM)
+            saveThemeMode(AppThemeModeDomain.SYSTEM)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.SYSTEM.mode)
             activity.delegate.applyDayNight()
         }
     }
 
-    override fun saveScale(scale: ViewScale) {
-        themeInteractor.saveScale(scale.mapToDomain())
+    override fun saveScale(scale: ViewScaleDomain) {
+        themeInteractor.saveScale(scale)
     }
 
-    override fun getScale(): ViewScale {
-        return themeInteractor.getScale().mapToUi()
+    override fun getScale(): ViewScaleDomain {
+        return themeInteractor.getScale()
     }
 
-    override fun getThemeMode(): AppThemeMode {
-        return themeInteractor.getThemeMode().mapToUi()
+    override fun getThemeMode(): AppThemeModeDomain {
+        return themeInteractor.getThemeMode()
     }
 
-    private fun saveThemeMode(themeMode: AppThemeMode) {
-        themeInteractor.saveThemeMode(themeMode.mapToDomain())
+    private fun saveThemeMode(themeMode: AppThemeModeDomain) {
+        themeInteractor.saveThemeMode(themeMode)
     }
 }

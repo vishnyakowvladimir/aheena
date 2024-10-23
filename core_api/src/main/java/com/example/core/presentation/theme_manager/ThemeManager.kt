@@ -12,11 +12,11 @@ interface ThemeManager {
 
     fun applyThemeModeSystem()
 
-    fun saveScale(scale: ViewScale)
+    fun saveScale(scale: ViewScaleDomain)
 
-    fun getScale(): ViewScale
+    fun getScale(): ViewScaleDomain
 
-    fun getThemeMode(): AppThemeMode
+    fun getThemeMode(): AppThemeModeDomain
 }
 
 fun ViewScaleDomain.mapToUi(): ViewScale {
