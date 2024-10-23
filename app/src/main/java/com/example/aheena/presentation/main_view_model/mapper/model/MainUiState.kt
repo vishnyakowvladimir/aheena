@@ -1,5 +1,11 @@
 package com.example.aheena.presentation.main_view_model.mapper.model
 
+import com.example.lib_ui.theme.typography.ViewScale
+
 internal data class MainUiState(
-    val none: Unit,
-)
+    val themeState: ThemeState,
+) {
+    data class ThemeState(
+        val viewScale: ViewScale,
+    )
+}

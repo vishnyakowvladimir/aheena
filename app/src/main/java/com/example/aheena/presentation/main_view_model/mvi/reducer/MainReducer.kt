@@ -4,6 +4,8 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.presentation.theme_manager.mapToDomain
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject
@@ -11,6 +13,7 @@ import javax.inject.Inject
 internal class MainReducer @Inject constructor(
     private val uiReducer: MainUiReducer,
     private val domainReducer: MainDomainReducer,
+    private val themeManager: ThemeManager,
 ) : Reducer<MainEvent, MainDomainState, MainSideEffect, MainUiCommand> {
 
     override fun update(
@@ -24,6 +27,10 @@ internal class MainReducer @Inject constructor(
     }
 
     fun getInitialState(): MainDomainState {
-        return MainDomainState()
+        return MainDomainState(
+            themeState = MainDomainState.ThemeState(
+                viewScale = themeManager.getScale().mapToDomain(),
+            )
+        )
     }
 }

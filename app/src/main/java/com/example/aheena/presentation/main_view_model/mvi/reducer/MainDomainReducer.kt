@@ -17,7 +17,8 @@ internal class MainDomainReducer @Inject constructor() :
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
             is MainEvent.Domain.OnLoadDataNeeded -> reduceOnLoadDataNeeded()
-            is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded(state, event)
+            is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded()
+            is MainEvent.Domain.OnScaleChanged -> reduceOnScaleChanged(state, event)
         }
     }
 
@@ -27,12 +28,25 @@ internal class MainDomainReducer @Inject constructor() :
         )
     }
 
-    private fun reduceOnDataLoaded(
-        state: MainDomainState,
-        event: MainEvent.Domain.OnDataLoaded,
-    ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+    private fun reduceOnDataLoaded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
+        )
+    }
+
+    private fun reduceOnScaleChanged(
+        state: MainDomainState,
+        event: MainEvent.Domain.OnScaleChanged,
+    ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        val themeState = state.themeState
+        val updatedThemeState = themeState.copy(
+            viewScale = event.scale,
+        )
+
+        return Update.state(
+            state = state.copy(
+                themeState = updatedThemeState,
+            ),
         )
     }
 }

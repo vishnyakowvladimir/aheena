@@ -2,10 +2,10 @@ package com.example.core_impl.presentation.theme_manager
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.presentation.theme_manager.mapToDomain
+import com.example.core.presentation.theme_manager.mapToUi
 import com.example.core_impl.holder.ActivityHolder
 import com.example.data_sdk_api.interactor.ThemeInteractor
-import com.example.domain_models.theme.AppThemeModeDomain
-import com.example.domain_models.theme.ViewScaleDomain
 import com.example.lib_ui.theme.AppThemeMode
 import com.example.lib_ui.theme.typography.ViewScale
 import javax.inject.Inject
@@ -17,6 +17,7 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeLight() {
         activityHolder.activity?.let { activity ->
+            saveThemeMode(AppThemeMode.LIGHT)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.LIGHT.mode)
             activity.delegate.applyDayNight()
         }
@@ -24,6 +25,7 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeDark() {
         activityHolder.activity?.let { activity ->
+            saveThemeMode(AppThemeMode.DARK)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.DARK.mode)
             activity.delegate.applyDayNight()
         }
@@ -31,6 +33,7 @@ class ThemeManagerImpl @Inject constructor(
 
     override fun applyThemeModeSystem() {
         activityHolder.activity?.let { activity ->
+            saveThemeMode(AppThemeMode.SYSTEM)
             AppCompatDelegate.setDefaultNightMode(AppThemeMode.SYSTEM.mode)
             activity.delegate.applyDayNight()
         }
@@ -50,37 +53,5 @@ class ThemeManagerImpl @Inject constructor(
 
     private fun saveThemeMode(themeMode: AppThemeMode) {
         themeInteractor.saveThemeMode(themeMode.mapToDomain())
-    }
-}
-
-private fun ViewScaleDomain.mapToUi(): ViewScale {
-    return when (this) {
-        ViewScaleDomain.M -> ViewScale.M
-        ViewScaleDomain.L -> ViewScale.L
-        ViewScaleDomain.XL -> ViewScale.XL
-    }
-}
-
-private fun ViewScale.mapToDomain(): ViewScaleDomain {
-    return when (this) {
-        ViewScale.M -> ViewScaleDomain.M
-        ViewScale.L -> ViewScaleDomain.L
-        ViewScale.XL -> ViewScaleDomain.XL
-    }
-}
-
-private fun AppThemeModeDomain.mapToUi(): AppThemeMode {
-    return when (this) {
-        AppThemeModeDomain.LIGHT -> AppThemeMode.LIGHT
-        AppThemeModeDomain.DARK -> AppThemeMode.DARK
-        AppThemeModeDomain.SYSTEM -> AppThemeMode.SYSTEM
-    }
-}
-
-private fun AppThemeMode.mapToDomain(): AppThemeModeDomain {
-    return when (this) {
-        AppThemeMode.LIGHT -> AppThemeModeDomain.LIGHT
-        AppThemeMode.DARK -> AppThemeModeDomain.DARK
-        AppThemeMode.SYSTEM -> AppThemeModeDomain.SYSTEM
     }
 }

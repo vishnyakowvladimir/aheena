@@ -2,13 +2,20 @@ package com.example.aheena.presentation.main_view_model.mapper
 
 import com.example.aheena.presentation.main_view_model.mapper.model.MainUiState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
+import com.example.core.presentation.theme_manager.mapToUi
 import javax.inject.Inject
 
 internal class MainMapper @Inject constructor() {
 
     fun map(domainState: MainDomainState): MainUiState {
         return MainUiState(
-            none = domainState.none,
+            themeState = mapThemeState(themeState = domainState.themeState),
+        )
+    }
+
+    private fun mapThemeState(themeState: MainDomainState.ThemeState): MainUiState.ThemeState {
+        return MainUiState.ThemeState(
+            viewScale = themeState.viewScale.mapToUi(),
         )
     }
 }
