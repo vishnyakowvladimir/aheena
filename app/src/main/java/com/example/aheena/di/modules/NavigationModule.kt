@@ -1,11 +1,8 @@
 package com.example.aheena.di.modules
 
-import android.content.Context
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.DialogNavigator
 import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.scope.ApplicationScope
+import com.example.core_impl.navigation.NavControllerHolder
 import dagger.Module
 import dagger.Provides
 
@@ -14,16 +11,13 @@ class NavigationModule {
 
     @ApplicationScope
     @Provides
-    fun provideNavHostController(context: Context): NavHostController {
-        return NavHostController(context).apply {
-            navigatorProvider.addNavigator(ComposeNavigator())
-            navigatorProvider.addNavigator(DialogNavigator())
-        }
+    fun provideNavHostControllerHolder(): NavControllerHolder {
+        return NavControllerHolder()
     }
 
     @ApplicationScope
     @Provides
-    fun provideMediatorsHolder(): FeatureComposablesHolder {
+    fun provideComposablesHolder(): FeatureComposablesHolder {
         return FeatureComposablesHolder()
     }
 }

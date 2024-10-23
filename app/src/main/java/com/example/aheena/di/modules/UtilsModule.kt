@@ -2,7 +2,7 @@ package com.example.aheena.di.modules
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.di.scope.ApplicationScope
-import com.example.core.utils.StringProvider
+import com.example.core.utils.string_provider.StringProvider
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.core.utils.shared_preferences.EncryptedSharedPreferencesProvider
 import com.example.core_impl.utils.AppViewModelFactory

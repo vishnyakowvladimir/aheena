@@ -1,4 +1,4 @@
-package com.example.core.utils
+package com.example.core.utils.string_provider
 
 import androidx.annotation.PluralsRes
 

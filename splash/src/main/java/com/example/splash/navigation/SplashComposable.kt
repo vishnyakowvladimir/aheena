@@ -1,0 +1,16 @@
+package com.example.splash.navigation
+
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import com.example.core.navigation.base.FeatureComposable
+import com.example.core.navigation.feature_destination.SplashDestination
+import com.example.splash.presentation.Splash
+
+class SplashComposable : FeatureComposable {
+
+    override fun featureComposable(navGraphBuilder: NavGraphBuilder) {
+        navGraphBuilder.composable<SplashDestination> {
+            Splash()
+        }
+    }
+}

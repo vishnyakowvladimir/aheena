@@ -108,8 +108,9 @@ dependencies {
     api project(':data_source_api')
     api project(':data_source_impl')
     api project(':mvi')
+    api project(':splash')
     api project(':feature_authentication')
-    api project(':feature_authentication_api')
+//    api project(':feature_authentication_api')
 
 //    implementation("androidx.core:core-ktx:1.13.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")

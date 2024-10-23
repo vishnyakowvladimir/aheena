@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.compose.view
+package com.example.splash.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

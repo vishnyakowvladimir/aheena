@@ -1,12 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-applyAndroidConfiguration(this, "com.example.feature_authentication")
+applyAndroidConfiguration(this, "com.example.splash")
 applyCompose(this, KotlinCompile)
 
 dependencies {
     implementation androidXAppCompat
 
     api project(':core_api')
-//    api project(':feature_authentication_api')
     api project(":ui:aheena-lib-ui")
 }

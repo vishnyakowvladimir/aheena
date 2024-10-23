@@ -2,7 +2,7 @@ package com.example.core_impl.utils
 
 import android.content.Context
 import androidx.annotation.PluralsRes
-import com.example.core.utils.StringProvider
+import com.example.core.utils.string_provider.StringProvider
 import javax.inject.Inject
 
 class StringProviderImpl @Inject constructor(

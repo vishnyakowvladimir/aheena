@@ -31,13 +31,14 @@ internal class MainDomainReducer @Inject constructor() :
         state: MainDomainState,
         event: MainEvent.Domain.OnAppThemeLoaded,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
-        return Update.state(
-            state.copy(
+        return Update.stateWithSideEffects(
+            state = state.copy(
                 themeState = MainDomainState.ThemeState(
                     themeMode = event.data.themeMode,
                     viewScale = event.data.viewScale,
                 ),
-            )
+            ),
+            sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
         )
     }
 }
