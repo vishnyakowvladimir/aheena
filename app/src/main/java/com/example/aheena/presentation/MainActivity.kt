@@ -39,8 +39,8 @@ internal class MainActivity : BaseActivity() {
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         getComponent<AppComponent>().inject(this)
+        super.onCreate(savedInstanceState)
 
         setContent {
             val navController = rememberNavController()
