@@ -3,3 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 applyAndroidConfiguration(this, "com.example.core_api")
 applyCompose(this, KotlinCompile)
 applyDagger(this)
+
+dependencies {
+    api project(":ui:aheena-lib-ui")
+    api project(':domain_models')
+}

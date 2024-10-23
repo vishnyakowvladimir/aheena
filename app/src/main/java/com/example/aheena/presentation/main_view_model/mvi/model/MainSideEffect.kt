@@ -8,7 +8,7 @@ internal sealed interface MainSideEffect {
     }
 
     sealed interface Domain : MainSideEffect {
-        data object LoadAppTheme : Domain
+        data object LoadData : Domain
     }
 }
 

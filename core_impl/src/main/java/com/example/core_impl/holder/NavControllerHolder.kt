@@ -1,4 +1,4 @@
-package com.example.core_impl.navigation
+package com.example.core_impl.holder
 
 import androidx.navigation.NavHostController
 

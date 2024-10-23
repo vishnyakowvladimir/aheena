@@ -2,22 +2,31 @@ package com.example.aheena.di.modules
 
 import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.scope.ApplicationScope
-import com.example.core_impl.navigation.NavControllerHolder
+import com.example.core.navigation.router.AppRouter
+import com.example.core_impl.holder.NavControllerHolder
+import com.example.core_impl.presentation.router.AppRouterImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-class NavigationModule {
+interface NavigationModule {
 
     @ApplicationScope
-    @Provides
-    fun provideNavHostControllerHolder(): NavControllerHolder {
-        return NavControllerHolder()
-    }
+    @Binds
+    fun bindAppRouter(routerImpl: AppRouterImpl): AppRouter
 
-    @ApplicationScope
-    @Provides
-    fun provideComposablesHolder(): FeatureComposablesHolder {
-        return FeatureComposablesHolder()
+    companion object {
+        @ApplicationScope
+        @Provides
+        fun provideNavHostControllerHolder(): NavControllerHolder {
+            return NavControllerHolder()
+        }
+
+        @ApplicationScope
+        @Provides
+        fun provideComposablesHolder(): FeatureComposablesHolder {
+            return FeatureComposablesHolder()
+        }
     }
 }

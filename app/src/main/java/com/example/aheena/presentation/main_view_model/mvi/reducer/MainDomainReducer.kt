@@ -16,28 +16,22 @@ internal class MainDomainReducer @Inject constructor() :
         event: MainEvent.Domain
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
-            is MainEvent.Domain.OnLoadAppThemeNeeded -> reduceOnLoadAppThemeNeeded()
-            is MainEvent.Domain.OnAppThemeLoaded -> reduceOnAppThemeLoaded(state, event)
+            is MainEvent.Domain.OnLoadDataNeeded -> reduceOnLoadDataNeeded()
+            is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded(state, event)
         }
     }
 
-    private fun reduceOnLoadAppThemeNeeded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+    private fun reduceOnLoadDataNeeded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
-            listOf(MainSideEffect.Domain.LoadAppTheme),
+            listOf(MainSideEffect.Domain.LoadData),
         )
     }
 
-    private fun reduceOnAppThemeLoaded(
+    private fun reduceOnDataLoaded(
         state: MainDomainState,
-        event: MainEvent.Domain.OnAppThemeLoaded,
+        event: MainEvent.Domain.OnDataLoaded,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
-        return Update.stateWithSideEffects(
-            state = state.copy(
-                themeState = MainDomainState.ThemeState(
-                    themeMode = event.data.themeMode,
-                    viewScale = event.data.viewScale,
-                ),
-            ),
+        return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
         )
     }

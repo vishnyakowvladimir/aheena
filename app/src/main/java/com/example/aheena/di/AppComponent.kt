@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.aheena.di.modules.DataSourceModule
 import com.example.aheena.di.modules.InteractorModule
 import com.example.aheena.di.modules.NavigationModule
+import com.example.aheena.di.modules.PresentationModule
 import com.example.aheena.di.modules.RepositoryModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.aheena.di.modules.ViewModelsModule
@@ -24,6 +25,7 @@ import dagger.Component
         DataSourceModule::class,
         RepositoryModule::class,
         InteractorModule::class,
+        PresentationModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent {

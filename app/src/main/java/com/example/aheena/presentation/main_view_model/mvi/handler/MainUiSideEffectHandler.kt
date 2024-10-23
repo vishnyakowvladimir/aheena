@@ -3,7 +3,7 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.navigation.feature_destination.AuthenticationDestination
-import com.example.core_impl.navigation.NavControllerHolder
+import com.example.core.navigation.router.AppRouter
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MainUiSideEffectHandler @Inject constructor(
-    private val navControllerHolder: NavControllerHolder,
+    private val router: AppRouter,
 ) : SideEffectHandler<MainEvent, MainSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -39,15 +39,15 @@ internal class MainUiSideEffectHandler @Inject constructor(
     }
 
     private fun handleBack(): Flow<MainEvent.Ui> {
-        navControllerHolder.navController?.popBackStack()
         return flow {
+            router.popBackStack()
             emit(MainEvent.Ui.None)
         }
     }
 
     private fun handleOpenAuthentication(): Flow<MainEvent.Ui> {
-        navControllerHolder.navController?.navigate(AuthenticationDestination())
         return flow {
+            router.navigate(AuthenticationDestination())
             emit(MainEvent.Ui.None)
         }
     }

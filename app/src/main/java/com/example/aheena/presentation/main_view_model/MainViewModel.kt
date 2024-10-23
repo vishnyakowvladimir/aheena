@@ -34,7 +34,7 @@ internal class MainViewModel @Inject constructor(
 
     init {
         createMvi()
-        onEvent(MainEvent.Domain.OnLoadAppThemeNeeded)
+        onEvent(MainEvent.Domain.OnLoadDataNeeded)
     }
 
     fun onEvent(event: MainEvent) {
