@@ -9,9 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.lib_ui.theme.AppTheme
+import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
 internal fun Splash() {
+    SetSystemBarsColor(
+        statusBarColor = AppTheme.palette.background.primary,
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()

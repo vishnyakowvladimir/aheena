@@ -16,9 +16,11 @@ import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.core.di.extension.getComponent
 import com.example.core.presentation.base.BaseActivity
+import com.example.core.presentation.theme_manager.ThemeManager
 import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.core_impl.holder.ActivityHolder
 import com.example.core_impl.holder.NavControllerHolder
+import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.lib_ui.theme.AppThemeContainer
 import javax.inject.Inject
 
@@ -32,6 +34,9 @@ internal class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var composablesHolder: FeatureComposablesHolder
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,6 +61,7 @@ internal class MainActivity : BaseActivity() {
                 viewModelFactory = viewModelFactory,
                 composablesHolder = composablesHolder,
                 navController = navController,
+                themeManager = themeManager,
             )
         }
     }
@@ -80,10 +86,14 @@ private fun SetComposableContent(
     viewModelFactory: ViewModelProvider.Factory,
     composablesHolder: FeatureComposablesHolder,
     navController: NavHostController,
+    themeManager: ThemeManager,
 ) {
     val state = mainViewModel.uiState.collectAsStateLifecycleAware()
 
-    AppThemeContainer(viewScale = state.value.themeState.viewScale) {
+    AppThemeContainer(
+        darkTheme = themeManager.getThemeMode() == AppThemeModeDomain.DARK,
+        viewScale = state.value.themeState.viewScale,
+    ) {
         Surface {
             BackHandler {
                 mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)

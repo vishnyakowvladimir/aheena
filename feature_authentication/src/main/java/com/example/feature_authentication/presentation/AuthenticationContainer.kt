@@ -8,9 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.lib_ui.theme.AppTheme
+import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
 fun AuthenticationContainer() {
+    SetSystemBarsColor(
+        statusBarColor = AppTheme.palette.background.primary,
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
