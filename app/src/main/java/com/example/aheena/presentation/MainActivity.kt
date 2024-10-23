@@ -20,7 +20,6 @@ import com.example.core.presentation.theme_manager.ThemeManager
 import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.core_impl.holder.ActivityHolder
 import com.example.core_impl.holder.NavControllerHolder
-import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.lib_ui.theme.AppThemeContainer
 import javax.inject.Inject
 
@@ -91,7 +90,6 @@ private fun SetComposableContent(
     val state = mainViewModel.uiState.collectAsStateLifecycleAware()
 
     AppThemeContainer(
-        darkTheme = themeManager.getThemeMode() == AppThemeModeDomain.DARK,
         viewScale = state.value.themeState.viewScale,
     ) {
         Surface {
