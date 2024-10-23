@@ -24,7 +24,7 @@ internal class MainUiReducer @Inject constructor() :
 
     private fun reduceOnBackPressed(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
-            listOf(MainSideEffect.Ui.Back)
+            sideEffects = listOf(MainSideEffect.Ui.Back),
         )
     }
 
@@ -32,7 +32,7 @@ internal class MainUiReducer @Inject constructor() :
         event: MainEvent.Ui.OnChangeScaleNeeded,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
-            listOf(MainSideEffect.Domain.ChangeViewScale(event.scale))
+            sideEffects = listOf(MainSideEffect.Domain.ChangeViewScale(event.scale)),
         )
     }
 }

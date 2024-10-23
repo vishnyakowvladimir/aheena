@@ -24,7 +24,7 @@ internal class MainDomainReducer @Inject constructor() :
 
     private fun reduceOnLoadDataNeeded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
-            listOf(MainSideEffect.Domain.LoadData),
+            sideEffects = listOf(MainSideEffect.Domain.LoadData),
         )
     }
 

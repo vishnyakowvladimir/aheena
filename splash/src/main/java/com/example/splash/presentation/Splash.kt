@@ -19,7 +19,7 @@ internal fun Splash() {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Hello",
+            text = "HELLO :)",
             style = AppTheme.typography.title1Bold,
             color = AppTheme.palette.text.primary,
         )
