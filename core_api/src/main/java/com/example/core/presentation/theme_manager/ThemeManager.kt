@@ -6,6 +6,9 @@ import com.example.lib_ui.theme.AppThemeMode
 import com.example.lib_ui.theme.typography.ViewScale
 
 interface ThemeManager {
+
+    fun applyThemeMode()
+
     fun applyThemeModeLight()
 
     fun applyThemeModeDark()

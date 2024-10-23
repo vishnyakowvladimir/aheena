@@ -2,6 +2,7 @@ package com.example.core_impl.presentation.theme_manager
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.presentation.theme_manager.mapToUi
 import com.example.core_impl.holder.ActivityHolder
 import com.example.data_sdk_api.interactor.ThemeInteractor
 import com.example.domain_models.theme.AppThemeModeDomain
@@ -13,6 +14,13 @@ class ThemeManagerImpl @Inject constructor(
     private val themeInteractor: ThemeInteractor,
     private val activityHolder: ActivityHolder,
 ) : ThemeManager {
+    override fun applyThemeMode() {
+        activityHolder.activity?.let { activity ->
+            val mode = themeInteractor.getThemeMode().mapToUi()
+            AppCompatDelegate.setDefaultNightMode(mode.mode)
+            activity.delegate.applyDayNight()
+        }
+    }
 
     override fun applyThemeModeLight() {
         activityHolder.activity?.let { activity ->
