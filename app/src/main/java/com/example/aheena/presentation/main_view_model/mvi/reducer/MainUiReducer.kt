@@ -18,6 +18,7 @@ internal class MainUiReducer @Inject constructor() :
         return when (event) {
             is MainEvent.Ui.None -> Update.nothing()
             is MainEvent.Ui.OnBackPressed -> reduceOnBackPressed()
+            is MainEvent.Ui.OnApplyThemeNeeded -> reduceOnApplyThemeNeeded()
             is MainEvent.Ui.OnChangeScaleNeeded -> reduceOnChangeScaleNeeded(event)
         }
     }
@@ -25,6 +26,12 @@ internal class MainUiReducer @Inject constructor() :
     private fun reduceOnBackPressed(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Ui.Back),
+        )
+    }
+
+    private fun reduceOnApplyThemeNeeded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        return Update.sideEffects(
+            sideEffects = listOf(MainSideEffect.Ui.ApplyTheme),
         )
     }
 

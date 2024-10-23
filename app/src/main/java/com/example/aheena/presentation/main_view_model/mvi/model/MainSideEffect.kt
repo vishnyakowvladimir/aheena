@@ -6,6 +6,7 @@ internal sealed interface MainSideEffect {
 
     sealed interface Ui : MainSideEffect {
         data object Back : Ui
+        data object ApplyTheme : Ui
         data object OpenAuthentication : Ui
     }
 

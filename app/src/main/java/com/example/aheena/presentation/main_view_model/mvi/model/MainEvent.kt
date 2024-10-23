@@ -7,6 +7,7 @@ internal sealed interface MainEvent {
     sealed interface Ui : MainEvent {
         data object None : Ui
         data object OnBackPressed : Ui
+        data object OnApplyThemeNeeded : Ui
         data class OnChangeScaleNeeded(val scale: ViewScaleDomain) : Ui
     }
 

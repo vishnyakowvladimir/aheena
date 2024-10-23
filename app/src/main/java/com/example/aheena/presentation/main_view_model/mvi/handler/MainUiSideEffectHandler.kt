@@ -4,6 +4,7 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.navigation.feature_destination.AuthenticationDestination
 import com.example.core.navigation.router.AppRouter
+import com.example.core.presentation.theme_manager.ThemeManager
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MainUiSideEffectHandler @Inject constructor(
     private val router: AppRouter,
+    private val themeManager: ThemeManager,
 ) : SideEffectHandler<MainEvent, MainSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -32,6 +34,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is MainSideEffect.Ui.Back -> handleBack()
+                is MainSideEffect.Ui.ApplyTheme -> handleApplyTheme()
                 is MainSideEffect.Ui.OpenAuthentication -> handleOpenAuthentication()
             }
         }
@@ -41,6 +44,13 @@ internal class MainUiSideEffectHandler @Inject constructor(
     private fun handleBack(): Flow<MainEvent.Ui> {
         return flow {
             router.popBackStack()
+            emit(MainEvent.Ui.None)
+        }
+    }
+
+    private fun handleApplyTheme(): Flow<MainEvent.Ui> {
+        return flow {
+            themeManager.applyThemeMode()
             emit(MainEvent.Ui.None)
         }
     }
