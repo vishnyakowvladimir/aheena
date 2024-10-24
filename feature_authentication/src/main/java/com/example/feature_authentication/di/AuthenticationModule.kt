@@ -19,7 +19,7 @@ internal interface AuthenticationModule {
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    fun bindPhoneAndPasswordViewModel(viewModel: LoginViewModel): ViewModel
+    fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 
     companion object {
 
