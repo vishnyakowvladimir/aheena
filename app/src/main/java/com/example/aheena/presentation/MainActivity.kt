@@ -63,6 +63,11 @@ internal class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        clear()
+    }
+
     private fun clear() {
         activityHolder.activity = null
         navControllerHolder.navController = null
