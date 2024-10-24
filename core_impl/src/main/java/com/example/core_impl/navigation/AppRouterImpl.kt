@@ -21,7 +21,17 @@ class AppRouterImpl @Inject constructor(
     override fun replace(destination: BaseDestination): Boolean {
         val navController = navControllerHolder.navController
         navController?.navigate(destination) {
-            navController.popBackStack()
+            popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
+                inclusive =  true
+            }
+        }
+        return navController != null
+    }
+
+    override fun replaceAll(destination: BaseDestination): Boolean {
+        val navController = navControllerHolder.navController
+        navController?.navigate(destination) {
+            popUpTo(0)
         }
         return navController != null
     }
@@ -29,8 +39,6 @@ class AppRouterImpl @Inject constructor(
     @SuppressLint("RestrictedApi")
     override fun popBackStack(): Boolean {
         val navController = navControllerHolder.navController
-
-        navController?.currentBackStack?.value?.size
 
         return if ((navController?.currentBackStack?.value?.size ?: 0) <= 2) {
             activityHolder.activity?.finish()
