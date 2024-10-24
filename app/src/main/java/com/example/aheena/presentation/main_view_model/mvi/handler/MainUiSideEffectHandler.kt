@@ -57,7 +57,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenAuthentication(): Flow<MainEvent.Ui> {
         return flow {
-            router.navigate(AuthenticationDestination())
+            router.replace(AuthenticationDestination())
             emit(MainEvent.Ui.None)
         }
     }

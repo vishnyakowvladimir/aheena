@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.compose
+package com.example.aheena.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -6,7 +6,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.navigation.feature_destination.SplashDestination
 
 @Composable

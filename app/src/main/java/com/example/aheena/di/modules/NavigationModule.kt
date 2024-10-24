@@ -4,7 +4,7 @@ import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.scope.ApplicationScope
 import com.example.core.navigation.router.AppRouter
 import com.example.core_impl.holder.NavControllerHolder
-import com.example.core_impl.presentation.router.AppRouterImpl
+import com.example.core_impl.navigation.AppRouterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

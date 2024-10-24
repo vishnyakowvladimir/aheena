@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.aheena.di.AppComponent
+import com.example.aheena.navigation.AppNavGraph
 import com.example.aheena.navigation.FeatureComposablesHolder
-import com.example.aheena.presentation.compose.AppNavGraph
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.core.di.extension.getComponent
