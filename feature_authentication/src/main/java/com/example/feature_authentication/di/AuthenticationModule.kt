@@ -2,11 +2,13 @@ package com.example.feature_authentication.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
+import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.login.LoginViewModel
 import dagger.Binds
 import dagger.Module
@@ -15,6 +17,9 @@ import dagger.multibindings.IntoMap
 
 @Module
 internal interface AuthenticationModule {
+
+    @Binds
+    fun provideViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap

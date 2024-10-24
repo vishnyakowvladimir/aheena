@@ -20,6 +20,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.presentation.login.model.LoginUiState
@@ -31,6 +32,8 @@ import com.example.lib_ui.components.input.password_input.PasswordInputState
 import com.example.lib_ui.components.input.phone_input.PhoneInput
 import com.example.lib_ui.components.input.phone_input.PhoneInputState
 import com.example.lib_ui.theme.AppTheme
+import com.example.lib_ui.theme.AppThemeContainer
+import com.example.lib_ui.theme.typography.ViewScale
 import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
@@ -224,10 +227,36 @@ private fun PasswordInputBlock(
     )
 }
 
-//@Preview
-//@Composable
-//private fun ContentPreview() {
-//    AppThemeContainer(viewScale = ViewScale.M) {
-//        Content()
-//    }
-//}
+@Preview
+@Composable
+private fun ContentPreview() {
+    AppThemeContainer(viewScale = ViewScale.M) {
+        Content(
+            state = LoginUiState(
+                phoneState = LoginUiState.PhoneState(
+                    textFieldValue = TextFieldValue(),
+                    placeholderText = "Введите номер телефона",
+                    errorText = "",
+                    isError = false,
+                ),
+                passwordState = LoginUiState.PasswordState(
+                    textFieldValue = TextFieldValue(),
+                    placeholderText = "Введите пароль",
+                    errorText = "",
+                    isPasswordVisible = false,
+                    isError = false,
+                ),
+                confirmButtonsState = LoginUiState.ConfirmButtonState(
+                    title = "Далее",
+                    isEnabled = true,
+                ),
+            ),
+            onPhoneChanged = {},
+            onResetPhoneIconClick = {},
+            onPasswordChanged = {},
+            onResetPasswordIconClick = {},
+            onPasswordIconClick = {},
+            onConfirmButtonClick = {},
+        )
+    }
+}

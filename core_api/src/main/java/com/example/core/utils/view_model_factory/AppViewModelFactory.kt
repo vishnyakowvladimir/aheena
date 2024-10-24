@@ -1,4 +1,4 @@
-package com.example.core_impl.utils
+package com.example.core.utils.view_model_factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

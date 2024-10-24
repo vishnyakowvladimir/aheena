@@ -18,6 +18,7 @@ fun AuthenticationContainer() {
     val component = context.getComponent<AuthenticationComponent>()
 
     val navController = component.provideNavController()
+    val viewModelFactory = component.provideViewModelFactory()
 
     ComposableLifecycle(
         onDestroy = {
@@ -31,7 +32,7 @@ fun AuthenticationContainer() {
     ) {
         composable<LocalAuthenticationDestination.PhoneAndPassword> {
             LoginScreen(
-                viewModel = viewModel()
+                viewModel = viewModel(factory = viewModelFactory)
             )
         }
 
