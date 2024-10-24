@@ -15,6 +15,14 @@ class AppRouterImpl @Inject constructor(
         return navController != null
     }
 
+    override fun replace(destination: BaseDestination): Boolean {
+        val navController = navControllerHolder.navController
+        navController?.navigate(destination) {
+            popBackStack()
+        }
+        return navController != null
+    }
+
     override fun popBackStack(): Boolean {
         val navController = navControllerHolder.navController
         navController?.popBackStack()

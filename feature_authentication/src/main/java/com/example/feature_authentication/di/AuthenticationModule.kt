@@ -7,7 +7,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
-import com.example.feature_authentication.presentation.phone_and_password.PhoneAndPasswordViewModel
+import com.example.feature_authentication.presentation.phone_and_password.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,8 +18,8 @@ internal interface AuthenticationModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(PhoneAndPasswordViewModel::class)
-    fun bindPhoneAndPasswordViewModel(viewModel: PhoneAndPasswordViewModel): ViewModel
+    @ViewModelKey(LoginViewModel::class)
+    fun bindPhoneAndPasswordViewModel(viewModel: LoginViewModel): ViewModel
 
     companion object {
 
