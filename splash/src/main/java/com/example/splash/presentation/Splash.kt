@@ -7,26 +7,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.lib_ui.theme.AppTheme
+import androidx.compose.ui.unit.sp
 import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
 internal fun Splash() {
     SetSystemBarsColor(
-        statusBarColor = AppTheme.palette.background.primary,
+        statusBarColor = Color.White,
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = AppTheme.palette.background.primary),
+            .background(color = Color.White),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = "HELLO :)",
-            style = AppTheme.typography.title1Bold,
-            color = AppTheme.palette.text.primary,
+            style = TextStyle(
+                fontSize = 24.sp,
+            ),
+            color = Color.DarkGray,
         )
     }
 }
