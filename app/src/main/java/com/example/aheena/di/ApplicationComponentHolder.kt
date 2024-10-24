@@ -1,12 +1,14 @@
 package com.example.aheena.di
 
 import com.example.aheena.di.component_builder.factory.ApplicationFactory
+import com.example.aheena.di.component_builder.factory.AuthenticationFactory
 import com.example.core.di.component.ComponentLifecycle
 import com.example.core.di.component.CompositeKey
 import com.example.core.di.component.DaggerComponent
 import com.example.core.di.component.FactoryProvider
 import com.example.core.di.component.clearComponentByKey
 import com.example.core.di.component.createFactoryKey
+import com.example.feature_authentication.di.AuthenticationComponent
 import kotlin.reflect.KClass
 
 internal class ApplicationComponentHolder(appComponent: AppComponent) : ComponentLifecycle {
@@ -16,6 +18,7 @@ internal class ApplicationComponentHolder(appComponent: AppComponent) : Componen
     private val factories: Map<String, FactoryProvider> by lazy {
         mapOf(
             AppComponent::class.createFactoryKey() to ApplicationFactory(appComponent),
+            AuthenticationComponent::class.createFactoryKey() to AuthenticationFactory(),
         )
     }
 

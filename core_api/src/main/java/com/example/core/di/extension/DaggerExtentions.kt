@@ -2,8 +2,10 @@ package com.example.core.di.extension
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import com.example.core.di.component.ComponentLifecycle
 import com.example.core.di.component.DaggerComponent
+import com.example.core.presentation.base.BaseActivity
 
 @Throws
 inline fun <reified T : DaggerComponent> T.throwDaggerWrongComponent(): Nothing {
@@ -22,11 +24,18 @@ inline fun <reified T : DaggerComponent> Application.getComponent(
 }
 
 
-inline fun <reified T : DaggerComponent> Activity.getComponent(
+inline fun <reified T : DaggerComponent> BaseActivity.getComponent(
     dependencyType: String? = null,
     instanceKey: String? = null
 ): T {
     return application.getComponent(dependencyType, instanceKey)
+}
+
+inline fun <reified T : DaggerComponent> Context.getComponent(
+    dependencyType: String? = null,
+    instanceKey: String? = null
+): T {
+    return (this as BaseActivity).getComponent(dependencyType, instanceKey)
 }
 
 inline fun <reified T : DaggerComponent> Application.clearComponent(
@@ -43,6 +52,13 @@ inline fun <reified T : DaggerComponent> Activity.clearComponent(
     instanceKey: String? = null,
 ) {
     application.clearComponent<T>(dependencyType, instanceKey)
+}
+
+inline fun <reified T : DaggerComponent> Context.clearComponent(
+    dependencyType: String? = null,
+    instanceKey: String? = null,
+) {
+    (this as BaseActivity).clearComponent<T>(dependencyType, instanceKey)
 }
 
 
