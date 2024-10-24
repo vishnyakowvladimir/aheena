@@ -1,4 +1,4 @@
-package com.example.feature_authentication.presentation.phone_and_password
+package com.example.feature_authentication.presentation.login
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
@@ -22,8 +22,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.core.utils.extension.collectAsStateLifecycleAware
-import com.example.feature_authentication.presentation.phone_and_password.model.LoginUiState
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginEvent
+import com.example.feature_authentication.presentation.login.model.LoginUiState
+import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.lib_ui.components.button.AppButton
 import com.example.lib_ui.components.button.AppButtonState
 import com.example.lib_ui.components.input.password_input.PasswordInput

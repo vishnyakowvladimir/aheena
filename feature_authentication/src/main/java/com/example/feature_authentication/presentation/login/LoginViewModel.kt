@@ -1,12 +1,12 @@
-package com.example.feature_authentication.presentation.phone_and_password
+package com.example.feature_authentication.presentation.login
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.extensions.mapData
 import com.example.core.presentation.base.BaseViewModel
-import com.example.feature_authentication.presentation.phone_and_password.mapper.LoginMapper
-import com.example.feature_authentication.presentation.phone_and_password.mvi.handler.LoginSideEffectHandler
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginEvent
-import com.example.feature_authentication.presentation.phone_and_password.mvi.reducer.LoginReducer
+import com.example.feature_authentication.presentation.login.mapper.LoginMapper
+import com.example.feature_authentication.presentation.login.mvi.handler.LoginSideEffectHandler
+import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
+import com.example.feature_authentication.presentation.login.mvi.reducer.LoginReducer
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
 import kotlinx.coroutines.flow.MutableSharedFlow

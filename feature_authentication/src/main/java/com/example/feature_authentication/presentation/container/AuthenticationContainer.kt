@@ -9,7 +9,7 @@ import com.example.core.di.extension.clearComponent
 import com.example.core.di.extension.getComponent
 import com.example.feature_authentication.di.AuthenticationComponent
 import com.example.feature_authentication.navigation.LocalAuthenticationDestination
-import com.example.feature_authentication.presentation.phone_and_password.LoginScreen
+import com.example.feature_authentication.presentation.login.LoginScreen
 import com.example.lib_ui.utils.ComposableLifecycle
 
 @Composable

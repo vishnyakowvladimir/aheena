@@ -1,9 +1,9 @@
-package com.example.feature_authentication.presentation.phone_and_password.mapper
+package com.example.feature_authentication.presentation.login.mapper
 
 import com.example.core.utils.string_provider.StringProvider
 import com.example.feature_authentication.R
-import com.example.feature_authentication.presentation.phone_and_password.model.LoginUiState
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginDomainState
+import com.example.feature_authentication.presentation.login.model.LoginUiState
+import com.example.feature_authentication.presentation.login.mvi.model.LoginDomainState
 import javax.inject.Inject
 
 internal class LoginMapper @Inject constructor(

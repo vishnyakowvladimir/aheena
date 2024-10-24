@@ -1,11 +1,11 @@
-package com.example.feature_authentication.presentation.phone_and_password.mvi.reducer
+package com.example.feature_authentication.presentation.login.mvi.reducer
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginDomainState
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginEvent
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginSideEffect
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginUiCommand
+import com.example.feature_authentication.presentation.login.mvi.model.LoginDomainState
+import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
+import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect
+import com.example.feature_authentication.presentation.login.mvi.model.LoginUiCommand
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject

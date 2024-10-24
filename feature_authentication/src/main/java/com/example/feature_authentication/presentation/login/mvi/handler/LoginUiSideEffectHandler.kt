@@ -1,10 +1,10 @@
-package com.example.feature_authentication.presentation.phone_and_password.mvi.handler
+package com.example.feature_authentication.presentation.login.mvi.handler
 
 import androidx.navigation.NavHostController
 import com.example.core.navigation.router.AppRouter
 import com.example.feature_authentication.navigation.LocalAuthenticationDestination
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginEvent
-import com.example.feature_authentication.presentation.phone_and_password.mvi.model.LoginSideEffect
+import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
+import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
