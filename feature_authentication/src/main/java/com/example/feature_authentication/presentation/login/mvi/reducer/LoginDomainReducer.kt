@@ -9,10 +9,7 @@ import com.example.mvi.model.Update
 import javax.inject.Inject
 
 internal class LoginDomainReducer @Inject constructor() :
-    Reducer<LoginEvent.Domain,
-        LoginDomainState,
-        LoginSideEffect,
-        LoginUiCommand> {
+    Reducer<LoginEvent.Domain, LoginDomainState, LoginSideEffect, LoginUiCommand> {
 
     override fun update(
         state: LoginDomainState,

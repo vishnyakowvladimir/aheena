@@ -5,5 +5,8 @@
     <string name="authentication_login_password_placeholder">Введите пароль</string>
     <string name="authentication_login_password_error">Пароль должен быть не менее 6 символов</string>
     <string name="authentication_login_confirm_button_title">Далее</string>
-    <string name="authentication_create_pin_title">Создание пин-кода</string>
+    <string name="authentication_create_pin_screen_title">Создание пин-кода</string>
+    <string name="authentication_create_pin_field_title_create">Придумайте пин-код</string>
+    <string name="authentication_create_pin_field_title_confirm">Подтвердите пин-код</string>
+    <string name="authentication_create_pin_error">Пожалуйста, повторите</string>
 </resources>

@@ -16,7 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.R
+import com.example.feature_authentication.presentation.create_pin.model.CreatePinUiState
+import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.lib_ui.components.keyboard.PinKeyboard
 import com.example.lib_ui.components.keyboard.model.PinKey
 import com.example.lib_ui.components.nav_bar.AppNavBar
@@ -32,12 +35,14 @@ import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
 internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
+    val state = viewModel.uiState.collectAsStateLifecycleAware()
+
     SetSystemBarsColor(
         statusBarColor = AppTheme.palette.background.primary,
     )
 
     BackHandler {
-
+        viewModel.onEvent(CreatePinEvent.Ui.OnBackPressed)
     }
 
     Scaffold(
@@ -48,10 +53,12 @@ internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
                     rightPart = null,
                     leftPart = AppNavBarState.LeftPart(
                         iconRes = com.example.lib_ui.R.drawable.ic_24dp_navigation_back,
-                        onClick = { },
+                        onClick = {
+                            viewModel.onEvent(CreatePinEvent.Ui.OnBackPressed)
+                        },
                     ),
                     middlePart = AppNavBarState.MiddlePart(
-                        title = stringResource(id = R.string.authentication_create_pin_title)
+                        title = stringResource(id = R.string.authentication_create_pin_screen_title)
                     ),
                     backgroundColor = AppTheme.palette.background.primary,
                 ),
@@ -66,7 +73,10 @@ internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
                 .padding(paddingValues),
         ) {
             Content(
-                onKeyboardClick = {},
+                state = state.value,
+                onKeyboardClick = { key ->
+                    viewModel.onEvent(CreatePinEvent.Ui.OnKeyboardClick(key))
+                },
             )
         }
     }
@@ -74,6 +84,7 @@ internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
 
 @Composable
 private fun Content(
+    state: CreatePinUiState,
     onKeyboardClick: (PinKey) -> Unit,
 ) {
     Column(
@@ -86,11 +97,7 @@ private fun Content(
             contentAlignment = Alignment.Center,
         ) {
             PinCodeField(
-                state = PinCodeFieldState(
-                    title = "Title",
-                    maxIndex = PinCodeFieldItemIndex.THREE,
-                    type = PinCodeFieldType.Default(selectedIndex = PinCodeFieldItemIndex.NONE),
-                ),
+                state = state.pinCodeFieldState,
             )
         }
 
@@ -103,6 +110,15 @@ private fun Content(
 private fun ContentPreview() {
     AppThemeContainer(viewScale = ViewScale.M) {
         Content(
+            state = CreatePinUiState(
+                pinCodeFieldState = PinCodeFieldState(
+                    title = "Title",
+                    maxIndex = PinCodeFieldItemIndex.THREE,
+                    type = PinCodeFieldType.Default(
+                        selectedIndex = PinCodeFieldItemIndex.THREE,
+                    ),
+                )
+            ),
             onKeyboardClick = {},
         )
     }
