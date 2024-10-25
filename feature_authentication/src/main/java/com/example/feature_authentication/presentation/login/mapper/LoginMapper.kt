@@ -22,7 +22,7 @@ internal class LoginMapper @Inject constructor(
             textFieldValue = state.textFieldValue,
             placeholderText = stringProvider.getString(R.string.authentication_login_phone_placeholder),
             errorText = stringProvider.getString(R.string.authentication_login_phone_error),
-            isError = state.isError,
+            showError = state.showError,
         )
     }
 
@@ -32,7 +32,7 @@ internal class LoginMapper @Inject constructor(
             placeholderText = stringProvider.getString(R.string.authentication_login_password_placeholder),
             errorText = stringProvider.getString(R.string.authentication_login_password_error),
             isPasswordVisible = state.isPasswordVisible,
-            isError = state.isError,
+            showError = state.showError,
         )
     }
 

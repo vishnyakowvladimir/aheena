@@ -11,7 +11,7 @@ internal data class LoginUiState(
         val textFieldValue: TextFieldValue,
         val placeholderText: String,
         val errorText: String,
-        val isError: Boolean,
+        val showError: Boolean,
     )
 
     data class PasswordState(
@@ -19,7 +19,7 @@ internal data class LoginUiState(
         val placeholderText: String,
         val isPasswordVisible: Boolean,
         val errorText: String,
-        val isError: Boolean,
+        val showError: Boolean,
     )
 
     data class ConfirmButtonState(

@@ -184,7 +184,7 @@ private fun PhoneInputBlock(
             ),
             errorState = PhoneInputState.ErrorState(
                 textError = phoneState.errorText,
-                isError = phoneState.isError,
+                isError = phoneState.showError,
             ),
         )
     )
@@ -221,7 +221,7 @@ private fun PasswordInputBlock(
             ),
             errorState = PasswordInputState.ErrorState(
                 textError = state.errorText,
-                isError = state.isError,
+                isError = state.showError,
             ),
         )
     )
@@ -237,14 +237,14 @@ private fun ContentPreview() {
                     textFieldValue = TextFieldValue(),
                     placeholderText = "Введите номер телефона",
                     errorText = "",
-                    isError = false,
+                    showError = false,
                 ),
                 passwordState = LoginUiState.PasswordState(
                     textFieldValue = TextFieldValue(),
                     placeholderText = "Введите пароль",
                     errorText = "",
                     isPasswordVisible = false,
-                    isError = false,
+                    showError = false,
                 ),
                 confirmButtonsState = LoginUiState.ConfirmButtonState(
                     title = "Далее",

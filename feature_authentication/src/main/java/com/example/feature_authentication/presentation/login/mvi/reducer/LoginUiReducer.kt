@@ -25,7 +25,7 @@ internal class LoginUiReducer @Inject constructor() :
             is LoginEvent.Ui.OnPasswordChanged -> reduceOnPasswordChanged(state, event)
             is LoginEvent.Ui.OnResetPasswordIconClick -> reduceOnResetPasswordIconClick(state)
             is LoginEvent.Ui.OnPasswordIconClick -> reduceOnPasswordIconClick(state)
-            is LoginEvent.Ui.OnConfirmButtonClick -> reduceOnConfirmButtonClick()
+            is LoginEvent.Ui.OnConfirmButtonClick -> reduceOnConfirmButtonClick(state)
         }
     }
 
@@ -40,8 +40,23 @@ internal class LoginUiReducer @Inject constructor() :
         event: LoginEvent.Ui.OnPhoneChanged,
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
         val phoneState = state.phoneState
-        val updatedPhoneState = phoneState.copy(textFieldValue = event.value)
-        val updatedState = state.copy(phoneState = updatedPhoneState)
+        val passwordState = state.passwordState
+        val buttonState = state.confirmButtonsState
+
+        val updatedPhoneState = phoneState.copy(
+            textFieldValue = event.value,
+            showError = false,
+        )
+        val updatedPasswordState = passwordState.copy(showError = false)
+        val updatedButtonState = buttonState.copy(
+            isEnabled = updatedPhoneState.isFilled() && passwordState.isNotEmpty()
+        )
+
+        val updatedState = state.copy(
+            phoneState = updatedPhoneState,
+            passwordState = updatedPasswordState,
+            confirmButtonsState = updatedButtonState,
+        )
 
         return Update.state(updatedState)
     }
@@ -50,10 +65,23 @@ internal class LoginUiReducer @Inject constructor() :
         state: LoginDomainState,
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
         val phoneState = state.phoneState
+        val passwordState = state.passwordState
+        val buttonState = state.confirmButtonsState
+
         val updatedPhoneState = phoneState.copy(
             textFieldValue = TextFieldValue(annotatedString = AnnotatedString(text = "")),
+            showError = false,
         )
-        val updatedState = state.copy(phoneState = updatedPhoneState)
+        val updatedPasswordState = passwordState.copy(showError = false)
+        val updatedButtonState = buttonState.copy(
+            isEnabled = false,
+        )
+
+        val updatedState = state.copy(
+            phoneState = updatedPhoneState,
+            passwordState = updatedPasswordState,
+            confirmButtonsState = updatedButtonState,
+        )
 
         return Update.state(updatedState)
     }
@@ -62,9 +90,24 @@ internal class LoginUiReducer @Inject constructor() :
         state: LoginDomainState,
         event: LoginEvent.Ui.OnPasswordChanged,
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
+        val phoneState = state.phoneState
         val passwordState = state.passwordState
-        val updatedPasswordState = passwordState.copy(textFieldValue = event.value)
-        val updatedState = state.copy(passwordState = updatedPasswordState)
+        val buttonState = state.confirmButtonsState
+
+        val updatedPhoneState = phoneState.copy(showError = false)
+        val updatedPasswordState = passwordState.copy(
+            textFieldValue = event.value,
+            showError = false,
+        )
+        val updatedButtonState = buttonState.copy(
+            isEnabled = phoneState.isFilled() && updatedPasswordState.isNotEmpty()
+        )
+
+        val updatedState = state.copy(
+            phoneState = updatedPhoneState,
+            passwordState = updatedPasswordState,
+            confirmButtonsState = updatedButtonState,
+        )
 
         return Update.state(updatedState)
     }
@@ -72,11 +115,24 @@ internal class LoginUiReducer @Inject constructor() :
     private fun reduceOnResetPasswordIconClick(
         state: LoginDomainState,
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
+        val phoneState = state.phoneState
         val passwordState = state.passwordState
+        val buttonState = state.confirmButtonsState
+
+        val updatedPhoneState = phoneState.copy(showError = false)
         val updatedPasswordState = passwordState.copy(
             textFieldValue = TextFieldValue(annotatedString = AnnotatedString(text = "")),
+            showError = false,
         )
-        val updatedState = state.copy(passwordState = updatedPasswordState)
+        val updatedButtonState = buttonState.copy(
+            isEnabled = false,
+        )
+
+        val updatedState = state.copy(
+            phoneState = updatedPhoneState,
+            passwordState = updatedPasswordState,
+            confirmButtonsState = updatedButtonState,
+        )
 
         return Update.state(updatedState)
     }
@@ -93,9 +149,24 @@ internal class LoginUiReducer @Inject constructor() :
         return Update.state(updatedState)
     }
 
-    private fun reduceOnConfirmButtonClick(): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
-        return Update.sideEffects(
-            listOf(LoginSideEffect.Ui.OpenPinScreen),
-        )
+    private fun reduceOnConfirmButtonClick(
+        state: LoginDomainState,
+    ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
+        return when {
+            state.isCorrect() -> {
+                Update.sideEffects(
+                    listOf(LoginSideEffect.Ui.OpenPinScreen),
+                )
+            }
+
+            else -> {
+                val passwordState = state.passwordState
+
+                val updatedPasswordState = passwordState.copy(showError = true)
+                val updatedState = state.copy(passwordState = updatedPasswordState)
+
+                Update.state(updatedState)
+            }
+        }
     }
 }

@@ -3,6 +3,6 @@
     <string name="authentication_login_phone_placeholder">Введите номер телефона</string>
     <string name="authentication_login_phone_error">Некорректный номер телефона</string>
     <string name="authentication_login_password_placeholder">Введите пароль</string>
-    <string name="authentication_login_password_error">Неверный пароль</string>
+    <string name="authentication_login_password_error">Пароль должен быть не менее 6 символов</string>
     <string name="authentication_login_confirm_button_title">Далее</string>
 </resources>

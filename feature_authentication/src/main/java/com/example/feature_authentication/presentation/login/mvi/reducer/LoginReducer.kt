@@ -29,12 +29,12 @@ internal class LoginReducer @Inject constructor(
         return LoginDomainState(
             phoneState = LoginDomainState.PhoneState(
                 textFieldValue = TextFieldValue(annotatedString = AnnotatedString(text = "")),
-                isError = false,
+                showError = false,
             ),
             passwordState = LoginDomainState.PasswordState(
                 textFieldValue = TextFieldValue(annotatedString = AnnotatedString(text = "")),
                 isPasswordVisible = false,
-                isError = false,
+                showError = false,
             ),
             confirmButtonsState = LoginDomainState.ConfirmButtonState(
                 isEnabled = false,
