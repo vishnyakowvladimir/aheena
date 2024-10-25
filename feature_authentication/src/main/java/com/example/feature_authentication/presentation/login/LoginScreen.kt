@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.login.model.LoginUiState
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.lib_ui.components.button.AppButton
@@ -31,6 +33,8 @@ import com.example.lib_ui.components.input.password_input.PasswordInput
 import com.example.lib_ui.components.input.password_input.PasswordInputState
 import com.example.lib_ui.components.input.phone_input.PhoneInput
 import com.example.lib_ui.components.input.phone_input.PhoneInputState
+import com.example.lib_ui.components.nav_bar.AppNavBar
+import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.theme.AppThemeContainer
 import com.example.lib_ui.theme.typography.ViewScale
@@ -52,6 +56,18 @@ internal fun LoginScreen(
 
     Scaffold(
         modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
+        topBar = {
+            AppNavBar(
+                state = AppNavBarState(
+                    leftPart = null,
+                    rightPart = null,
+                    middlePart = AppNavBarState.MiddlePart(
+                        title = stringResource(id = R.string.authentication_login_title)
+                    ),
+                    backgroundColor = AppTheme.palette.background.primary,
+                ),
+            )
+        },
         containerColor = AppTheme.palette.background.primary,
     ) { paddingValues ->
         Box(
