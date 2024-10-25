@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.core.di.extension.clearComponent
 import com.example.core.di.extension.getComponent
 import com.example.feature_authentication.di.AuthenticationComponent
-import com.example.feature_authentication.navigation.LocalAuthenticationDestination
+import com.example.feature_authentication.navigation.LocalDestionationAuthentication
 import com.example.feature_authentication.presentation.create_pin.CreatePinScreen
 import com.example.feature_authentication.presentation.login.LoginScreen
 import com.example.lib_ui.utils.ComposableLifecycle
@@ -29,13 +29,13 @@ fun AuthenticationContainer() {
 
     NavHost(
         navController = navController,
-        startDestination = LocalAuthenticationDestination.PhoneAndPassword,
+        startDestination = LocalDestionationAuthentication.PhoneAndPassword,
     ) {
-        composable<LocalAuthenticationDestination.PhoneAndPassword> {
+        composable<LocalDestionationAuthentication.PhoneAndPassword> {
             LoginScreen(viewModel = viewModel(factory = viewModelFactory))
         }
 
-        composable<LocalAuthenticationDestination.CreatePin> {
+        composable<LocalDestionationAuthentication.CreatePin> {
             CreatePinScreen(viewModel = viewModel(factory = viewModelFactory))
         }
     }

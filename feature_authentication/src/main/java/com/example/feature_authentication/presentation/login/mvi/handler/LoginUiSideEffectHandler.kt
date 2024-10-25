@@ -2,7 +2,7 @@ package com.example.feature_authentication.presentation.login.mvi.handler
 
 import androidx.navigation.NavHostController
 import com.example.core.navigation.router.AppRouter
-import com.example.feature_authentication.navigation.LocalAuthenticationDestination
+import com.example.feature_authentication.navigation.LocalDestionationAuthentication
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect
 import com.example.mvi.SideEffectHandler
@@ -50,7 +50,7 @@ internal class LoginUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenPinScreen(): Flow<LoginEvent.Ui> {
         return flow {
-            navHostController.navigate(LocalAuthenticationDestination.CreatePin)
+            navHostController.navigate(LocalDestionationAuthentication.CreatePin)
             emit(LoginEvent.Ui.None)
         }
     }

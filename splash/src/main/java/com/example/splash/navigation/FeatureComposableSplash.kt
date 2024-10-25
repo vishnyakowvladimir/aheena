@@ -6,7 +6,7 @@ import com.example.core.navigation.base.FeatureComposable
 import com.example.core.navigation.feature_destination.SplashDestination
 import com.example.splash.presentation.Splash
 
-class SplashComposable : FeatureComposable {
+class FeatureComposableSplash : FeatureComposable {
 
     override fun featureComposable(navGraphBuilder: NavGraphBuilder) {
         navGraphBuilder.composable<SplashDestination> {
