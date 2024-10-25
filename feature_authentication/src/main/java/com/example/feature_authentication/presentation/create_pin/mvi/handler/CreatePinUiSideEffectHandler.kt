@@ -7,6 +7,7 @@ import com.example.feature_authentication.presentation.create_pin.mvi.model.Crea
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapMerge
@@ -33,6 +34,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is CreatePinSideEffect.Ui.Back -> handleBack()
+                is CreatePinSideEffect.Ui.DelayBeforeChangeMode -> handleDelayBeforeChangeMode()
             }
         }
             .flowOn(Dispatchers.Main)
@@ -42,6 +44,13 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
         return flow {
             navHostController.popBackStack()
             emit(CreatePinEvent.Ui.None)
+        }
+    }
+
+    private fun handleDelayBeforeChangeMode(): Flow<CreatePinEvent.Ui> {
+        return flow {
+            delay(300)
+            emit(CreatePinEvent.Ui.OnDelayBeforeChangeMode)
         }
     }
 }

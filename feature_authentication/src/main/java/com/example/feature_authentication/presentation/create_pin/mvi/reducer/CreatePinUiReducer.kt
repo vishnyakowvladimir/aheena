@@ -20,6 +20,7 @@ internal class CreatePinUiReducer @Inject constructor() :
             is CreatePinEvent.Ui.None -> Update.nothing()
             is CreatePinEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is CreatePinEvent.Ui.OnKeyboardClick -> reduceOnKeyboardClick(state, event)
+            is CreatePinEvent.Ui.OnDelayBeforeChangeMode -> reduceOnDelayBeforeChangeMode(state)
         }
     }
 
@@ -56,12 +57,12 @@ internal class CreatePinUiReducer @Inject constructor() :
                         pin = createPinState.pin.plus((event.key.type as PinKeyType.Digit).value.toChar())
                     )
 
-                    Update.state(
-                        state.copy(
+                    Update.stateWithSideEffects(
+                        state = state.copy(
                             createPinState = updatedCreatePinState,
-                            mode = CreatePinDomainState.Mode.CONFIRM,
                             isError = false,
                         ),
+                        sideEffects = listOf(CreatePinSideEffect.Ui.DelayBeforeChangeMode),
                     )
                 }
 
@@ -157,5 +158,15 @@ internal class CreatePinUiReducer @Inject constructor() :
                 }
             }
         }
+    }
+
+    private fun reduceOnDelayBeforeChangeMode(
+        state: CreatePinDomainState,
+    ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
+        return Update.state(
+            state = state.copy(
+                mode = CreatePinDomainState.Mode.CONFIRM,
+            )
+        )
     }
 }

@@ -8,6 +8,7 @@ internal sealed interface CreatePinEvent {
         data object None : Ui
         data object OnBackPressed : Ui
         data class OnKeyboardClick(val key: PinKey) : Ui
+        data object OnDelayBeforeChangeMode : Ui
     }
 
     sealed interface Domain : CreatePinEvent
