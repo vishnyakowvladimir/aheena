@@ -39,6 +39,7 @@ import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.theme.AppThemeContainer
 import com.example.lib_ui.theme.typography.ViewScale
+import com.example.lib_ui.utils.ComposableLifecycle
 import com.example.lib_ui.utils.SetSystemBarsColor
 
 @Composable
@@ -46,6 +47,8 @@ internal fun LoginScreen(
     viewModel: LoginViewModel,
 ) {
     val state = viewModel.uiState.collectAsStateLifecycleAware()
+    val localFocusManager = LocalFocusManager.current
+
 
     SetSystemBarsColor(
         statusBarColor = AppTheme.palette.background.primary,
@@ -54,6 +57,12 @@ internal fun LoginScreen(
     BackHandler {
         viewModel.onEvent(LoginEvent.Ui.OnBackPressed)
     }
+
+    ComposableLifecycle(
+        onPause = {
+            localFocusManager.clearFocus()
+        }
+    )
 
     Scaffold(
         modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
