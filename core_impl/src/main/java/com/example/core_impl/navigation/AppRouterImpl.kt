@@ -22,7 +22,7 @@ class AppRouterImpl @Inject constructor(
         val navController = navControllerHolder.navController
         navController?.navigate(destination) {
             popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
-                inclusive =  true
+                inclusive = true
             }
         }
         return navController != null
@@ -40,12 +40,12 @@ class AppRouterImpl @Inject constructor(
     override fun popBackStack(): Boolean {
         val navController = navControllerHolder.navController
 
-        return if ((navController?.currentBackStack?.value?.size ?: 0) <= 2) {
+        val isPopUp = navController?.popBackStack() ?: false
+        return if (isPopUp) {
+            true
+        } else {
             activityHolder.activity?.finish()
             activityHolder.activity != null
-        } else {
-            navController?.popBackStack()
-            true
         }
     }
 }
