@@ -14,7 +14,9 @@ class AppRouterImpl @Inject constructor(
 
     override fun navigate(destination: BaseDestination): Boolean {
         val navController = navControllerHolder.navController
-        navController?.navigate(destination)
+        navController?.navigate(destination) {
+            launchSingleTop = true
+        }
         return navController != null
     }
 
