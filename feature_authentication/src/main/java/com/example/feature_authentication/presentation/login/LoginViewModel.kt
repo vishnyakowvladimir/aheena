@@ -1,7 +1,7 @@
 package com.example.feature_authentication.presentation.login
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.extensions.mapData
+import com.example.core.utils.extension.mapData
 import com.example.core.presentation.base.BaseViewModel
 import com.example.feature_authentication.presentation.login.mapper.LoginMapper
 import com.example.feature_authentication.presentation.login.mvi.handler.LoginSideEffectHandler
