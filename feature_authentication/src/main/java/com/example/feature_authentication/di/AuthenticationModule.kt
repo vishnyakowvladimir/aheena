@@ -10,6 +10,7 @@ import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
 import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.login.LoginViewModel
+import com.example.feature_authentication.presentation.create_pin.CreatePinViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,11 @@ internal interface AuthenticationModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreatePinViewModel::class)
+    fun bindPinCodeViewModel(viewModel: CreatePinViewModel): ViewModel
 
     companion object {
 

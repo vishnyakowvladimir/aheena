@@ -50,7 +50,7 @@ internal class LoginUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenPinScreen(): Flow<LoginEvent.Ui> {
         return flow {
-            navHostController.navigate(LocalAuthenticationDestination.Pin)
+            navHostController.navigate(LocalAuthenticationDestination.CreatePin)
             emit(LoginEvent.Ui.None)
         }
     }

@@ -7,5 +7,5 @@ internal sealed interface LocalAuthenticationDestination {
     data object PhoneAndPassword : LocalAuthenticationDestination
 
     @Serializable
-    data object Pin : LocalAuthenticationDestination
+    data object CreatePin : LocalAuthenticationDestination
 }
