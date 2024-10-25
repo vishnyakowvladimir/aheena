@@ -3,6 +3,7 @@ package com.example.aheena.presentation
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ internal class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         setContent {
             val navController = rememberNavController()

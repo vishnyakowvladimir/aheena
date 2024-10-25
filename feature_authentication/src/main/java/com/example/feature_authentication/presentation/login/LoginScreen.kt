@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -73,6 +74,7 @@ internal fun LoginScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .imePadding()
                 .padding(paddingValues),
         ) {
             Content(
@@ -110,6 +112,7 @@ private fun Content(
     onPasswordIconClick: () -> Unit,
     onConfirmButtonClick: () -> Unit,
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
