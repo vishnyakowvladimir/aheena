@@ -39,124 +39,128 @@ internal class CreatePinUiReducer @Inject constructor() :
 
         val keyType = event.key.type
 
-        if (state.mode == CreatePinDomainState.Mode.CREATE) {
-            return when {
-                keyType is PinKeyType.Digit && createPinState.pin.count() < 3 -> {
-                    val updatedCreatePinState = createPinState.copy(
-                        pin = createPinState.pin.plus(keyType.value)
-                    )
-
-                    Update.state(
-                        state.copy(
-                            createPinState = updatedCreatePinState,
-                            isError = false,
+        return when (state.mode) {
+            CreatePinDomainState.Mode.CREATE -> {
+                when {
+                    keyType is PinKeyType.Digit && createPinState.pin.count() < 3 -> {
+                        val updatedCreatePinState = createPinState.copy(
+                            pin = createPinState.pin.plus(keyType.value)
                         )
-                    )
-                }
 
-                keyType is PinKeyType.Digit && createPinState.pin.count() == 3 -> {
-                    val updatedCreatePinState = createPinState.copy(
-                        pin = createPinState.pin.plus(keyType.value)
-                    )
-
-                    Update.stateWithSideEffects(
-                        state = state.copy(
-                            createPinState = updatedCreatePinState,
-                            isError = false,
-                        ),
-                        sideEffects = listOf(CreatePinSideEffect.Ui.DelayBeforeChangeMode),
-                    )
-                }
-
-                keyType is PinKeyType.Icon -> {
-                    val pin = if (createPinState.pin.isEmpty()) {
-                        createPinState.pin
-                    } else {
-                        createPinState.pin.subList(fromIndex = 0, toIndex = createPinState.pin.count().dec())
-                    }
-
-                    val updatedCreatePinState = createPinState.copy(
-                        pin = pin
-                    )
-
-                    Update.state(
-                        state.copy(
-                            createPinState = updatedCreatePinState,
-                            isError = false,
-                        ),
-                    )
-                }
-
-                else -> {
-                    Update.nothing()
-                }
-            }
-        } else {
-            return when {
-                keyType is PinKeyType.Digit && confirmPinState.pin.count() < 3 -> {
-                    val updatedConfirmPinState = confirmPinState.copy(
-                        pin = confirmPinState.pin.plus(keyType.value)
-                    )
-
-                    Update.state(
-                        state.copy(
-                            confirmPinState = updatedConfirmPinState,
-                            isError = false,
-                        ),
-                    )
-                }
-
-                keyType is PinKeyType.Digit && confirmPinState.pin.count() == 3 -> {
-                    val confirmedPin = confirmPinState.pin.plus(keyType.value)
-
-                    val isError = createPinState.pin != confirmedPin
-
-                    return if (isError) {
                         Update.state(
                             state.copy(
-                                createPinState = createPinState.copy(
-                                    pin = emptyList(),
-                                ),
-                                confirmPinState = confirmPinState.copy(
-                                    pin = emptyList()
-                                ),
-                                mode = CreatePinDomainState.Mode.CREATE,
-                                isError = true,
-                            ),
+                                createPinState = updatedCreatePinState,
+                                isError = false,
+                            )
                         )
-                    } else {
+                    }
+
+                    keyType is PinKeyType.Digit && createPinState.pin.count() == 3 -> {
+                        val updatedCreatePinState = createPinState.copy(
+                            pin = createPinState.pin.plus(keyType.value)
+                        )
+
                         Update.stateWithSideEffects(
                             state = state.copy(
-                                confirmPinState = confirmPinState.copy(
-                                    pin = confirmedPin,
-                                )
+                                createPinState = updatedCreatePinState,
+                                isError = false,
                             ),
-                            sideEffects = listOf(),
+                            sideEffects = listOf(CreatePinSideEffect.Ui.DelayBeforeChangeMode),
                         )
                     }
-                }
 
-                keyType is PinKeyType.Icon -> {
-                    val pin = if (confirmPinState.pin.isEmpty()) {
-                        confirmPinState.pin
-                    } else {
-                        confirmPinState.pin.subList(fromIndex = 0, toIndex = confirmPinState.pin.count().dec())
+                    keyType is PinKeyType.Icon -> {
+                        val pin = if (createPinState.pin.isEmpty()) {
+                            createPinState.pin
+                        } else {
+                            createPinState.pin.subList(fromIndex = 0, toIndex = createPinState.pin.count().dec())
+                        }
+
+                        val updatedCreatePinState = createPinState.copy(
+                            pin = pin
+                        )
+
+                        Update.state(
+                            state.copy(
+                                createPinState = updatedCreatePinState,
+                                isError = false,
+                            ),
+                        )
                     }
 
-                    val updatedConfirmPinState = confirmPinState.copy(
-                        pin = pin,
-                    )
-
-                    Update.state(
-                        state.copy(
-                            confirmPinState = updatedConfirmPinState,
-                            isError = false,
-                        ),
-                    )
+                    else -> {
+                        Update.nothing()
+                    }
                 }
+            }
 
-                else -> {
-                    Update.nothing()
+            CreatePinDomainState.Mode.CONFIRM -> {
+                when {
+                    keyType is PinKeyType.Digit && confirmPinState.pin.count() < 3 -> {
+                        val updatedConfirmPinState = confirmPinState.copy(
+                            pin = confirmPinState.pin.plus(keyType.value)
+                        )
+
+                        Update.state(
+                            state.copy(
+                                confirmPinState = updatedConfirmPinState,
+                                isError = false,
+                            ),
+                        )
+                    }
+
+                    keyType is PinKeyType.Digit && confirmPinState.pin.count() == 3 -> {
+                        val confirmedPin = confirmPinState.pin.plus(keyType.value)
+
+                        val isError = createPinState.pin != confirmedPin
+
+                        return if (isError) {
+                            Update.state(
+                                state.copy(
+                                    createPinState = createPinState.copy(
+                                        pin = emptyList(),
+                                    ),
+                                    confirmPinState = confirmPinState.copy(
+                                        pin = emptyList()
+                                    ),
+                                    mode = CreatePinDomainState.Mode.CREATE,
+                                    isError = true,
+                                ),
+                            )
+                        } else {
+                            Update.stateWithSideEffects(
+                                state = state.copy(
+                                    confirmPinState = confirmPinState.copy(
+                                        pin = confirmedPin,
+                                    )
+                                ),
+                                sideEffects = listOf(),
+                            )
+                        }
+                    }
+
+                    keyType is PinKeyType.Icon -> {
+                        val pin = if (confirmPinState.pin.isEmpty()) {
+                            confirmPinState.pin
+                        } else {
+                            confirmPinState.pin.subList(fromIndex = 0, toIndex = confirmPinState.pin.count().dec())
+                        }
+
+                        val updatedConfirmPinState = confirmPinState.copy(
+                            pin = pin,
+                        )
+
+                        Update.state(
+                            state.copy(
+                                confirmPinState = updatedConfirmPinState,
+                                isError = false,
+                            ),
+                        )
+                    }
+
+                    else -> {
+                        Update.nothing()
+                    }
                 }
             }
         }
