@@ -11,5 +11,7 @@ internal sealed interface CreatePinEvent {
         data object OnDelayBeforeChangeMode : Ui
     }
 
-    sealed interface Domain : CreatePinEvent
+    sealed interface Domain : CreatePinEvent {
+        data object OnPinCodeSaved: Domain
+    }
 }

@@ -4,11 +4,12 @@ internal sealed interface CreatePinSideEffect {
 
     sealed interface Ui : CreatePinSideEffect {
         data object Back : Ui
-        data object DelayBeforeChangeMode: Ui
+        data object DelayBeforeChangeMode : Ui
+        data object OpenMain : Ui
     }
 
     sealed interface Domain : CreatePinSideEffect {
-
+        data class SavePinCode(val list: List<Int>) : Domain
     }
 }
 

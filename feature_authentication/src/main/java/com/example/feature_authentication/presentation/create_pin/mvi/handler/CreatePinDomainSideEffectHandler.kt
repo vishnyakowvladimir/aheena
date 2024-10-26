@@ -5,6 +5,7 @@ import com.example.feature_authentication.presentation.create_pin.mvi.model.Crea
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapMerge
@@ -28,9 +29,18 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor() :
 
     private fun postListSideEffectHandler(): Flow<CreatePinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
-            flow<CreatePinEvent> { }
+            when (sideEffect) {
+                is CreatePinSideEffect.Domain.SavePinCode -> handleSavePinCode(sideEffect)
+            }
         }
             .flowOn(Dispatchers.IO)
+    }
+
+    private fun handleSavePinCode(sideEffect: CreatePinSideEffect.Domain.SavePinCode): Flow<CreatePinEvent> {
+        return flow {
+            delay(1000)
+            emit(CreatePinEvent.Domain.OnPinCodeSaved)
+        }
     }
 
 }

@@ -31,6 +31,11 @@ internal class CreatePinMapper @Inject constructor(
                     errorText = stringProvider.getString(R.string.authentication_create_pin_error)
                 )
             }
+
+            domainState.isLoading -> {
+                PinCodeFieldType.Loading
+            }
+
             else -> {
                 val selectedIndex = if (domainState.mode == CreatePinDomainState.Mode.CREATE) {
                     domainState.createPinState.pin.lastIndex

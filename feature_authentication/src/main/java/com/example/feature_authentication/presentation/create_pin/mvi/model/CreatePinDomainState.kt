@@ -5,6 +5,7 @@ internal data class CreatePinDomainState(
     val confirmPinState: ConfirmPinState,
     val mode: Mode = Mode.CREATE,
     val isError: Boolean = false,
+    val isLoading: Boolean = false,
 ) {
     data class CreatePinState(
         val pin: List<Int>,

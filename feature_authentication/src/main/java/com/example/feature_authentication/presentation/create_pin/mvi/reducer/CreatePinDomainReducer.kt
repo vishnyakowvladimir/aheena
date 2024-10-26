@@ -15,7 +15,13 @@ internal class CreatePinDomainReducer @Inject constructor() :
         state: CreatePinDomainState,
         event: CreatePinEvent.Domain
     ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
-        return Update.nothing()
+        return when (event) {
+            is CreatePinEvent.Domain.OnPinCodeSaved -> reduceOnPinCodeSaved()
+        }
+    }
+
+    private fun reduceOnPinCodeSaved(): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
+        return Update.sideEffects(listOf(CreatePinSideEffect.Ui.OpenMain))
     }
 }
 

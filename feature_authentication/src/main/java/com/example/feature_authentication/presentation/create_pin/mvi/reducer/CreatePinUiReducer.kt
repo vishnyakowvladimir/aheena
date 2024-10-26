@@ -34,6 +34,10 @@ internal class CreatePinUiReducer @Inject constructor() :
         state: CreatePinDomainState,
         event: CreatePinEvent.Ui.OnKeyboardClick,
     ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
+        if (state.isLoading) {
+            return Update.nothing()
+        }
+
         val createPinState = state.createPinState
         val confirmPinState = state.confirmPinState
 
@@ -132,9 +136,11 @@ internal class CreatePinUiReducer @Inject constructor() :
                                 state = state.copy(
                                     confirmPinState = confirmPinState.copy(
                                         pin = confirmedPin,
-                                    )
-                                ),
-                                sideEffects = listOf(),
+                                    ),
+                                    isLoading = true,
+
+                                    ),
+                                sideEffects = listOf(CreatePinSideEffect.Domain.SavePinCode(confirmedPin)),
                             )
                         }
                     }

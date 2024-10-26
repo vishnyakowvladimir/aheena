@@ -35,6 +35,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
             when (sideEffect) {
                 is CreatePinSideEffect.Ui.Back -> handleBack()
                 is CreatePinSideEffect.Ui.DelayBeforeChangeMode -> handleDelayBeforeChangeMode()
+                is CreatePinSideEffect.Ui.OpenMain -> handleOpenMain()
             }
         }
             .flowOn(Dispatchers.Main)
@@ -51,6 +52,13 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
         return flow {
             delay(300)
             emit(CreatePinEvent.Ui.OnDelayBeforeChangeMode)
+        }
+    }
+
+    private fun handleOpenMain(): Flow<CreatePinEvent.Ui> {
+        return flow {
+            navHostController.popBackStack()
+            emit(CreatePinEvent.Ui.None)
         }
     }
 }
