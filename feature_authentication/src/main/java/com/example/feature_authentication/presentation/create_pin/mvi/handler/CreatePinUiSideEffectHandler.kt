@@ -50,7 +50,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleDelayBeforeChangeMode(): Flow<CreatePinEvent.Ui> {
         return flow {
-            delay(300)
+            delay(400)
             emit(CreatePinEvent.Ui.OnDelayBeforeChangeMode)
         }
     }
