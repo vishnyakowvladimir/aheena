@@ -7,11 +7,11 @@ internal data class CreatePinDomainState(
     val isError: Boolean = false,
 ) {
     data class CreatePinState(
-        val pin: List<Char>,
+        val pin: List<Int>,
     )
 
     data class ConfirmPinState(
-        val pin: List<Char>,
+        val pin: List<Int>,
     )
 
     enum class Mode {

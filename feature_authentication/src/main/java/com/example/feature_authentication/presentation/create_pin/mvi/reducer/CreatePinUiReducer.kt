@@ -37,11 +37,13 @@ internal class CreatePinUiReducer @Inject constructor() :
         val createPinState = state.createPinState
         val confirmPinState = state.confirmPinState
 
+        val keyType = event.key.type
+
         if (state.mode == CreatePinDomainState.Mode.CREATE) {
             return when {
-                event.key.type is PinKeyType.Digit && createPinState.pin.count() < 3 -> {
+                keyType is PinKeyType.Digit && createPinState.pin.count() < 3 -> {
                     val updatedCreatePinState = createPinState.copy(
-                        pin = createPinState.pin.plus((event.key.type as PinKeyType.Digit).value.toChar())
+                        pin = createPinState.pin.plus(keyType.value)
                     )
 
                     Update.state(
@@ -52,9 +54,9 @@ internal class CreatePinUiReducer @Inject constructor() :
                     )
                 }
 
-                event.key.type is PinKeyType.Digit && createPinState.pin.count() == 3 -> {
+                keyType is PinKeyType.Digit && createPinState.pin.count() == 3 -> {
                     val updatedCreatePinState = createPinState.copy(
-                        pin = createPinState.pin.plus((event.key.type as PinKeyType.Digit).value.toChar())
+                        pin = createPinState.pin.plus(keyType.value)
                     )
 
                     Update.stateWithSideEffects(
@@ -66,7 +68,7 @@ internal class CreatePinUiReducer @Inject constructor() :
                     )
                 }
 
-                event.key.type is PinKeyType.Icon -> {
+                keyType is PinKeyType.Icon -> {
                     val pin = if (createPinState.pin.isEmpty()) {
                         createPinState.pin
                     } else {
@@ -91,9 +93,9 @@ internal class CreatePinUiReducer @Inject constructor() :
             }
         } else {
             return when {
-                event.key.type is PinKeyType.Digit && confirmPinState.pin.count() < 3 -> {
+                keyType is PinKeyType.Digit && confirmPinState.pin.count() < 3 -> {
                     val updatedConfirmPinState = confirmPinState.copy(
-                        pin = confirmPinState.pin.plus((event.key.type as PinKeyType.Digit).value.toChar())
+                        pin = confirmPinState.pin.plus(keyType.value)
                     )
 
                     Update.state(
@@ -104,8 +106,8 @@ internal class CreatePinUiReducer @Inject constructor() :
                     )
                 }
 
-                event.key.type is PinKeyType.Digit && confirmPinState.pin.count() == 3 -> {
-                    val confirmedPin = confirmPinState.pin.plus((event.key.type as PinKeyType.Digit).value.toChar())
+                keyType is PinKeyType.Digit && confirmPinState.pin.count() == 3 -> {
+                    val confirmedPin = confirmPinState.pin.plus(keyType.value)
 
                     val isError = createPinState.pin != confirmedPin
 
@@ -134,7 +136,7 @@ internal class CreatePinUiReducer @Inject constructor() :
                     }
                 }
 
-                event.key.type is PinKeyType.Icon -> {
+                keyType is PinKeyType.Icon -> {
                     val pin = if (confirmPinState.pin.isEmpty()) {
                         confirmPinState.pin
                     } else {
