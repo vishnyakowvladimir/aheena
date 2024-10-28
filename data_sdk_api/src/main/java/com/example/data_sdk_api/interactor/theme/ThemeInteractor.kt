@@ -1,4 +1,4 @@
-package com.example.data_sdk_api.interactor
+package com.example.data_sdk_api.interactor.theme
 
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain

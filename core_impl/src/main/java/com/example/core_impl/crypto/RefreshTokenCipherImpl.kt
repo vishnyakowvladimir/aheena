@@ -1,20 +1,21 @@
-package com.example.feature_authentication.utils.crypto
+package com.example.core_impl.crypto
 
+import com.example.core.crypto.authentication.RefreshTokenCipher
 import com.example.core.crypto.vizhener.IVizhenerCipher
 import javax.inject.Inject
 
 private const val EMPTY_STRING = ""
 private const val COLON_CHAR = ':'
 
-class PasswordCipher @Inject constructor(
+class RefreshTokenCipherImpl @Inject constructor(
     private val vizhenerCipher: IVizhenerCipher,
-) {
+) : RefreshTokenCipher {
 
-    fun encrypt(refreshToken: String, pinCode: String): String {
+    override fun encrypt(refreshToken: String, pinCode: String): String {
         return applyTokenCryptography(refreshToken) { vizhenerCipher.encrypt(it, pinCode) }
     }
 
-    fun decrypt(refreshToken: String, pinCode: String): String {
+    override fun decrypt(refreshToken: String, pinCode: String): String {
         return applyTokenCryptography(refreshToken) { vizhenerCipher.decrypt(it, pinCode) }
     }
 

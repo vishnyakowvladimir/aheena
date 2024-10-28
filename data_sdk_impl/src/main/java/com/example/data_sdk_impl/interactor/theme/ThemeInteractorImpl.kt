@@ -1,6 +1,6 @@
-package com.example.data_sdk_impl.interactor
+package com.example.data_sdk_impl.interactor.theme
 
-import com.example.data_sdk_api.interactor.ThemeInteractor
+import com.example.data_sdk_api.interactor.theme.ThemeInteractor
 import com.example.data_source_api.repository.theme.ThemeRepository
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain

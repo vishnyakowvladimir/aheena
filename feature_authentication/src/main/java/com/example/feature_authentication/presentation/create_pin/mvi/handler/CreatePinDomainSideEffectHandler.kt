@@ -1,5 +1,6 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
+import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
 import com.example.mvi.SideEffectHandler
@@ -14,7 +15,9 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class CreatePinDomainSideEffectHandler @Inject constructor() :
+internal class CreatePinDomainSideEffectHandler @Inject constructor(
+    private val authenticationInteractor: AuthenticationInteractor,
+) :
     SideEffectHandler<CreatePinEvent, CreatePinSideEffect.Domain> {
 
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Domain>(Int.MAX_VALUE)
