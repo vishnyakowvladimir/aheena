@@ -140,7 +140,7 @@ internal class CreatePinUiReducer @Inject constructor() :
                                     isLoading = true,
 
                                     ),
-                                sideEffects = listOf(CreatePinSideEffect.Domain.SavePinCode(confirmedPin)),
+                                sideEffects = listOf(CreatePinSideEffect.Domain.SaveRefreshToken(confirmedPin)),
                             )
                         }
                     }

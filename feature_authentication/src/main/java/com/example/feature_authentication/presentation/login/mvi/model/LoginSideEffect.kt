@@ -8,7 +8,7 @@ internal sealed interface LoginSideEffect {
     }
 
     sealed interface Domain : LoginSideEffect {
-
+        data class SaveRefreshToken(val refreshToken: CharSequence) : Domain
     }
 }
 

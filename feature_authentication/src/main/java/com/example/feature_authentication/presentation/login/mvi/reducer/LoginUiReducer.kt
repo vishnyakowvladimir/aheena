@@ -155,7 +155,10 @@ internal class LoginUiReducer @Inject constructor() :
         return when {
             state.isCorrect() -> {
                 Update.sideEffects(
-                    listOf(LoginSideEffect.Ui.OpenPinScreen),
+                    listOf(
+                        LoginSideEffect.Domain.SaveRefreshToken(state.passwordState.textFieldValue.text),
+                        LoginSideEffect.Ui.OpenPinScreen,
+                    ),
                 )
             }
 

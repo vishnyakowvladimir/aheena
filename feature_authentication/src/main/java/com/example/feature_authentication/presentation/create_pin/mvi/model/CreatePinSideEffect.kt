@@ -9,7 +9,7 @@ internal sealed interface CreatePinSideEffect {
     }
 
     sealed interface Domain : CreatePinSideEffect {
-        data class SavePinCode(val list: List<Int>) : Domain
+        data class SaveRefreshToken(val list: List<Int>) : Domain
     }
 }
 

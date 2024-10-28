@@ -15,7 +15,9 @@ internal class LoginDomainReducer @Inject constructor() :
         state: LoginDomainState,
         event: LoginEvent.Domain
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
-        return Update.nothing()
+        return when (event) {
+            is LoginEvent.Domain.None -> Update.nothing()
+        }
     }
 }
 

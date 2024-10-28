@@ -15,5 +15,7 @@ internal sealed interface LoginEvent {
         data object OnConfirmButtonClick : Ui
     }
 
-    sealed interface Domain : LoginEvent
+    sealed interface Domain : LoginEvent {
+        data object None : Domain
+    }
 }
