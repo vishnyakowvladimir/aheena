@@ -2,6 +2,7 @@ package com.example.aheena.di
 
 import android.content.Context
 import com.example.aheena.di.dependencies.FeaturesDependenciesProvider
+import com.example.aheena.di.modules.CryptoModule
 import com.example.aheena.di.modules.DataSourceModule
 import com.example.aheena.di.modules.InteractorModule
 import com.example.aheena.di.modules.NavigationModule
@@ -27,6 +28,7 @@ import dagger.Component
         RepositoryModule::class,
         InteractorModule::class,
         PresentationModule::class,
+        CryptoModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider {
