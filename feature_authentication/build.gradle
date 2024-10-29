@@ -6,10 +6,12 @@ applyCompose(this, KotlinCompile)
 
 dependencies {
     implementation androidXAppCompat
+    implementation androidXBiometric
 
     api project(':core_api')
     api project(':data_sdk_api')
     api project(':mvi')
-//    api project(':feature_authentication_api')
     api project(":ui:aheena-lib-ui")
+
+    //    api project(':feature_authentication_api')
 }
