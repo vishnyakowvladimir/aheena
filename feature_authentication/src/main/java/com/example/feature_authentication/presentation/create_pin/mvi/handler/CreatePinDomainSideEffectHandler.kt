@@ -46,11 +46,16 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor(
             delay(1000)
             authenticationInteractor.saveRefreshToken(
                 refreshToken = (localAuthenticationInteractor.getRefreshToken() ?: "").toString(),
-                pinCode = "",
+                pinCode = convertIntegersToCharSequence(sideEffect.list),
             )
             emit(CreatePinEvent.Domain.OnPinCodeSaved)
         }
     }
 
+    private fun convertIntegersToCharSequence(list: List<Int>): CharSequence {
+        return list.fold("") { currentString, value ->
+            currentString.plus(value)
+        }
+    }
 }
 
