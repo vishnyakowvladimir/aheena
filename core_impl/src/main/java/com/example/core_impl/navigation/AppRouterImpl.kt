@@ -1,5 +1,6 @@
 package com.example.core_impl.navigation
 
+import android.util.Log
 import com.example.core.navigation.base.BaseDestination
 import com.example.core.navigation.router.AppRouter
 import com.example.core_impl.holder.ActivityHolder
@@ -21,6 +22,11 @@ class AppRouterImpl @Inject constructor(
 
     override fun replace(destination: BaseDestination): Boolean {
         val navController = navControllerHolder.navController
+
+        if (navController == null) {
+            Log.d("check111", "navController == null")
+        }
+
         navController?.navigate(destination) {
             popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
                 inclusive = true

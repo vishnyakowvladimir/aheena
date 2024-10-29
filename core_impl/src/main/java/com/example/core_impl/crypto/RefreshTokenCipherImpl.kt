@@ -11,24 +11,27 @@ class RefreshTokenCipherImpl @Inject constructor(
     private val vizhenerCipher: IVizhenerCipher,
 ) : RefreshTokenCipher {
 
-    override fun encrypt(refreshToken: String, pinCode: String): String {
+    override fun encrypt(refreshToken: CharSequence, pinCode: CharSequence): CharSequence {
         return applyTokenCryptography(refreshToken) { vizhenerCipher.encrypt(it, pinCode) }
     }
 
-    override fun decrypt(refreshToken: String, pinCode: String): String {
+    override fun decrypt(refreshToken: CharSequence, pinCode: CharSequence): CharSequence {
         return applyTokenCryptography(refreshToken) { vizhenerCipher.decrypt(it, pinCode) }
     }
 
-    private fun applyTokenCryptography(refreshToken: String, cryptographyPredicate: (String) -> String): String {
-        return refreshToken.replaceAfter(
+    private fun applyTokenCryptography(
+        refreshToken: CharSequence,
+        cryptographyPredicate: (CharSequence) -> CharSequence,
+    ): CharSequence {
+        return refreshToken.toString().replaceAfter(
             delimiter = COLON_CHAR,
             replacement = cryptographyPredicate(
-                refreshToken.substringAfter(
+                refreshToken.toString().substringAfter(
                     delimiter = COLON_CHAR,
                     missingDelimiterValue = EMPTY_STRING,
                 )
-            ),
-            missingDelimiterValue = cryptographyPredicate(refreshToken)
+            ).toString(),
+            missingDelimiterValue = cryptographyPredicate(refreshToken).toString(),
         )
     }
 }

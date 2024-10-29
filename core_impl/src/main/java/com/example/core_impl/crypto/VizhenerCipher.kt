@@ -10,7 +10,7 @@ class VizhenerCipher(
 
     private val alphabetMap by lazy { alphabet.mapIndexed { index, char -> char to index }.toMap() }
 
-    override fun encrypt(text: String, key: String): String {
+    override fun encrypt(text: CharSequence, key: CharSequence): CharSequence {
         return if (key.isNotEmpty()) {
             text.mapIndexed { index, char ->
                 if (alphabetMap.contains(char)) {
@@ -27,7 +27,7 @@ class VizhenerCipher(
         }
     }
 
-    override fun decrypt(text: String, key: String): String {
+    override fun decrypt(text: CharSequence, key: CharSequence): CharSequence {
         return if (key.isNotEmpty()) {
             text.mapIndexed { index, char ->
                 if (alphabetMap.contains(char)) {

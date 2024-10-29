@@ -2,6 +2,6 @@ package com.example.core.crypto.authentication
 
 interface RefreshTokenCipher {
 
-    fun encrypt(refreshToken: String, pinCode: String): String
-    fun decrypt(refreshToken: String, pinCode: String): String
+    fun encrypt(refreshToken: CharSequence, pinCode: CharSequence): CharSequence
+    fun decrypt(refreshToken: CharSequence, pinCode: CharSequence): CharSequence
 }

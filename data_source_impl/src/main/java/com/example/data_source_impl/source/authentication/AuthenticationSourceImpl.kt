@@ -12,9 +12,9 @@ class AuthenticationSourceImpl @Inject constructor(
     private val preferencesProvider: AndroidPreferencesProvider,
     private val refreshTokenCipher: RefreshTokenCipher,
 ) : AuthenticationSource {
-    override fun saveRefreshToken(refreshToken: String, pinCode: String) {
+    override fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence) {
         preferencesProvider.cryptoPrefs.edit {
-            putString(REFRESH_TOKEN_KEY, refreshTokenCipher.encrypt(refreshToken, pinCode))
+            putString(REFRESH_TOKEN_KEY, refreshTokenCipher.encrypt(refreshToken, pinCode).toString())
         }
     }
 

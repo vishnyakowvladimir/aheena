@@ -8,7 +8,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val authenticationSource: AuthenticationSource
 ) : AuthenticationRepository {
 
-    override fun saveRefreshToken(refreshToken: String, pinCode: String) {
+    override fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence) {
         authenticationSource.saveRefreshToken(refreshToken, pinCode)
     }
 
