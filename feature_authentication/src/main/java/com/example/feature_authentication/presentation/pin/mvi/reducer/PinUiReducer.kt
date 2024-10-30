@@ -1,5 +1,8 @@
 package com.example.feature_authentication.presentation.pin.mvi.reducer
 
+import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
+import com.example.feature_authentication.constants.REFRESH_TOKEN
+import com.example.feature_authentication.extension.convertToCharSequence
 import com.example.feature_authentication.presentation.pin.mvi.model.PinDomainState
 import com.example.feature_authentication.presentation.pin.mvi.model.PinEvent
 import com.example.feature_authentication.presentation.pin.mvi.model.PinSideEffect
@@ -9,7 +12,9 @@ import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject
 
-internal class PinUiReducer @Inject constructor() :
+internal class PinUiReducer @Inject constructor(
+    private val authenticationInteractor: AuthenticationInteractor,
+) :
     Reducer<PinEvent.Ui, PinDomainState, PinSideEffect, PinUiCommand> {
 
     override fun update(
@@ -48,7 +53,9 @@ internal class PinUiReducer @Inject constructor() :
             keyType is PinKeyType.Digit && state.pin.count() == 3 -> {
                 val confirmedPin = state.pin.plus(keyType.value)
 
-                val isError = true
+
+                val refreshToken = authenticationInteractor.getRefreshToken(confirmedPin.convertToCharSequence())
+                val isError = refreshToken != REFRESH_TOKEN
 
                 return if (isError) {
                     Update.state(
@@ -64,7 +71,7 @@ internal class PinUiReducer @Inject constructor() :
                             isLoading = true,
 
                             ),
-                        sideEffects = listOf(),
+                        sideEffects = listOf(PinSideEffect.Ui.OpenMainScreen),
                     )
                 }
             }

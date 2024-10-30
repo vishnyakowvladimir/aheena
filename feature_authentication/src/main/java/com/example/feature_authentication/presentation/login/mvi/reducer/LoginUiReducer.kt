@@ -2,6 +2,7 @@ package com.example.feature_authentication.presentation.login.mvi.reducer
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
+import com.example.feature_authentication.constants.REFRESH_TOKEN
 import com.example.feature_authentication.presentation.login.mvi.model.LoginDomainState
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect
@@ -156,8 +157,8 @@ internal class LoginUiReducer @Inject constructor() :
             state.isCorrect() -> {
                 Update.sideEffects(
                     listOf(
-                        // refreshToken нет, сохраняем вместо него пароль
-                        LoginSideEffect.Domain.SaveRefreshToken(state.passwordState.textFieldValue.text),
+                        // по идее сначала надо отправить запрос авторизации, получить токены и потом сохранять
+                        LoginSideEffect.Domain.SaveRefreshToken(REFRESH_TOKEN),
                         LoginSideEffect.Ui.OpenPinScreen,
                     ),
                 )

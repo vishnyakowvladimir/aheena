@@ -2,6 +2,7 @@ package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
 import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
 import com.example.feature_authentication.domain.LocalAuthenticationInteractor
+import com.example.feature_authentication.extension.convertToCharSequence
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
 import com.example.mvi.SideEffectHandler
@@ -46,7 +47,7 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor(
             .flatMapMerge { refreshToken ->
                 flow {
                     delay(1000)
-                    val pinCode = convertIntegersToCharSequence(sideEffect.pinCode)
+                    val pinCode = sideEffect.pinCode.convertToCharSequence()
 
                     // сохраняем refreshToken на основе пин-кода
                     authenticationInteractor.saveRefreshToken(
@@ -60,12 +61,6 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor(
                     emit(CreatePinEvent.Domain.OnRefreshTokenSaved)
                 }
             }
-    }
-
-    private fun convertIntegersToCharSequence(list: List<Int>): CharSequence {
-        return list.fold("") { currentString, value ->
-            currentString.plus(value)
-        }
     }
 }
 
