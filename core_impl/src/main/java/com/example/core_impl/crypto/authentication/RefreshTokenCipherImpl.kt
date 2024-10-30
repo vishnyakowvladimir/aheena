@@ -1,4 +1,4 @@
-package com.example.core_impl.crypto
+package com.example.core_impl.crypto.authentication
 
 import com.example.core.crypto.authentication.RefreshTokenCipher
 import com.example.core.crypto.vizhener.IVizhenerCipher

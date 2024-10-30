@@ -1,4 +1,4 @@
-package com.example.core_impl.crypto
+package com.example.core_impl.crypto.vizhener
 
 import com.example.core.crypto.vizhener.IVizhenerCipher
 
@@ -44,4 +44,3 @@ class VizhenerCipher(
         }
     }
 }
-
