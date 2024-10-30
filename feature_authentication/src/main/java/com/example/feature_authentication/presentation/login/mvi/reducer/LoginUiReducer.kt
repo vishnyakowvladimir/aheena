@@ -156,6 +156,7 @@ internal class LoginUiReducer @Inject constructor() :
             state.isCorrect() -> {
                 Update.sideEffects(
                     listOf(
+                        // refreshToken нет, сохраняем вместо него пароль
                         LoginSideEffect.Domain.SaveRefreshToken(state.passwordState.textFieldValue.text),
                         LoginSideEffect.Ui.OpenPinScreen,
                     ),

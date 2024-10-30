@@ -18,7 +18,7 @@ internal class BiometricsUiReducer @Inject constructor() :
         return when (event) {
             is BiometricsEvent.Ui.None -> Update.nothing()
             is BiometricsEvent.Ui.OnBackPressed -> reduceOnBackPressed()
-            is BiometricsEvent.Ui.OnEnableButtonClick -> reduceOnEnableButtonClick(state)
+            is BiometricsEvent.Ui.OnEnableButtonClick -> reduceOnEnableButtonClick()
             is BiometricsEvent.Ui.OnSkipButtonClick -> reduceOnSkipButtonClick()
         }
     }
@@ -29,9 +29,9 @@ internal class BiometricsUiReducer @Inject constructor() :
         )
     }
 
-    private fun reduceOnEnableButtonClick(state: BiometricsDomainState): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
-        return Update.state(
-            state.copy(isShowBiometrics = true),
+    private fun reduceOnEnableButtonClick(): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
+        return Update.sideEffects(
+            listOf(BiometricsSideEffect.Domain.SavePinCode)
         )
     }
 

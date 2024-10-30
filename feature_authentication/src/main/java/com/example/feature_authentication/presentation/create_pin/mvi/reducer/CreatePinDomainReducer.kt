@@ -20,11 +20,11 @@ internal class CreatePinDomainReducer @Inject constructor(
         event: CreatePinEvent.Domain
     ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
         return when (event) {
-            is CreatePinEvent.Domain.OnPinCodeSaved -> reduceOnPinCodeSaved()
+            is CreatePinEvent.Domain.OnRefreshTokenSaved -> reduceOnRefreshTokenSaved()
         }
     }
 
-    private fun reduceOnPinCodeSaved(): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
+    private fun reduceOnRefreshTokenSaved(): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
         return if (biometricController.canAuthenticate(BiometricAuthenticators.STRONG).isSuccess) {
             Update.sideEffects(listOf(CreatePinSideEffect.Ui.OpenBiometricScreen))
         } else {

@@ -35,21 +35,31 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor(
     private fun postListSideEffectHandler(): Flow<CreatePinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
-                is CreatePinSideEffect.Domain.SaveRefreshToken -> handleSavePinCode(sideEffect)
+                is CreatePinSideEffect.Domain.SaveRefreshToken -> handleSaveRefreshToken(sideEffect)
             }
         }
             .flowOn(Dispatchers.IO)
     }
 
-    private fun handleSavePinCode(sideEffect: CreatePinSideEffect.Domain.SaveRefreshToken): Flow<CreatePinEvent> {
-        return flow {
-            delay(1000)
-            authenticationInteractor.saveRefreshToken(
-                refreshToken = (localAuthenticationInteractor.getRefreshToken() ?: "").toString(),
-                pinCode = convertIntegersToCharSequence(sideEffect.list),
-            )
-            emit(CreatePinEvent.Domain.OnPinCodeSaved)
-        }
+    private fun handleSaveRefreshToken(sideEffect: CreatePinSideEffect.Domain.SaveRefreshToken): Flow<CreatePinEvent> {
+        return localAuthenticationInteractor.getRefreshToken()
+            .flatMapMerge { refreshToken ->
+                flow {
+                    delay(1000)
+                    val pinCode = convertIntegersToCharSequence(sideEffect.pinCode)
+
+                    // сохраняем refreshToken на основе пин-кода
+                    authenticationInteractor.saveRefreshToken(
+                        refreshToken = refreshToken,
+                        pinCode = pinCode,
+                    )
+
+                    // временно сохраняем пин-код
+                    localAuthenticationInteractor.savePinCode(pinCode)
+
+                    emit(CreatePinEvent.Domain.OnRefreshTokenSaved)
+                }
+            }
     }
 
     private fun convertIntegersToCharSequence(list: List<Int>): CharSequence {

@@ -1,5 +1,6 @@
 package com.example.feature_authentication.data
 
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 internal class LocalAuthenticationRepository @Inject constructor(
@@ -10,7 +11,15 @@ internal class LocalAuthenticationRepository @Inject constructor(
         source.saveRefreshToken(refreshToken)
     }
 
-    fun getRefreshToken(): CharSequence? {
+    fun getRefreshToken(): Flow<CharSequence> {
         return source.getRefreshToken()
+    }
+
+    fun savePinCode(pinCode: CharSequence) {
+        source.savePinCode(pinCode)
+    }
+
+    fun getPinCode(): Flow<CharSequence> {
+        return source.getPinCode()
     }
 }

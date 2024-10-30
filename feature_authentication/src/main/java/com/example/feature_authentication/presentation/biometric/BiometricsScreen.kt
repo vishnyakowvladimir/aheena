@@ -22,6 +22,7 @@ import com.example.feature_authentication.presentation.biometric.model.Biometric
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent
 import com.example.lib_ui.components.button.AppButton
 import com.example.lib_ui.components.button.AppButtonState
+import com.example.lib_ui.components.loader.GradientCircularLoader
 import com.example.lib_ui.components.nav_bar.AppNavBar
 import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
@@ -79,12 +80,17 @@ private fun Content(
     onEnableClick: () -> Unit,
     onSkipClick: () -> Unit,
 ) {
+    if (state.isLoading) {
+        GradientCircularLoader.XL
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
         AppButton(
             state = AppButtonState(
                 title = stringResource(id = R.string.authentication_biometrics_button_enable),
+                isEnabled = !state.isLoading,
             ),
             onClick = onEnableClick,
         )
@@ -94,6 +100,7 @@ private fun Content(
         AppButton(
             state = AppButtonState(
                 title = stringResource(id = R.string.authentication_biometrics_button_skip),
+                isEnabled = !state.isLoading,
             ),
             onClick = onSkipClick,
         )

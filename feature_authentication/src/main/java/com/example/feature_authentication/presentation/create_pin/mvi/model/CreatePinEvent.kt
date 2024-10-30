@@ -12,6 +12,6 @@ internal sealed interface CreatePinEvent {
     }
 
     sealed interface Domain : CreatePinEvent {
-        data object OnPinCodeSaved: Domain
+        data object OnRefreshTokenSaved: Domain
     }
 }

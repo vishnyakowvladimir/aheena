@@ -8,7 +8,7 @@ internal class BiometricsMapper @Inject constructor() {
 
     fun map(domainState: BiometricsDomainState): BiometricsUiState {
         return BiometricsUiState(
-            isShowBiometrics = domainState.isShowBiometrics,
+            isLoading = domainState.isLoading,
         )
     }
 }

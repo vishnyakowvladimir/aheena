@@ -7,7 +7,9 @@ internal sealed interface BiometricsSideEffect {
         data object OpenMainScreen : Ui
     }
 
-    sealed interface Domain : BiometricsSideEffect {}
+    sealed interface Domain : BiometricsSideEffect {
+        data object SavePinCode : Domain
+    }
 }
 
 
