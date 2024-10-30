@@ -2,7 +2,7 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
-import com.example.core.navigation.feature_destination.AuthenticationDestination
+import com.example.core.navigation.feature_destination.FeaturesDestination
 import com.example.core.navigation.router.AppRouter
 import com.example.core.presentation.theme_manager.ThemeManager
 import com.example.mvi.SideEffectHandler
@@ -57,7 +57,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenAuthentication(): Flow<MainEvent.Ui> {
         return flow {
-            router.replace(AuthenticationDestination())
+            router.replace(FeaturesDestination.AuthenticationDestination)
             emit(MainEvent.Ui.None)
         }
     }

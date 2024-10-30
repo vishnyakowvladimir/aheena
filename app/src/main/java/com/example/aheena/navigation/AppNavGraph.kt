@@ -6,7 +6,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.core.navigation.feature_destination.SplashDestination
+import com.example.core.navigation.feature_destination.FeaturesDestination
 
 @Composable
 internal fun AppNavGraph(
@@ -17,7 +17,7 @@ internal fun AppNavGraph(
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = SplashDestination(),
+            startDestination = FeaturesDestination.SplashDestination,
         ) {
             composablesHolder.composables.forEach { composable ->
                 composable.featureComposable(navGraphBuilder = this)
