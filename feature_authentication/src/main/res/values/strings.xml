@@ -12,4 +12,7 @@
     <string name="authentication_biometrics_title">Биометрия</string>
     <string name="authentication_biometrics_button_enable">Включить биометрию</string>
     <string name="authentication_biometrics_button_skip">Может позже</string>
+    <string name="authentication_pin_title">Введите пин-код</string>
+    <string name="authentication_pin_field_title">Пин-код</string>
+    <string name="authentication_pin_error">Неправильный пин-код</string>
 </resources>

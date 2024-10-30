@@ -13,6 +13,7 @@ import com.example.feature_authentication.presentation.biometric.BiometricsViewM
 import com.example.feature_authentication.presentation.container.AuthenticationContainerViewModel
 import com.example.feature_authentication.presentation.create_pin.CreatePinViewModel
 import com.example.feature_authentication.presentation.login.LoginViewModel
+import com.example.feature_authentication.presentation.pin.PinViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -37,12 +38,17 @@ internal interface AuthenticationModule {
     @Binds
     @IntoMap
     @ViewModelKey(CreatePinViewModel::class)
-    fun bindPinCodeViewModel(viewModel: CreatePinViewModel): ViewModel
+    fun bindCreatePinCodeViewModel(viewModel: CreatePinViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(BiometricsViewModel::class)
     fun bindBiometricsViewModel(viewModel: BiometricsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PinViewModel::class)
+    fun bindPinCodeViewModel(viewModel: PinViewModel): ViewModel
 
     companion object {
 

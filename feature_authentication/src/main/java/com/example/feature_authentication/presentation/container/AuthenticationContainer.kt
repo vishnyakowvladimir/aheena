@@ -8,10 +8,11 @@ import androidx.navigation.compose.composable
 import com.example.core.di.extension.clearComponent
 import com.example.core.di.extension.getComponent
 import com.example.feature_authentication.di.AuthenticationComponent
-import com.example.feature_authentication.navigation.LocalDestionationAuthentication
+import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.biometric.BiometricsScreen
 import com.example.feature_authentication.presentation.create_pin.CreatePinScreen
 import com.example.feature_authentication.presentation.login.LoginScreen
+import com.example.feature_authentication.presentation.pin.PinScreen
 import com.example.lib_ui.utils.ComposableLifecycle
 
 @Composable
@@ -24,9 +25,9 @@ fun AuthenticationContainer() {
     val viewModel = viewModel<AuthenticationContainerViewModel>(factory = viewModelFactory)
 
     val startDestination = if (viewModel.isRefreshTokenExist()) {
-        LocalDestionationAuthentication.PhoneAndPassword
+        LocalDestinationAuthentication.Pin
     } else {
-        LocalDestionationAuthentication.PhoneAndPassword
+        LocalDestinationAuthentication.PhoneAndPassword
     }
 
     ComposableLifecycle(
@@ -39,16 +40,20 @@ fun AuthenticationContainer() {
         navController = navController,
         startDestination = startDestination,
     ) {
-        composable<LocalDestionationAuthentication.PhoneAndPassword> {
+        composable<LocalDestinationAuthentication.PhoneAndPassword> {
             LoginScreen(viewModel = viewModel(factory = viewModelFactory))
         }
 
-        composable<LocalDestionationAuthentication.CreatePin> {
+        composable<LocalDestinationAuthentication.CreatePin> {
             CreatePinScreen(viewModel = viewModel(factory = viewModelFactory))
         }
 
-        composable<LocalDestionationAuthentication.Biometrics> {
+        composable<LocalDestinationAuthentication.Biometrics> {
             BiometricsScreen(viewModel = viewModel(factory = viewModelFactory))
+        }
+
+        composable<LocalDestinationAuthentication.Pin> {
+            PinScreen(viewModel = viewModel(factory = viewModelFactory))
         }
     }
 }

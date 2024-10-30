@@ -4,7 +4,7 @@ import androidx.navigation.NavHostController
 import com.example.core.navigation.extension.replaceAll
 import com.example.core.navigation.feature_destination.FeaturesDestination
 import com.example.core.navigation.router.AppRouter
-import com.example.feature_authentication.navigation.LocalDestionationAuthentication
+import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
 import com.example.mvi.SideEffectHandler
@@ -68,7 +68,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            navHostController.replaceAll(LocalDestionationAuthentication.Biometrics)
+            navHostController.replaceAll(LocalDestinationAuthentication.Biometrics)
             emit(CreatePinEvent.Ui.None)
         }
     }
