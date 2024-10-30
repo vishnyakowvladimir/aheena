@@ -13,9 +13,17 @@ internal class BiometricsDomainReducer @Inject constructor() :
 
     override fun update(
         state: BiometricsDomainState,
-        event: BiometricsEvent.Domain
+        event: BiometricsEvent.Domain,
     ): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
-        return Update.nothing()
+        return when (event) {
+            BiometricsEvent.Domain.OnPinCodeSaved -> reduceOnPinCodeSaved()
+        }
+    }
+
+    private fun reduceOnPinCodeSaved(): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
+        return Update.sideEffects(
+            listOf(BiometricsSideEffect.Ui.OpenMainScreen),
+        )
     }
 }
 

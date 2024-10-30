@@ -1,6 +1,7 @@
 package com.example.feature_authentication.presentation.biometric.mvi.handler
 
 import androidx.navigation.NavHostController
+import com.example.core.navigation.feature_destination.MainDestination
 import com.example.core.navigation.router.AppRouter
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsSideEffect
@@ -48,7 +49,7 @@ internal class BiometricsUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenMainScreen(): Flow<BiometricsEvent.Ui> {
         return flow {
-            navHostController.popBackStack()
+            router.replaceAll(MainDestination())
             emit(BiometricsEvent.Ui.None)
         }
     }

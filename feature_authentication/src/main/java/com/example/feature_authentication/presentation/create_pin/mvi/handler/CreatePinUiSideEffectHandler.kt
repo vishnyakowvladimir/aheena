@@ -1,6 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
 import androidx.navigation.NavHostController
+import com.example.core.navigation.extension.replaceAll
+import com.example.core.navigation.feature_destination.MainDestination
 import com.example.core.navigation.router.AppRouter
 import com.example.feature_authentication.navigation.LocalDestionationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
@@ -59,14 +61,14 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenMainScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            navHostController.popBackStack()
+            router.replaceAll(MainDestination())
             emit(CreatePinEvent.Ui.None)
         }
     }
 
     private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            navHostController.navigate(LocalDestionationAuthentication.Biometrics)
+            navHostController.replaceAll(LocalDestionationAuthentication.Biometrics)
             emit(CreatePinEvent.Ui.None)
         }
     }

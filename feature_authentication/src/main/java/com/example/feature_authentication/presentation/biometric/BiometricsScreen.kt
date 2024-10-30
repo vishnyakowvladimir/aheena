@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,6 @@ import com.example.lib_ui.components.nav_bar.AppNavBar
 import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.utils.SetSystemBarsColor
-import com.example.lib_ui.R as LibUiR
 
 @Composable
 internal fun BiometricsScreen(viewModel: BiometricsViewModel) {
@@ -47,10 +47,7 @@ internal fun BiometricsScreen(viewModel: BiometricsViewModel) {
             AppNavBar(
                 state = AppNavBarState(
                     rightPart = null,
-                    leftPart = AppNavBarState.LeftPart(
-                        iconRes = LibUiR.drawable.ic_24dp_navigation_back,
-                        onClick = { viewModel.onEvent(BiometricsEvent.Ui.OnBackPressed) },
-                    ),
+                    leftPart = null,
                     middlePart = AppNavBarState.MiddlePart(
                         title = stringResource(id = R.string.authentication_biometrics_title)
                     ),
@@ -64,6 +61,7 @@ internal fun BiometricsScreen(viewModel: BiometricsViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
+            contentAlignment = Alignment.Center,
         ) {
             Content(
                 state = state.value,
@@ -86,6 +84,7 @@ private fun Content(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AppButton(
             state = AppButtonState(
