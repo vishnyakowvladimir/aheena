@@ -9,4 +9,7 @@
     <string name="authentication_create_pin_field_title_create">Придумайте пин-код</string>
     <string name="authentication_create_pin_field_title_confirm">Подтвердите пин-код</string>
     <string name="authentication_create_pin_error">Пожалуйста, повторите</string>
+    <string name="authentication_biometrics_title">Биометрия</string>
+    <string name="authentication_biometrics_button_enable">Включить биометрию</string>
+    <string name="authentication_biometrics_button_skip">Может позже</string>
 </resources>

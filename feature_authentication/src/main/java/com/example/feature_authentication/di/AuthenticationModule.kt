@@ -9,8 +9,9 @@ import androidx.navigation.compose.DialogNavigator
 import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
 import com.example.core.utils.view_model_factory.AppViewModelFactory
-import com.example.feature_authentication.presentation.login.LoginViewModel
+import com.example.feature_authentication.presentation.biometric.BiometricsViewModel
 import com.example.feature_authentication.presentation.create_pin.CreatePinViewModel
+import com.example.feature_authentication.presentation.login.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,6 +32,11 @@ internal interface AuthenticationModule {
     @IntoMap
     @ViewModelKey(CreatePinViewModel::class)
     fun bindPinCodeViewModel(viewModel: CreatePinViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BiometricsViewModel::class)
+    fun bindBiometricsViewModel(viewModel: BiometricsViewModel): ViewModel
 
     companion object {
 

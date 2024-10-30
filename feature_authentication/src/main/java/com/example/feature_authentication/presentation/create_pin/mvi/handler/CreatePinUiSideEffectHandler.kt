@@ -2,6 +2,7 @@ package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
 import androidx.navigation.NavHostController
 import com.example.core.navigation.router.AppRouter
+import com.example.feature_authentication.navigation.LocalDestionationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
 import com.example.mvi.SideEffectHandler
@@ -35,7 +36,8 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
             when (sideEffect) {
                 is CreatePinSideEffect.Ui.Back -> handleBack()
                 is CreatePinSideEffect.Ui.DelayBeforeChangeMode -> handleDelayBeforeChangeMode()
-                is CreatePinSideEffect.Ui.OpenMain -> handleOpenMain()
+                is CreatePinSideEffect.Ui.OpenMainScreen -> handleOpenMainScreen()
+                is CreatePinSideEffect.Ui.OpenBiometricScreen -> handleOpenBiometricScreen()
             }
         }
             .flowOn(Dispatchers.Main)
@@ -55,9 +57,16 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
         }
     }
 
-    private fun handleOpenMain(): Flow<CreatePinEvent.Ui> {
+    private fun handleOpenMainScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
             navHostController.popBackStack()
+            emit(CreatePinEvent.Ui.None)
+        }
+    }
+
+    private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
+        return flow {
+            navHostController.navigate(LocalDestionationAuthentication.Biometrics)
             emit(CreatePinEvent.Ui.None)
         }
     }

@@ -9,6 +9,7 @@ import com.example.core.di.extension.clearComponent
 import com.example.core.di.extension.getComponent
 import com.example.feature_authentication.di.AuthenticationComponent
 import com.example.feature_authentication.navigation.LocalDestionationAuthentication
+import com.example.feature_authentication.presentation.biometric.BiometricsScreen
 import com.example.feature_authentication.presentation.create_pin.CreatePinScreen
 import com.example.feature_authentication.presentation.login.LoginScreen
 import com.example.lib_ui.utils.ComposableLifecycle
@@ -37,6 +38,10 @@ fun AuthenticationContainer() {
 
         composable<LocalDestionationAuthentication.CreatePin> {
             CreatePinScreen(viewModel = viewModel(factory = viewModelFactory))
+        }
+
+        composable<LocalDestionationAuthentication.Biometrics> {
+            BiometricsScreen(viewModel = viewModel(factory = viewModelFactory))
         }
     }
 }

@@ -8,4 +8,7 @@ internal sealed interface LocalDestionationAuthentication {
 
     @Serializable
     data object CreatePin : LocalDestionationAuthentication
+
+    @Serializable
+    data object Biometrics : LocalDestionationAuthentication
 }

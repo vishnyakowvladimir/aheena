@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -32,6 +31,7 @@ import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.theme.AppThemeContainer
 import com.example.lib_ui.theme.typography.ViewScale
 import com.example.lib_ui.utils.SetSystemBarsColor
+import com.example.lib_ui.R as LibUiR
 
 @Composable
 internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
@@ -52,7 +52,7 @@ internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
                 state = AppNavBarState(
                     rightPart = null,
                     leftPart = AppNavBarState.LeftPart(
-                        iconRes = com.example.lib_ui.R.drawable.ic_24dp_navigation_back,
+                        iconRes = LibUiR.drawable.ic_24dp_navigation_back,
                         onClick = {
                             viewModel.onEvent(CreatePinEvent.Ui.OnBackPressed)
                         },
@@ -69,8 +69,8 @@ internal fun CreatePinScreen(viewModel: CreatePinViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .imePadding()
                 .padding(paddingValues),
+            contentAlignment = Alignment.Center,
         ) {
             Content(
                 state = state.value,
@@ -89,6 +89,7 @@ private fun Content(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier

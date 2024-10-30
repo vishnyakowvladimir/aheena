@@ -5,7 +5,8 @@ internal sealed interface CreatePinSideEffect {
     sealed interface Ui : CreatePinSideEffect {
         data object Back : Ui
         data object DelayBeforeChangeMode : Ui
-        data object OpenMain : Ui
+        data object OpenMainScreen : Ui
+        data object OpenBiometricScreen : Ui
     }
 
     sealed interface Domain : CreatePinSideEffect {
