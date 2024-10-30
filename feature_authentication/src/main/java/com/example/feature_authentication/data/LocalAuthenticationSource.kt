@@ -1,9 +1,11 @@
 package com.example.feature_authentication.data
 
+import com.example.core.di.scope.FeatureScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
+@FeatureScope
 internal class LocalAuthenticationSource @Inject constructor() {
 
     private val refreshTokenStateFlow = MutableStateFlow<CharSequence>("")
