@@ -10,6 +10,7 @@ import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
 import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.biometric.BiometricsViewModel
+import com.example.feature_authentication.presentation.container.AuthenticationContainerViewModel
 import com.example.feature_authentication.presentation.create_pin.CreatePinViewModel
 import com.example.feature_authentication.presentation.login.LoginViewModel
 import dagger.Binds
@@ -22,6 +23,11 @@ internal interface AuthenticationModule {
 
     @Binds
     fun provideViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthenticationContainerViewModel::class)
+    fun bindAuthenticationContainerViewModel(viewModel: AuthenticationContainerViewModel): ViewModel
 
     @Binds
     @IntoMap

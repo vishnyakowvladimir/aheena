@@ -21,6 +21,13 @@ fun AuthenticationContainer() {
 
     val navController = component.provideNavController()
     val viewModelFactory = component.provideViewModelFactory()
+    val viewModel = viewModel<AuthenticationContainerViewModel>(factory = viewModelFactory)
+
+    val startDestination = if (viewModel.isRefreshTokenExist()) {
+        LocalDestionationAuthentication.PhoneAndPassword
+    } else {
+        LocalDestionationAuthentication.PhoneAndPassword
+    }
 
     ComposableLifecycle(
         onDestroy = {
@@ -30,7 +37,7 @@ fun AuthenticationContainer() {
 
     NavHost(
         navController = navController,
-        startDestination = LocalDestionationAuthentication.PhoneAndPassword,
+        startDestination = startDestination,
     ) {
         composable<LocalDestionationAuthentication.PhoneAndPassword> {
             LoginScreen(viewModel = viewModel(factory = viewModelFactory))
