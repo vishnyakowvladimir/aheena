@@ -1,8 +1,10 @@
 package com.example.aheena.di.modules
 
 import com.example.data_source_api.source.authentication.AuthenticationSource
+import com.example.data_source_api.source.biometrics.BiometricsSource
 import com.example.data_source_api.source.theme.ThemeSource
 import com.example.data_source_impl.source.authentication.AuthenticationSourceImpl
+import com.example.data_source_impl.source.biometrics.BiometricsSourceImpl
 import com.example.data_source_impl.source.theme.ThemeSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,7 @@ interface DataSourceModule {
 
     @Binds
     fun bindAuthenticationSource(source: AuthenticationSourceImpl): AuthenticationSource
+
+    @Binds
+    fun bindBiometricsSource(source: BiometricsSourceImpl): BiometricsSource
 }

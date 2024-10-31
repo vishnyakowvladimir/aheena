@@ -1,4 +1,4 @@
-package com.example.data_source_api.models.authentication
+package com.example.data_source_api.repository.authentication
 
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
 

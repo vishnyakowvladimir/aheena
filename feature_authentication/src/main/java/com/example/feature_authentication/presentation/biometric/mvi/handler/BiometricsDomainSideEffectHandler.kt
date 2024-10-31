@@ -35,12 +35,29 @@ internal class BiometricsDomainSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is BiometricsSideEffect.Domain.SavePinCode -> handleSavePinCode()
+                is BiometricsSideEffect.Domain.SaveOnBiometricFlag -> handleSavePinCode()
+                is BiometricsSideEffect.Domain.SaveOffBiometricFlag -> handleSavePinCode()
             }
         }
             .flowOn(Dispatchers.IO)
     }
 
     private fun handleSavePinCode(): Flow<BiometricsEvent> {
+        return localAuthenticationInteractor.getPinCode().flatMapMerge { pinCode ->
+            flow {
+                authenticationInteractor.savePin(pinCode)
+                emit(BiometricsEvent.Domain.OnPinCodeSaved)
+            }
+        }
+    }
+
+    private fun handleSaveOnBiometricFlag(): Flow<BiometricsEvent> {
+        return flow {
+
+        }
+    }
+
+    private fun handleSaveOffBiometricFlag(): Flow<BiometricsEvent> {
         return localAuthenticationInteractor.getPinCode().flatMapMerge { pinCode ->
             flow {
                 authenticationInteractor.savePin(pinCode)

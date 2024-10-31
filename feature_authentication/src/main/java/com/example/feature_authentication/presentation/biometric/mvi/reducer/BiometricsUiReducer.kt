@@ -31,13 +31,19 @@ internal class BiometricsUiReducer @Inject constructor() :
 
     private fun reduceOnEnableButtonClick(): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return Update.sideEffects(
-            listOf(BiometricsSideEffect.Domain.SavePinCode)
+            listOf(
+                BiometricsSideEffect.Domain.SavePinCode,
+                BiometricsSideEffect.Domain.SaveOnBiometricFlag,
+            )
         )
     }
 
     private fun reduceOnSkipButtonClick(): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return Update.sideEffects(
-            sideEffects = listOf(BiometricsSideEffect.Ui.OpenMainScreen),
+            sideEffects = listOf(
+                BiometricsSideEffect.Domain.SaveOffBiometricFlag,
+                BiometricsSideEffect.Ui.OpenMainScreen,
+            ),
         )
     }
 }

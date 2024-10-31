@@ -5,6 +5,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.example.data_sdk_api.interactor.biometrics.BiometricsInteractor
 import com.example.feature_authentication.biometric.model.AuthenticationErrorType
 import com.example.feature_authentication.biometric.model.BiometricAuthenticationPossibility
 import com.example.feature_authentication.biometric.model.BiometricAuthenticationResult
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 internal class BiometricController @Inject constructor(
     private val applicationContext: Context,
+    private val biometricsInteractor: BiometricsInteractor,
 ) {
 
     fun isHardwareUnavailable(): Boolean {

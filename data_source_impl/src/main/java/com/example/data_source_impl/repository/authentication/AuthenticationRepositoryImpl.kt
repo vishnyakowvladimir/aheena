@@ -1,7 +1,7 @@
 package com.example.data_source_impl.repository.authentication
 
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
-import com.example.data_source_api.models.authentication.AuthenticationRepository
+import com.example.data_source_api.repository.authentication.AuthenticationRepository
 import com.example.data_source_api.source.authentication.AuthenticationSource
 import javax.inject.Inject
 

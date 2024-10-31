@@ -2,7 +2,7 @@ package com.example.data_sdk_impl.interactor.authentication
 
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
 import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
-import com.example.data_source_api.models.authentication.AuthenticationRepository
+import com.example.data_source_api.repository.authentication.AuthenticationRepository
 import javax.inject.Inject
 
 class AuthenticationInteractorImpl @Inject constructor(
