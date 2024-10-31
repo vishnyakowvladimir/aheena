@@ -33,7 +33,7 @@ internal class BiometricsUiReducer @Inject constructor() :
         return Update.sideEffects(
             listOf(
                 BiometricsSideEffect.Domain.SavePinCode,
-                BiometricsSideEffect.Domain.SaveOnBiometricFlag,
+                BiometricsSideEffect.Domain.SaveBiometricsFlag(true),
             )
         )
     }
@@ -41,7 +41,7 @@ internal class BiometricsUiReducer @Inject constructor() :
     private fun reduceOnSkipButtonClick(): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(
-                BiometricsSideEffect.Domain.SaveOffBiometricFlag,
+                BiometricsSideEffect.Domain.SaveBiometricsFlag(false),
                 BiometricsSideEffect.Ui.OpenMainScreen,
             ),
         )

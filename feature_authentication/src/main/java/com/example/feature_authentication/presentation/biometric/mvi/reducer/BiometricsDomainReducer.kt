@@ -16,6 +16,7 @@ internal class BiometricsDomainReducer @Inject constructor() :
         event: BiometricsEvent.Domain,
     ): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return when (event) {
+            BiometricsEvent.Domain.None -> Update.nothing()
             BiometricsEvent.Domain.OnPinCodeSaved -> reduceOnPinCodeSaved()
         }
     }

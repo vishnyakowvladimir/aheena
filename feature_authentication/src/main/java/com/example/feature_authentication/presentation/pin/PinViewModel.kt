@@ -32,14 +32,15 @@ internal class PinViewModel @Inject constructor(
     )
 
     init {
-        Mvi()
+        createMvi()
+        onEvent(PinEvent.Ui.OnEnableBiometricsNeeded)
     }
 
     fun onEvent(event: PinEvent) {
         viewModelScope.launch { uiEvent.emit(event) }
     }
 
-    private fun Mvi() {
+    private fun createMvi() {
         val mviStore = MviStore(
             stateMachine = StateMachine(
                 reducer,

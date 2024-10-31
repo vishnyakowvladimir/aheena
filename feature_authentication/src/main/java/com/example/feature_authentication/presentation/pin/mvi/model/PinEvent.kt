@@ -8,6 +8,7 @@ internal sealed interface PinEvent {
         data object None : Ui
         data object OnBackPressed : Ui
         data class OnKeyboardClick(val key: PinKey) : Ui
+        data object OnEnableBiometricsNeeded : Ui
     }
 
     sealed interface Domain : PinEvent {}

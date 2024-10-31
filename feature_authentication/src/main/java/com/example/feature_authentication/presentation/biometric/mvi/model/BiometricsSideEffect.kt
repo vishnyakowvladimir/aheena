@@ -9,8 +9,7 @@ internal sealed interface BiometricsSideEffect {
 
     sealed interface Domain : BiometricsSideEffect {
         data object SavePinCode : Domain
-        data object SaveOnBiometricFlag : Domain
-        data object SaveOffBiometricFlag : Domain
+        data class SaveBiometricsFlag(val flag: Boolean) : Domain
     }
 }
 
