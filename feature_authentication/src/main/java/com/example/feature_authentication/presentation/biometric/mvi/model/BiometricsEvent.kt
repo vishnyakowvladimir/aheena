@@ -10,6 +10,7 @@ internal sealed interface BiometricsEvent {
     }
 
     sealed interface Domain : BiometricsEvent {
+        data object None : Domain
         data object OnPinCodeSaved : Domain
     }
 }

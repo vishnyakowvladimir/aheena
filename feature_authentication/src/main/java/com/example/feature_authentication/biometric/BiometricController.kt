@@ -51,6 +51,14 @@ internal class BiometricController @Inject constructor(
         return BiometricPromptHandler { prompt.cancelAuthentication() }
     }
 
+    fun saveEnabledBiometricsFlag(flag: Boolean) {
+        biometricsInteractor.saveEnabledBiometricsFlag(flag)
+    }
+
+    fun isBiometricsEnabled(): Boolean {
+        return biometricsInteractor.isBiometricsEnabled()
+    }
+
     private fun createAuthenticationCallback(
         resultAction: (result: BiometricAuthenticationResult) -> Unit,
     ): BiometricPrompt.AuthenticationCallback {
