@@ -36,4 +36,8 @@ class AuthenticationInteractorImpl @Inject constructor(
     override fun clearPin() {
         authenticationRepository.clearPin()
     }
+
+    override fun getAuthenticationCryptoObject(): AuthenticationCryptoObject {
+        return authenticationRepository.getAuthenticationCryptoObject()
+    }
 }

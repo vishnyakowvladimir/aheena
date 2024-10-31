@@ -11,4 +11,5 @@ interface AuthenticationSource {
     fun savePin(pinCode: CharSequence): Boolean
     fun getPin(authenticatedCryptoObject: AuthenticationCryptoObject): CharSequence
     fun clearPin()
+    fun getAuthenticationCryptoObject(): AuthenticationCryptoObject
 }

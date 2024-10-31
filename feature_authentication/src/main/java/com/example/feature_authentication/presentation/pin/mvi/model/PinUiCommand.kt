@@ -1,3 +1,7 @@
 package com.example.feature_authentication.presentation.pin.mvi.model
 
-internal sealed interface PinUiCommand
+import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
+
+internal sealed interface PinUiCommand {
+    data class ShowBiometricsDialog(val cryptoObject: AuthenticationCryptoObject) : PinUiCommand
+}

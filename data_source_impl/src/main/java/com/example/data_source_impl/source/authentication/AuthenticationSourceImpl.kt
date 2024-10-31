@@ -71,4 +71,8 @@ class AuthenticationSourceImpl @Inject constructor(
             remove(PIN_CODE_KEY)
         }
     }
+
+    override fun getAuthenticationCryptoObject(): AuthenticationCryptoObject {
+        return rsaCipher.getAuthenticationCryptoObject()
+    }
 }

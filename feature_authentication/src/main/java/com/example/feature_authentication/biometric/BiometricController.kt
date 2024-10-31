@@ -5,6 +5,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.example.core.utils.extension.findActivity
 import com.example.data_sdk_api.interactor.biometrics.BiometricsInteractor
 import com.example.feature_authentication.biometric.model.AuthenticationErrorType
 import com.example.feature_authentication.biometric.model.BiometricAuthenticationPossibility
@@ -36,12 +37,21 @@ internal class BiometricController @Inject constructor(
             .getById(BiometricManager.from(applicationContext).canAuthenticate(authenticatorsValue))
     }
 
+    fun saveEnabledBiometricsFlag(flag: Boolean) {
+        biometricsInteractor.saveEnabledBiometricsFlag(flag)
+    }
+
+    fun isReady(): Boolean {
+        return canAuthenticate(BiometricAuthenticators.STRONG).isSuccess && isBiometricsEnabled()
+    }
+
     fun authenticate(
-        activity: FragmentActivity,
         promptInfo: BiometricPrompt.PromptInfo,
         cryptoObject: BiometricPrompt.CryptoObject,
         resultAction: (result: BiometricAuthenticationResult) -> Unit,
     ): BiometricPromptHandler {
+        val activity = requireNotNull(applicationContext.findActivity<FragmentActivity>())
+
         val prompt = BiometricPrompt(
             activity,
             ContextCompat.getMainExecutor(activity),
@@ -49,14 +59,6 @@ internal class BiometricController @Inject constructor(
         )
         prompt.authenticate(promptInfo, cryptoObject)
         return BiometricPromptHandler { prompt.cancelAuthentication() }
-    }
-
-    fun saveEnabledBiometricsFlag(flag: Boolean) {
-        biometricsInteractor.saveEnabledBiometricsFlag(flag)
-    }
-
-    fun isBiometricsEnabled(): Boolean {
-        return biometricsInteractor.isBiometricsEnabled()
     }
 
     private fun createAuthenticationCallback(
@@ -77,6 +79,10 @@ internal class BiometricController @Inject constructor(
                 resultAction(BiometricAuthenticationResult.Failure)
             }
         }
+    }
+
+    private fun isBiometricsEnabled(): Boolean {
+        return biometricsInteractor.isBiometricsEnabled()
     }
 }
 

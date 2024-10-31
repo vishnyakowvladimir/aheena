@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 internal class PinUiReducer @Inject constructor(
     private val authenticationInteractor: AuthenticationInteractor,
-) :
+
+    ) :
     Reducer<PinEvent.Ui, PinDomainState, PinSideEffect, PinUiCommand> {
 
     override fun update(
@@ -24,6 +25,7 @@ internal class PinUiReducer @Inject constructor(
         return when (event) {
             is PinEvent.Ui.None -> Update.nothing()
             is PinEvent.Ui.OnBackPressed -> reduceOnBackPressed()
+            is PinEvent.Ui.OnEnableBiometricsNeeded -> reduceOnEnableBiometricsNeeded(state)
             is PinEvent.Ui.OnKeyboardClick -> reduceOnKeyboardClick(state, event)
         }
     }
@@ -32,6 +34,16 @@ internal class PinUiReducer @Inject constructor(
         return Update.sideEffects(
             sideEffects = listOf(PinSideEffect.Ui.Back),
         )
+    }
+
+    private fun reduceOnEnableBiometricsNeeded(state: PinDomainState): Update<PinDomainState, PinSideEffect, PinUiCommand> {
+        return if (state.isBiometricsReady && state.cryptoObject != null) {
+            Update.uiCommands(
+                listOf(PinUiCommand.ShowBiometricsDialog(state.cryptoObject)),
+            )
+        } else {
+            Update.nothing()
+        }
     }
 
     private fun reduceOnKeyboardClick(
