@@ -96,7 +96,10 @@ private fun Content(
             )
         }
 
-        PinKeyboard(onClick = onKeyboardClick)
+        PinKeyboard(
+            withBiometrics = state.withBiometrics,
+            onClick = onKeyboardClick,
+        )
     }
 }
 
@@ -112,7 +115,8 @@ private fun ContentPreview() {
                     type = PinCodeFieldType.Default(
                         selectedIndex = PinCodeFieldItemIndex.THREE,
                     ),
-                )
+                ),
+                withBiometrics = true,
             ),
             onKeyboardClick = {},
         )

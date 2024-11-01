@@ -8,6 +8,7 @@ import com.example.feature_authentication.presentation.pin.mvi.model.PinDomainSt
 import com.example.feature_authentication.presentation.pin.mvi.model.PinEvent
 import com.example.feature_authentication.presentation.pin.mvi.model.PinSideEffect
 import com.example.feature_authentication.presentation.pin.mvi.model.PinUiCommand
+import com.example.lib_ui.components.keyboard.model.PinKey
 import com.example.lib_ui.components.keyboard.model.PinKeyType
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
@@ -92,7 +93,8 @@ internal class PinUiReducer @Inject constructor(
         state: PinDomainState,
         event: PinEvent.Ui.OnKeyboardClick,
     ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
-        val keyType = event.key.type
+        val key = event.key
+        val keyType = key.type
 
         return when {
             keyType is PinKeyType.Digit && state.pin.count() < 3 -> {
@@ -118,7 +120,17 @@ internal class PinUiReducer @Inject constructor(
                 )
             }
 
-            keyType is PinKeyType.Icon -> {
+            key == PinKey.BIOMETRICS -> {
+                if (state.isBiometricsReady && state.cryptoObject != null) {
+                    Update.uiCommands(
+                        listOf(PinUiCommand.ShowBiometricsDialog(state.cryptoObject)),
+                    )
+                } else {
+                    Update.nothing()
+                }
+            }
+
+            key == PinKey.DELETE -> {
                 val pin = if (state.pin.isEmpty()) {
                     state.pin
                 } else {

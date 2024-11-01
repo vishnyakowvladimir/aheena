@@ -16,7 +16,6 @@ import com.example.feature_authentication.presentation.pin.mvi.model.PinUiComman
 import com.example.feature_authentication.presentation.pin.mvi.reducer.PinReducer
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +44,6 @@ internal class PinViewModel @Inject constructor(
     init {
         createMvi()
         viewModelScope.launch {
-            delay(2000)
             onEvent(PinEvent.Ui.OnEnableBiometricsNeeded)
         }
     }

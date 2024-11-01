@@ -15,6 +15,7 @@ internal class PinMapper @Inject constructor(
     fun map(domainState: PinDomainState): PinUiState {
         return PinUiState(
             pinCodeFieldState = mapPinCodeFieldState(domainState),
+            withBiometrics = domainState.isBiometricsReady,
         )
     }
 
