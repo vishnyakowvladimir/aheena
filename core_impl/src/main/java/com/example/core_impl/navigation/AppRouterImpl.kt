@@ -1,52 +1,41 @@
 package com.example.core_impl.navigation
 
-import android.util.Log
+import androidx.navigation.NavHostController
 import com.example.core.holder.ActivityHolder
 import com.example.core.navigation.base.BaseDestination
 import com.example.core.navigation.router.AppRouter
-import com.example.core_impl.holder.NavControllerHolder
 import javax.inject.Inject
 
 class AppRouterImpl @Inject constructor(
-    private val navControllerHolder: NavControllerHolder,
+    private val navController: NavHostController,
     private val activityHolder: ActivityHolder,
 ) : AppRouter {
 
     override fun navigate(destination: BaseDestination): Boolean {
-        val navController = navControllerHolder.navController
-        navController?.navigate(destination) {
+        navController.navigate(destination) {
             launchSingleTop = true
         }
-        return navController != null
+        return true
     }
 
     override fun replace(destination: BaseDestination): Boolean {
-        val navController = navControllerHolder.navController
-
-        if (navController == null) {
-            Log.d("check111", "navController == null")
-        }
-
-        navController?.navigate(destination) {
+        navController.navigate(destination) {
             popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
                 inclusive = true
             }
         }
-        return navController != null
+        return true
     }
 
     override fun replaceAll(destination: BaseDestination): Boolean {
-        val navController = navControllerHolder.navController
-        navController?.navigate(destination) {
+        navController.navigate(destination) {
             popUpTo(0)
         }
-        return navController != null
+        return true
     }
 
     override fun popBackStack(): Boolean {
-        val navController = navControllerHolder.navController
-
-        val isPopUp = navController?.popBackStack() ?: false
+        val isPopUp = navController.popBackStack() ?: false
         return if (isPopUp) {
             true
         } else {
