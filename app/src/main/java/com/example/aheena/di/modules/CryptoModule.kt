@@ -53,7 +53,7 @@ internal interface CryptoModule {
         }
 
         @Provides
-        fun providePerUseKeyConfig(): RsaSecretKeyConfig {
+        fun provideRsaSecretKeyConfig(): RsaSecretKeyConfig {
             return RsaSecretKeyConfig(
                 digests = listOf(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512),
                 encryptionPadding = EncryptionPadding.RSA_OAEP,

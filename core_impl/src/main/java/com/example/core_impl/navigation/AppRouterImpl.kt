@@ -1,9 +1,9 @@
 package com.example.core_impl.navigation
 
 import android.util.Log
+import com.example.core.holder.ActivityHolder
 import com.example.core.navigation.base.BaseDestination
 import com.example.core.navigation.router.AppRouter
-import com.example.core_impl.holder.ActivityHolder
 import com.example.core_impl.holder.NavControllerHolder
 import javax.inject.Inject
 

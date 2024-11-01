@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
-import com.example.core.utils.extension.findActivity
+import com.example.core.holder.ActivityHolder
 import com.example.data_sdk_api.interactor.biometrics.BiometricsInteractor
 import com.example.feature_authentication.biometric.model.AuthenticationErrorType
 import com.example.feature_authentication.biometric.model.BiometricAuthenticationPossibility
@@ -15,6 +14,7 @@ import javax.inject.Inject
 
 internal class BiometricController @Inject constructor(
     private val applicationContext: Context,
+    val activityHolder: ActivityHolder,
     private val biometricsInteractor: BiometricsInteractor,
 ) {
 
@@ -50,7 +50,7 @@ internal class BiometricController @Inject constructor(
         cryptoObject: BiometricPrompt.CryptoObject,
         resultAction: (result: BiometricAuthenticationResult) -> Unit,
     ): BiometricPromptHandler {
-        val activity = requireNotNull(applicationContext.findActivity<FragmentActivity>())
+        val activity = requireNotNull(activityHolder.activity)
 
         val prompt = BiometricPrompt(
             activity,

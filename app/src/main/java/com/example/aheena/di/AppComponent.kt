@@ -43,7 +43,7 @@ internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider 
                 .factory()
                 .create(
                     dependencies = dependencies,
-                    context = app,
+                    applicationContext = app,
                 )
         }
     }
@@ -53,7 +53,7 @@ internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider 
 
         fun create(
             dependencies: AppComponentDependencies,
-            @BindsInstance context: Context,
+            @BindsInstance applicationContext: Context,
         ): AppComponent
     }
 
