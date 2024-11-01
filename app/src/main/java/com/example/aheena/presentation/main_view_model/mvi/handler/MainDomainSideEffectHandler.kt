@@ -2,7 +2,7 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
-import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.controller.theme.ThemeManager
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

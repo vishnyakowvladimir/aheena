@@ -4,7 +4,7 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
-import com.example.core.presentation.theme_manager.ThemeManager
+import com.example.core.controller.theme.ThemeManager
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject

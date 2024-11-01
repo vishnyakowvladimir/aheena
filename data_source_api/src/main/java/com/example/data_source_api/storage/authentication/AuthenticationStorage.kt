@@ -1,6 +1,6 @@
 package com.example.data_source_api.storage.authentication
 
-import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
 
 interface AuthenticationStorage {
 

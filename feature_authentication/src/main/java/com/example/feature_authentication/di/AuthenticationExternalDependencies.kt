@@ -1,6 +1,7 @@
 package com.example.feature_authentication.di
 
 import android.content.Context
+import com.example.core.controller.logout.LogoutController
 import com.example.core.holder.ActivityHolder
 import com.example.core.navigation.router.AppRouter
 import com.example.core.utils.string_provider.StringProvider
@@ -15,4 +16,5 @@ class AuthenticationExternalDependencies @Inject constructor(
     val stringProvider: StringProvider,
     val authenticationInteractor: AuthenticationInteractor,
     val biometricsInteractor: BiometricsInteractor,
+    val logoutController: LogoutController,
 )

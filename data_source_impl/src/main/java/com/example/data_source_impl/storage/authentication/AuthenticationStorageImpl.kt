@@ -3,8 +3,8 @@ package com.example.data_source_impl.storage.authentication
 import android.util.Base64
 import androidx.core.content.edit
 import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.rsa.AuthenticationRsaCipher
-import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
+import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject

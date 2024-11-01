@@ -1,20 +1,25 @@
 package com.example.feature_authentication.presentation.pin
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.pin.model.PinUiState
@@ -68,9 +73,8 @@ internal fun PinScreen(viewModel: PinViewModel) {
         ) {
             Content(
                 state = state.value,
-                onKeyboardClick = { key ->
-                    viewModel.onEvent(PinEvent.Ui.OnKeyboardClick(key))
-                },
+                onKeyboardClick = { key -> viewModel.onEvent(PinEvent.Ui.OnKeyboardClick(key)) },
+                onLogoutClick = { viewModel.onEvent(PinEvent.Ui.OnLogoutClick) },
             )
         }
     }
@@ -80,6 +84,7 @@ internal fun PinScreen(viewModel: PinViewModel) {
 private fun Content(
     state: PinUiState,
     onKeyboardClick: (PinKey) -> Unit,
+    onLogoutClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -100,7 +105,25 @@ private fun Content(
             withBiometrics = state.withBiometrics,
             onClick = onKeyboardClick,
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LogoutButton(onClick = onLogoutClick)
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
+}
+
+@Composable
+private fun LogoutButton(
+    onClick: () -> Unit,
+) {
+    Text(
+        text = stringResource(id = R.string.authentication_pin_logout_button),
+        color = AppTheme.palette.text.secondary,
+        style = AppTheme.typography.text1Regular,
+        modifier = Modifier.clickable { onClick() }
+    )
 }
 
 @Preview
@@ -119,6 +142,7 @@ private fun ContentPreview() {
                 withBiometrics = true,
             ),
             onKeyboardClick = {},
+            onLogoutClick = {},
         )
     }
 }

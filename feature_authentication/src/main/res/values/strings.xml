@@ -18,4 +18,5 @@
     <string name="authentication_pin_biometric_title">Биометрическая аутентификация</string>
     <string name="authentication_pin_biometric_description">Используйте отпечаток пальца или камеру для аутентификации</string>
     <string name="authentication_pin_biometric_cancel">Отмена</string>
+    <string name="authentication_pin_logout_button">Выйти</string>
 </resources>

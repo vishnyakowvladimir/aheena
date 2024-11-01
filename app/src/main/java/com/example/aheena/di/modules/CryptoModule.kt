@@ -2,8 +2,8 @@ package com.example.aheena.di.modules
 
 import android.security.keystore.KeyProperties
 import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.rsa.AuthenticationRsaCipher
-import com.example.core.crypto.rsa.RsaCipherKeyStore
+import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
+import com.example.core.crypto.rsa.store.RsaCipherKeyStore
 import com.example.core.crypto.vizhener.IVizhenerCipher
 import com.example.core_impl.crypto.authentication.RefreshTokenCipherImpl
 import com.example.core_impl.crypto.rsa.AuthenticationRsaCipherImpl

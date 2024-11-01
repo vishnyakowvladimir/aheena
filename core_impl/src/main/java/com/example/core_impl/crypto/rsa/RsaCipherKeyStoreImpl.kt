@@ -5,7 +5,7 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.annotation.RequiresApi
-import com.example.core.crypto.rsa.RsaCipherKeyStore
+import com.example.core.crypto.rsa.store.RsaCipherKeyStore
 import com.example.core_impl.crypto.rsa.model.EncryptionPadding
 import java.security.Key
 import java.security.KeyPairGenerator

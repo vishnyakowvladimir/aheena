@@ -1,6 +1,6 @@
-package com.example.core.crypto.rsa
+package com.example.core.crypto.rsa.cipher
 
-import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
 import java.io.IOException
 import java.security.GeneralSecurityException
 

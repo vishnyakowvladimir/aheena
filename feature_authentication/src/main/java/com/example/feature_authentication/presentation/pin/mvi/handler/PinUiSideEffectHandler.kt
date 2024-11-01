@@ -1,5 +1,6 @@
 package com.example.feature_authentication.presentation.pin.mvi.handler
 
+import com.example.core.controller.logout.LogoutController
 import com.example.core.navigation.feature_destination.FeaturesDestination
 import com.example.core.navigation.router.AppRouter
 import com.example.feature_authentication.presentation.pin.mvi.model.PinEvent
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class PinUiSideEffectHandler @Inject constructor(
     private val router: AppRouter,
+    private val logoutController: LogoutController,
 ) : SideEffectHandler<PinEvent, PinSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<PinSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -33,6 +35,7 @@ internal class PinUiSideEffectHandler @Inject constructor(
             when (sideEffect) {
                 is PinSideEffect.Ui.Back -> handleBack()
                 is PinSideEffect.Ui.OpenMainScreen -> handleOpenMainScreen()
+                is PinSideEffect.Ui.Logout -> handleLogout()
             }
         }
             .flowOn(Dispatchers.Main)
@@ -41,6 +44,13 @@ internal class PinUiSideEffectHandler @Inject constructor(
     private fun handleBack(): Flow<PinEvent.Ui> {
         return flow {
             router.popBackStack()
+            emit(PinEvent.Ui.None)
+        }
+    }
+
+    private fun handleLogout(): Flow<PinEvent.Ui> {
+        return flow {
+            logoutController.logout()
             emit(PinEvent.Ui.None)
         }
     }

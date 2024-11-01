@@ -2,12 +2,13 @@ package com.example.aheena.di
 
 import android.content.Context
 import com.example.aheena.di.dependencies.FeaturesDependenciesProvider
+import com.example.aheena.di.modules.ControllerModule
 import com.example.aheena.di.modules.CryptoModule
-import com.example.aheena.di.modules.DataSourceModule
 import com.example.aheena.di.modules.InteractorModule
 import com.example.aheena.di.modules.NavigationModule
 import com.example.aheena.di.modules.PresentationModule
 import com.example.aheena.di.modules.RepositoryModule
+import com.example.aheena.di.modules.StorageModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.aheena.di.modules.ViewModelsModule
 import com.example.aheena.presentation.MainActivity
@@ -24,11 +25,12 @@ import dagger.Component
         UtilsModule::class,
         NavigationModule::class,
         ViewModelsModule::class,
-        DataSourceModule::class,
+        StorageModule::class,
         RepositoryModule::class,
         InteractorModule::class,
         PresentationModule::class,
         CryptoModule::class,
+        ControllerModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider {

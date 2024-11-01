@@ -13,6 +13,7 @@ internal sealed interface PinEvent {
         data object OnEnableBiometricsNeeded : Ui
         data class OnBiometricsShowed(val biometricPromptHandler: BiometricPromptHandler) : Ui
         data class OnBiometricsResult(val result: BiometricAuthenticationResult) : Ui
+        data object OnLogoutClick : Ui
     }
 
     sealed interface Domain : PinEvent {

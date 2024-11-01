@@ -10,14 +10,14 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface DataSourceModule {
+interface StorageModule {
 
     @Binds
-    fun bindThemeSource(source: ThemeStorageImpl): ThemeStorage
+    fun bindThemeStorage(source: ThemeStorageImpl): ThemeStorage
 
     @Binds
-    fun bindAuthenticationSource(source: AuthenticationStorageImpl): AuthenticationStorage
+    fun bindAuthenticationStorage(source: AuthenticationStorageImpl): AuthenticationStorage
 
     @Binds
-    fun bindBiometricsSource(source: BiometricsStorageImpl): BiometricsStorage
+    fun bindBiometricsStorage(source: BiometricsStorageImpl): BiometricsStorage
 }

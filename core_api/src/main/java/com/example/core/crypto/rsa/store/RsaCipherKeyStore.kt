@@ -1,4 +1,4 @@
-package com.example.core.crypto.rsa
+package com.example.core.crypto.rsa.store
 
 import java.io.IOException
 import java.security.GeneralSecurityException

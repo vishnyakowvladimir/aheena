@@ -1,4 +1,4 @@
-package com.example.core.presentation.theme_manager
+package com.example.core.controller.theme
 
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain
