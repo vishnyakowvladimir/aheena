@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 internal class BiometricController @Inject constructor(
     private val applicationContext: Context,
-    val activityHolder: ActivityHolder,
+    private val activityHolder: ActivityHolder,
     private val biometricsInteractor: BiometricsInteractor,
 ) {
 

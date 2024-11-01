@@ -1,11 +1,11 @@
 package com.example.data_source_impl.repository.biometrics
 
 import com.example.data_source_api.repository.biometrics.BiometricsRepository
-import com.example.data_source_api.source.biometrics.BiometricsSource
+import com.example.data_source_api.storage.biometrics.BiometricsStorage
 import javax.inject.Inject
 
 class BiometricsRepositoryImpl @Inject constructor(
-    private val biometricsSource: BiometricsSource,
+    private val biometricsSource: BiometricsStorage,
 ) : BiometricsRepository {
     override fun saveEnabledBiometricsFlag(flag: Boolean) {
         biometricsSource.saveEnabledBiometricsFlag(flag)

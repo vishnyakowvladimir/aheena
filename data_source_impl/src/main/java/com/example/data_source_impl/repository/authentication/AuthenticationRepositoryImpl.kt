@@ -2,11 +2,11 @@ package com.example.data_source_impl.repository.authentication
 
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
 import com.example.data_source_api.repository.authentication.AuthenticationRepository
-import com.example.data_source_api.source.authentication.AuthenticationSource
+import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val authenticationSource: AuthenticationSource
+    private val authenticationSource: AuthenticationStorage
 ) : AuthenticationRepository {
 
     override fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence) {

@@ -1,14 +1,14 @@
 package com.example.data_source_impl.repository.theme
 
 import com.example.data_source_api.repository.theme.ThemeRepository
-import com.example.data_source_api.source.theme.ThemeSource
+import com.example.data_source_api.storage.theme.ThemeStorage
 import com.example.data_source_impl.mapper.theme.ThemeMapper
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain
 import javax.inject.Inject
 
 class ThemeRepositoryImpl @Inject constructor(
-    private val themeSource: ThemeSource,
+    private val themeSource: ThemeStorage,
     private val themeMapper: ThemeMapper,
 ) : ThemeRepository {
 

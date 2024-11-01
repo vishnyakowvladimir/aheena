@@ -1,9 +1,9 @@
-package com.example.data_source_api.source.theme
+package com.example.data_source_api.storage.theme
 
 import com.example.data_source_api.models.theme.AppThemeModeDto
 import com.example.data_source_api.models.theme.ViewScaleDto
 
-interface ThemeSource {
+interface ThemeStorage {
 
     fun saveViewScale(scale: ViewScaleDto)
 

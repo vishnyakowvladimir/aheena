@@ -1,10 +1,10 @@
-package com.example.data_source_impl.source.theme
+package com.example.data_source_impl.storage.theme
 
 import androidx.core.content.edit
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.models.theme.AppThemeModeDto
 import com.example.data_source_api.models.theme.ViewScaleDto
-import com.example.data_source_api.source.theme.ThemeSource
+import com.example.data_source_api.storage.theme.ThemeStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
@@ -12,10 +12,10 @@ import javax.inject.Inject
 private const val KEY_SCALE = "KEY_SCALE"
 private const val KEY_THEME_MODE = "KEY_THEME_MODE"
 
-class ThemeSourceImpl @Inject constructor(
+class ThemeStorageImpl @Inject constructor(
     private val gson: Gson,
     provider: AndroidPreferencesProvider,
-) : ThemeSource {
+) : ThemeStorage {
     private val pref = provider.prefs
 
     override fun saveViewScale(scale: ViewScaleDto) {

@@ -1,4 +1,4 @@
-package com.example.data_source_impl.source.authentication
+package com.example.data_source_impl.storage.authentication
 
 import android.util.Base64
 import androidx.core.content.edit
@@ -6,17 +6,17 @@ import com.example.core.crypto.authentication.RefreshTokenCipher
 import com.example.core.crypto.rsa.AuthenticationRsaCipher
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
-import com.example.data_source_api.source.authentication.AuthenticationSource
+import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject
 
 private const val REFRESH_TOKEN_KEY = "refresh_token"
 private const val PIN_CODE_KEY = "pin_code"
 
-class AuthenticationSourceImpl @Inject constructor(
+class AuthenticationStorageImpl @Inject constructor(
     private val preferencesProvider: AndroidPreferencesProvider,
     private val refreshTokenCipher: RefreshTokenCipher,
     private val rsaCipher: AuthenticationRsaCipher,
-) : AuthenticationSource {
+) : AuthenticationStorage {
     override fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence) {
         preferencesProvider.cryptoPrefs.edit {
             putString(REFRESH_TOKEN_KEY, refreshTokenCipher.encrypt(refreshToken, pinCode).toString())

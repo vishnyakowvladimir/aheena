@@ -1,8 +1,8 @@
-package com.example.data_source_api.source.authentication
+package com.example.data_source_api.storage.authentication
 
 import com.example.core.crypto.rsa.model.AuthenticationCryptoObject
 
-interface AuthenticationSource {
+interface AuthenticationStorage {
 
     fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence)
     fun getRefreshToken(pinCode: CharSequence): CharSequence

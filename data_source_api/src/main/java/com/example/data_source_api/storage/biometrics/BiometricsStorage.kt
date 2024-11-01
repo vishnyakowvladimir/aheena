@@ -1,6 +1,6 @@
-package com.example.data_source_api.source.biometrics
+package com.example.data_source_api.storage.biometrics
 
-interface BiometricsSource {
+interface BiometricsStorage {
 
     fun saveEnabledBiometricsFlag(flag: Boolean)
     fun isBiometricsEnabled(): Boolean

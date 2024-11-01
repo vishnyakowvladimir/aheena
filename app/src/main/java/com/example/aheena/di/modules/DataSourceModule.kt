@@ -1,11 +1,11 @@
 package com.example.aheena.di.modules
 
-import com.example.data_source_api.source.authentication.AuthenticationSource
-import com.example.data_source_api.source.biometrics.BiometricsSource
-import com.example.data_source_api.source.theme.ThemeSource
-import com.example.data_source_impl.source.authentication.AuthenticationSourceImpl
-import com.example.data_source_impl.source.biometrics.BiometricsSourceImpl
-import com.example.data_source_impl.source.theme.ThemeSourceImpl
+import com.example.data_source_api.storage.authentication.AuthenticationStorage
+import com.example.data_source_api.storage.biometrics.BiometricsStorage
+import com.example.data_source_api.storage.theme.ThemeStorage
+import com.example.data_source_impl.storage.authentication.AuthenticationStorageImpl
+import com.example.data_source_impl.storage.biometrics.BiometricsStorageImpl
+import com.example.data_source_impl.storage.theme.ThemeStorageImpl
 import dagger.Binds
 import dagger.Module
 
@@ -13,11 +13,11 @@ import dagger.Module
 interface DataSourceModule {
 
     @Binds
-    fun bindThemeSource(source: ThemeSourceImpl): ThemeSource
+    fun bindThemeSource(source: ThemeStorageImpl): ThemeStorage
 
     @Binds
-    fun bindAuthenticationSource(source: AuthenticationSourceImpl): AuthenticationSource
+    fun bindAuthenticationSource(source: AuthenticationStorageImpl): AuthenticationStorage
 
     @Binds
-    fun bindBiometricsSource(source: BiometricsSourceImpl): BiometricsSource
+    fun bindBiometricsSource(source: BiometricsStorageImpl): BiometricsStorage
 }

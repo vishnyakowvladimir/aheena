@@ -1,15 +1,15 @@
-package com.example.data_source_impl.source.biometrics
+package com.example.data_source_impl.storage.biometrics
 
 import androidx.core.content.edit
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
-import com.example.data_source_api.source.biometrics.BiometricsSource
+import com.example.data_source_api.storage.biometrics.BiometricsStorage
 import javax.inject.Inject
 
 private const val BIOMETRICS_FLAG_KEY = "biometrics_flag_key"
 
-class BiometricsSourceImpl @Inject constructor(
+class BiometricsStorageImpl @Inject constructor(
     private val preferencesProvider: AndroidPreferencesProvider,
-) : BiometricsSource {
+) : BiometricsStorage {
 
     override fun saveEnabledBiometricsFlag(flag: Boolean) {
         preferencesProvider.prefs.edit {
