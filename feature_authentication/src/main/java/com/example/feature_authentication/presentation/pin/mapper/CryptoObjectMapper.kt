@@ -9,4 +9,10 @@ class CryptoObjectMapper @Inject constructor() {
     fun map(cryptoObject: AuthenticationCryptoObject): BiometricPrompt.CryptoObject {
         return BiometricPrompt.CryptoObject(cryptoObject.cipher)
     }
+
+    fun map(biometricPromptCryptoObject: BiometricPrompt.CryptoObject): AuthenticationCryptoObject {
+        return AuthenticationCryptoObject(
+            requireNotNull(biometricPromptCryptoObject.cipher),
+        )
+    }
 }

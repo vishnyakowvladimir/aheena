@@ -15,4 +15,7 @@
     <string name="authentication_pin_title">Введите пин-код</string>
     <string name="authentication_pin_field_title">Пин-код</string>
     <string name="authentication_pin_error">Неправильный пин-код</string>
+    <string name="authentication_pin_biometric_title">Биометрическая аутентификация</string>
+    <string name="authentication_pin_biometric_description">Используйте отпечаток пальца или камеру для аутентификации</string>
+    <string name="authentication_pin_biometric_cancel">Отмена</string>
 </resources>

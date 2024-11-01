@@ -13,9 +13,30 @@ internal class PinDomainReducer @Inject constructor() :
 
     override fun update(
         state: PinDomainState,
-        event: PinEvent.Domain
+        event: PinEvent.Domain,
     ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
-        return Update.nothing()
+        return when (event) {
+            is PinEvent.Domain.OnAuthentication -> reduceOnAuthentication(state, event)
+        }
+    }
+
+    private fun reduceOnAuthentication(
+        state: PinDomainState,
+        event: PinEvent.Domain.OnAuthentication,
+    ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
+        return if (event.isSuccess) {
+            Update.sideEffects(
+                sideEffects = listOf(PinSideEffect.Ui.OpenMainScreen),
+            )
+        } else {
+            Update.state(
+                state.copy(
+                    pin = emptyList(),
+                    isError = true,
+                    isLoading = false,
+                ),
+            )
+        }
     }
 }
 

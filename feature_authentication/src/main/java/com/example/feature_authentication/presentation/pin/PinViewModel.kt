@@ -1,10 +1,11 @@
 package com.example.feature_authentication.presentation.pin
 
-import android.util.Log
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.viewModelScope
 import com.example.core.presentation.base.BaseViewModel
 import com.example.core.utils.extension.mapData
+import com.example.core.utils.string_provider.StringProvider
+import com.example.feature_authentication.R
 import com.example.feature_authentication.biometric.BiometricController
 import com.example.feature_authentication.biometric.model.BiometricAuthenticators
 import com.example.feature_authentication.presentation.pin.mapper.CryptoObjectMapper
@@ -31,6 +32,7 @@ internal class PinViewModel @Inject constructor(
     private val reducer: PinReducer,
     private val biometricController: BiometricController,
     private val cryptoObjectMapper: CryptoObjectMapper,
+    private val stringProvider: StringProvider,
 ) : BaseViewModel() {
     private val uiEvent = MutableSharedFlow<PinEvent>(replay = Int.MAX_VALUE)
 
@@ -83,23 +85,20 @@ internal class PinViewModel @Inject constructor(
 
     private fun handleUiCommandShowBiometricsDialog(uiCommand: PinUiCommand.ShowBiometricsDialog) {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Биометрическая аутентификация")
-            .setDescription("Используйте отпечаток пальца или камеру для аутентификации")
-            .setNegativeButtonText("Отмена")
+            .setTitle(stringProvider.getString(R.string.authentication_pin_biometric_title))
+            .setDescription(stringProvider.getString(R.string.authentication_pin_biometric_description))
+            .setNegativeButtonText(stringProvider.getString(R.string.authentication_pin_biometric_cancel))
             .setAllowedAuthenticators(BiometricAuthenticators.STRONG.value)
             .build()
 
-        try {
-            biometricController.authenticate(
-                promptInfo = promptInfo,
-                cryptoObject = cryptoObjectMapper.map(uiCommand.cryptoObject),
-                resultAction = { result ->
-                    Log.d("check111", "result: $result")
-                },
-            )
-        } catch (e: Exception) {
-            Log.d("check111", "e: $e")
-        }
+        val biometricPromptHandler = biometricController.showBiometricsWindow(
+            promptInfo = promptInfo,
+            cryptoObject = cryptoObjectMapper.map(uiCommand.cryptoObject),
+            resultAction = { result ->
+                onEvent(PinEvent.Ui.OnBiometricsResult(result))
+            },
+        )
 
+        onEvent(PinEvent.Ui.OnBiometricsShowed(biometricPromptHandler))
     }
 }

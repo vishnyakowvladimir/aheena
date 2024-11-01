@@ -45,7 +45,7 @@ internal class BiometricController @Inject constructor(
         return canAuthenticate(BiometricAuthenticators.STRONG).isSuccess && isBiometricsEnabled()
     }
 
-    fun authenticate(
+    fun showBiometricsWindow(
         promptInfo: BiometricPrompt.PromptInfo,
         cryptoObject: BiometricPrompt.CryptoObject,
         resultAction: (result: BiometricAuthenticationResult) -> Unit,

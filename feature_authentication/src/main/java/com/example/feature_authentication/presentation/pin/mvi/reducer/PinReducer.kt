@@ -40,6 +40,7 @@ internal class PinReducer @Inject constructor(
             pin = emptyList(),
             cryptoObject = cryptoObject,
             isBiometricsReady = biometricController.isReady(),
+            biometricPromptHandler = null,
         )
     }
 }
