@@ -5,8 +5,8 @@ import com.example.aheena.presentation.main_view_model.mapper.MainMapper
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
-import com.example.core.utils.extension.mapData
 import com.example.core.presentation.base.BaseViewModel
+import com.example.core.utils.extension.mapData
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,7 +35,6 @@ internal class MainViewModel @Inject constructor(
     init {
         createMvi()
         onEvent(MainEvent.Ui.OnApplyThemeNeeded)
-        onEvent(MainEvent.Domain.OnLoadDataNeeded)
     }
 
     fun onEvent(event: MainEvent) {

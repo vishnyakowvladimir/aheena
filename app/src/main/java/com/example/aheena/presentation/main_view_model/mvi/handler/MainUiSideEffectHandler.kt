@@ -52,7 +52,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
     private fun handleApplyTheme(): Flow<MainEvent.Ui> {
         return flow {
             themeManager.applyThemeMode()
-            emit(MainEvent.Ui.None)
+            emit(MainEvent.Ui.OnThemeApplied)
         }
     }
 
