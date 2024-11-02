@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
-import com.example.core.navigation.router.FeatureRouter
+import com.example.core.navigation.router.AbstractNavRouter
+import com.example.core.navigation.router.FeatureRouterImp
+import com.example.core.navigation.router.NavControllerHolder
+import com.example.core.navigation.router.NavControllerHolderImpl
+import com.example.core.navigation.router.NavRouter
 import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.biometric.BiometricsViewModel
 import com.example.feature_authentication.presentation.container.AuthenticationContainerViewModel
@@ -51,8 +55,20 @@ internal interface AuthenticationModule {
 
         @FeatureScope
         @Provides
-        fun provideFeatureRouter(): FeatureRouter {
-            return FeatureRouter()
+        fun provideNavControllerHolder(): NavControllerHolder {
+            return NavControllerHolderImpl()
+        }
+
+        @FeatureScope
+        @Provides
+        fun provideRouter(
+            mainRouter: AbstractNavRouter,
+            navControllerHolder: NavControllerHolder,
+        ): NavRouter {
+            return FeatureRouterImp(
+                appRouter = mainRouter,
+                navControllerHolder = navControllerHolder,
+            )
         }
     }
 }

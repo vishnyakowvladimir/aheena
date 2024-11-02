@@ -1,41 +1,18 @@
 package com.example.core_impl.navigation
 
-import androidx.navigation.NavHostController
 import com.example.core.holder.ActivityHolder
-import com.example.core.navigation.base.BaseDestination
-import com.example.core.navigation.router.AppRouter
-import javax.inject.Inject
+import com.example.core.navigation.router.AbstractNavRouter
+import com.example.core.navigation.router.NavControllerHolder
 
-class AppRouterImpl @Inject constructor(
-    private val navController: NavHostController,
+class AppRouterImpl(
+    private val navControllerHolder: NavControllerHolder,
     private val activityHolder: ActivityHolder,
-) : AppRouter {
-
-    override fun navigate(destination: BaseDestination): Boolean {
-        navController.navigate(destination) {
-            launchSingleTop = true
-        }
-        return true
-    }
-
-    override fun replace(destination: BaseDestination): Boolean {
-        navController.navigate(destination) {
-            popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
-                inclusive = true
-            }
-        }
-        return true
-    }
-
-    override fun replaceAll(destination: BaseDestination): Boolean {
-        navController.navigate(destination) {
-            popUpTo(0)
-        }
-        return true
-    }
+) : AbstractNavRouter(navControllerHolder) {
 
     override fun popBackStack(): Boolean {
-        val isPopUp = navController.popBackStack() ?: false
+        val navController = navControllerHolder.navHostController
+
+        val isPopUp = navController?.popBackStack() ?: false
         return if (isPopUp) {
             true
         } else {

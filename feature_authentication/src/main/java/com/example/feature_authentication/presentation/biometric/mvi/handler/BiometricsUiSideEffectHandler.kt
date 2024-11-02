@@ -1,7 +1,7 @@
 package com.example.feature_authentication.presentation.biometric.mvi.handler
 
 import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.AppRouter
+import com.example.core.navigation.router.AbstractNavRouter
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsSideEffect
 import com.example.mvi.SideEffectHandler
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class BiometricsUiSideEffectHandler @Inject constructor(
-    private val router: AppRouter,
+    private val mainRouter: AbstractNavRouter,
 ) : SideEffectHandler<BiometricsEvent, BiometricsSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<BiometricsSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -40,14 +40,14 @@ internal class BiometricsUiSideEffectHandler @Inject constructor(
 
     private fun handleBack(): Flow<BiometricsEvent.Ui> {
         return flow {
-            router.popBackStack()
+            mainRouter.popBackStack()
             emit(BiometricsEvent.Ui.None)
         }
     }
 
     private fun handleOpenMainScreen(): Flow<BiometricsEvent.Ui> {
         return flow {
-            router.replaceAll(FeaturesDestination.MainDestination)
+            mainRouter.replaceAll(FeaturesDestination.MainDestination)
             emit(BiometricsEvent.Ui.None)
         }
     }

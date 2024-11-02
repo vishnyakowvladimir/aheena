@@ -1,8 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
 import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.AppRouter
-import com.example.core.navigation.router.FeatureRouter
+import com.example.core.navigation.router.AbstractNavRouter
+import com.example.core.navigation.router.NavRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
@@ -19,8 +19,8 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CreatePinUiSideEffectHandler @Inject constructor(
-    private val router: AppRouter,
-    private val featureRouter: FeatureRouter,
+    private val mainRouter: AbstractNavRouter,
+    private val router: NavRouter,
 ) : SideEffectHandler<CreatePinEvent, CreatePinSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -46,7 +46,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleBack(): Flow<CreatePinEvent.Ui> {
         return flow {
-            featureRouter.popBackStack()
+            router.popBackStack()
             emit(CreatePinEvent.Ui.None)
         }
     }
@@ -60,14 +60,14 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenMainScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            router.replaceAll(FeaturesDestination.MainDestination)
+            mainRouter.replaceAll(FeaturesDestination.MainDestination)
             emit(CreatePinEvent.Ui.None)
         }
     }
 
     private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            featureRouter.replaceAll(LocalDestinationAuthentication.Biometrics)
+            router.replaceAll(LocalDestinationAuthentication.Biometrics)
             emit(CreatePinEvent.Ui.None)
         }
     }

@@ -21,12 +21,12 @@ fun AuthenticationContainer() {
     val context = LocalContext.current
     val component = context.getComponent<AuthenticationComponent>()
 
-    val featureRouter = component.provideFeatureRouter()
+    val navControllerHolder = component.provideNavControllerHolder()
     val viewModelFactory = component.provideViewModelFactory()
     val viewModel = viewModel<AuthenticationContainerViewModel>(factory = viewModelFactory)
 
     val navController = rememberNavController()
-    featureRouter.setNavController(navController)
+    navControllerHolder.navHostController = navController
 
     val startDestination = if (viewModel.isRefreshTokenExist()) {
         LocalDestinationAuthentication.Pin

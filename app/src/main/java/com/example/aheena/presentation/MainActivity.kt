@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.AppNavGraph
 import com.example.aheena.navigation.FeatureComposablesHolder
@@ -16,6 +17,7 @@ import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.core.di.extension.getComponent
 import com.example.core.holder.ActivityHolder
+import com.example.core.navigation.router.NavControllerHolder
 import com.example.core.presentation.base.BaseActivity
 import com.example.core.utils.extension.collectAsStateLifecycleAware
 import com.example.lib_ui.theme.AppThemeContainer
@@ -24,7 +26,7 @@ import javax.inject.Inject
 internal class MainActivity : BaseActivity() {
 
     @Inject
-    lateinit var navController: NavHostController
+    lateinit var navControllerHolder: NavControllerHolder
 
     @Inject
     lateinit var activityHolder: ActivityHolder
@@ -47,8 +49,12 @@ internal class MainActivity : BaseActivity() {
 
         setContent {
             clear()
+
+            val navController = rememberNavController()
+
             setNew(
                 activity = this,
+                navController = navController,
             )
 
             SetComposableContent(
@@ -67,12 +73,15 @@ internal class MainActivity : BaseActivity() {
 
     private fun clear() {
         activityHolder.activity = null
+        navControllerHolder.navHostController = null
     }
 
     private fun setNew(
         activity: BaseActivity,
+        navController: NavHostController,
     ) {
         activityHolder.activity = activity
+        navControllerHolder.navHostController = navController
     }
 }
 
