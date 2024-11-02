@@ -3,8 +3,9 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.controller.theme.ThemeManager
+import com.example.core.di.qualifier.MainRouter
 import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.AbstractNavRouter
+import com.example.core.navigation.router.NavRouter
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MainUiSideEffectHandler @Inject constructor(
-    private val mainRouter: AbstractNavRouter,
+    @MainRouter private val mainRouter: NavRouter,
     private val themeManager: ThemeManager,
 ) : SideEffectHandler<MainEvent, MainSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Ui>(Int.MAX_VALUE)

@@ -2,7 +2,7 @@ package com.example.core.navigation.router
 
 class FeatureRouterImp(
     private val navControllerHolder: NavControllerHolder,
-    private val appRouter: AbstractNavRouter,
+    private val appRouter: NavRouter,
 ) : AbstractNavRouter(navControllerHolder) {
 
     override fun popBackStack(): Boolean {

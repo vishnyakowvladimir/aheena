@@ -3,8 +3,9 @@ package com.example.feature_authentication.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.di.key.ViewModelKey
+import com.example.core.di.qualifier.FeatureRouter
+import com.example.core.di.qualifier.MainRouter
 import com.example.core.di.scope.FeatureScope
-import com.example.core.navigation.router.AbstractNavRouter
 import com.example.core.navigation.router.FeatureRouterImp
 import com.example.core.navigation.router.NavControllerHolder
 import com.example.core.navigation.router.NavControllerHolderImpl
@@ -59,10 +60,11 @@ internal interface AuthenticationModule {
             return NavControllerHolderImpl()
         }
 
+        @FeatureRouter
         @FeatureScope
         @Provides
         fun provideRouter(
-            mainRouter: AbstractNavRouter,
+            @MainRouter mainRouter: NavRouter,
             navControllerHolder: NavControllerHolder,
         ): NavRouter {
             return FeatureRouterImp(

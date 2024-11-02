@@ -1,7 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
+import com.example.core.di.qualifier.FeatureRouter
+import com.example.core.di.qualifier.MainRouter
 import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.AbstractNavRouter
 import com.example.core.navigation.router.NavRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
@@ -19,8 +20,8 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CreatePinUiSideEffectHandler @Inject constructor(
-    private val mainRouter: AbstractNavRouter,
-    private val router: NavRouter,
+    @MainRouter private val mainRouter: NavRouter,
+    @FeatureRouter private val router: NavRouter,
 ) : SideEffectHandler<CreatePinEvent, CreatePinSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Ui>(Int.MAX_VALUE)
 
