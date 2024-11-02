@@ -1,6 +1,5 @@
 package com.example.feature_authentication.presentation.login.mvi.handler
 
-import com.example.core.di.qualifier.FeatureRouter
 import com.example.core.di.qualifier.MainRouter
 import com.example.core.navigation.router.NavRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
@@ -19,7 +18,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class LoginUiSideEffectHandler @Inject constructor(
     @MainRouter private val mainRouter: NavRouter,
-    @FeatureRouter private val router: NavRouter,
+    private val router: NavRouter,
 ) : SideEffectHandler<LoginEvent, LoginSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<LoginSideEffect.Ui>(Int.MAX_VALUE)
 
