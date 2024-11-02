@@ -2,7 +2,7 @@ package com.example.data_source_impl.repository.user_activity
 
 import com.example.data_source_api.repository.user_activity.UserActivityRepository
 import com.example.data_source_api.storage.user_activity.UserActivityStorage
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserActivityRepositoryImpl @Inject constructor(
@@ -13,7 +13,7 @@ class UserActivityRepositoryImpl @Inject constructor(
         userActivityStorage.setLastUserActivityTime(millis)
     }
 
-    override fun getLastUserActivityTime(): SharedFlow<Long> {
+    override fun getLastUserActivityTime(): Flow<Long> {
         return userActivityStorage.getLastUserActivityTime()
     }
 }
