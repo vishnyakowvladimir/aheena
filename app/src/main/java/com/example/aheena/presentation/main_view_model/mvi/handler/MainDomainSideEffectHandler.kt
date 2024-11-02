@@ -1,6 +1,5 @@
 package com.example.aheena.presentation.main_view_model.mvi.handler
 
-import android.util.Log
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.controller.theme.ThemeManager
@@ -64,7 +63,6 @@ internal class MainDomainSideEffectHandler @Inject constructor(
         sideEffect: MainSideEffect.Domain.SaveUserActivity,
     ): Flow<MainEvent.Domain> {
         return flow {
-            Log.d("check111", "millis: ${sideEffect.millis}")
             userActivityInteractor.setLastUserActivityTime(sideEffect.millis)
             emit(MainEvent.Domain.None)
         }

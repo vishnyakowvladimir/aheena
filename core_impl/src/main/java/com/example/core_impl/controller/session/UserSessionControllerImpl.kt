@@ -1,5 +1,6 @@
 package com.example.core_impl.controller.session
 
+import android.util.Log
 import com.example.core.controller.session.UserSessionController
 import com.example.core.di.qualifier.MainRouter
 import com.example.core.navigation.feature_destination.FeaturesDestination
@@ -11,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -19,29 +19,44 @@ import javax.inject.Inject
 class UserSessionControllerImpl @Inject constructor(
     @MainRouter private val mainRouter: NavRouter,
     private val systemClock: AppSystemClock,
-    userActivityInteractor: UserActivityInteractor,
+    private val userActivityInteractor: UserActivityInteractor,
 ) : UserSessionController {
 
     private var isEnable = false
     private var job: Job? = null
 
     init {
-        userActivityInteractor.getLastUserActivityTime().onEach { millis ->
-            if (isEnable) {
-                start(millis)
+        CoroutineScope(Dispatchers.Default + Job()).launch {
+            userActivityInteractor.getLastUserActivityTime().collect { millis ->
+                Log.d("check111", "onEach millis: $millis")
+                if (isEnable) {
+                    Log.d("check111", "isEnable onEach millis: $millis")
+                    start(millis)
+                }
             }
         }
+
+//        userActivityInteractor.getLastUserActivityTime().onEach { millis ->
+//            Log.d("check111", "onEach millis: $millis")
+//            if (isEnable) {
+//                Log.d("check111", "isEnable onEach millis: $millis")
+//                start(millis)
+//            }
+//        }
     }
 
     override fun enable() {
         isEnable = true
+        userActivityInteractor.setLastUserActivityTime(systemClock.getCurrentTimeMillis())
     }
 
     override fun disable() {
         isEnable = false
+        job = null
     }
 
     private fun start(millis: Long) {
+        job?.cancel()
         job = null
 
         val superVisorJob = CoroutineScope(Dispatchers.Default + SupervisorJob()).launch {
