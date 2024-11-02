@@ -9,15 +9,21 @@ import com.example.core.utils.time.AppSystemClock
 import com.example.data_sdk_api.interactor.user_activity.UserActivityInteractor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+private const val DELAY = 2000L
+private const val WITHOUT_USER_ACTIVITY_DURATION = 10000
+
+@OptIn(FlowPreview::class)
 class UserSessionControllerImpl @Inject constructor(
     @MainRouter private val mainRouter: NavRouter,
     private val systemClock: AppSystemClock,
@@ -30,6 +36,7 @@ class UserSessionControllerImpl @Inject constructor(
 
     init {
         userActivityInteractor.getLastUserActivityTime()
+            .debounce(DELAY)
             .onEach { millis ->
                 if (isEnable) {
                     start(millis)
@@ -65,8 +72,8 @@ class UserSessionControllerImpl @Inject constructor(
 
     private suspend fun check(millis: Long) {
         val currentMillis = systemClock.getCurrentTimeMillis()
-        delay(2000)
-        if (currentMillis < millis + 10000) {
+        delay(DELAY)
+        if (currentMillis - millis < WITHOUT_USER_ACTIVITY_DURATION) {
             check(millis)
         }
     }
