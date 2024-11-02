@@ -10,9 +10,11 @@ internal sealed interface MainEvent {
         data object OnApplyThemeNeeded : Ui
         data object OnThemeApplied : Ui
         data class OnChangeScaleNeeded(val scale: ViewScaleDomain) : Ui
+        data object OnTouch : Ui
     }
 
     sealed interface Domain : MainEvent {
+        data object None : Domain
         data object OnLoadDataNeeded : Domain
         data object OnDataLoaded : Domain
         data class OnScaleChanged(val scale: ViewScaleDomain) : Domain

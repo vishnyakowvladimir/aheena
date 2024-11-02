@@ -13,6 +13,7 @@ internal sealed interface MainSideEffect {
     sealed interface Domain : MainSideEffect {
         data object LoadData : Domain
         data class ChangeViewScale(val viewScaleDomain: ViewScaleDomain) : Domain
+        data class SaveUserActivity(val millis: Long) : Domain
     }
 }
 

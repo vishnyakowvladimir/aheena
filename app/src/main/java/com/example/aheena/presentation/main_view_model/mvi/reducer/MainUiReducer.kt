@@ -4,11 +4,14 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.core.utils.time.AppSystemClock
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject
 
-internal class MainUiReducer @Inject constructor() :
+internal class MainUiReducer @Inject constructor(
+    val appSystemClock: AppSystemClock,
+) :
     Reducer<MainEvent.Ui, MainDomainState, MainSideEffect, MainUiCommand> {
 
     override fun update(
@@ -21,6 +24,7 @@ internal class MainUiReducer @Inject constructor() :
             is MainEvent.Ui.OnApplyThemeNeeded -> reduceOnApplyThemeNeeded()
             is MainEvent.Ui.OnThemeApplied -> reduceOnThemeApplied()
             is MainEvent.Ui.OnChangeScaleNeeded -> reduceOnChangeScaleNeeded(event)
+            is MainEvent.Ui.OnTouch -> reduceOnTouch()
         }
     }
 
@@ -47,6 +51,12 @@ internal class MainUiReducer @Inject constructor() :
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Domain.ChangeViewScale(event.scale)),
+        )
+    }
+
+    private fun reduceOnTouch(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        return Update.sideEffects(
+            sideEffects = listOf(MainSideEffect.Domain.SaveUserActivity(appSystemClock.getCurrentTimeMillis())),
         )
     }
 }

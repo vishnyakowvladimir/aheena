@@ -1,6 +1,7 @@
 package com.example.aheena.presentation
 
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -64,6 +65,11 @@ internal class MainActivity : BaseActivity() {
                 navController = navController,
             )
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        mainViewModel.onEvent(MainEvent.Ui.OnTouch)
+        return super.dispatchTouchEvent(ev)
     }
 
     override fun onDestroy() {

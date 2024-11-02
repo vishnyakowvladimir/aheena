@@ -5,10 +5,12 @@ import com.example.core.di.scope.ApplicationScope
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.core.utils.shared_preferences.EncryptedSharedPreferencesProvider
 import com.example.core.utils.string_provider.StringProvider
+import com.example.core.utils.time.AppSystemClock
 import com.example.core.utils.view_model_factory.AppViewModelFactory
-import com.example.core_impl.utils.string_provider.StringProviderImpl
 import com.example.core_impl.utils.shared_preferences.AndroidPreferencesProviderImpl
 import com.example.core_impl.utils.shared_preferences.EncryptedSharedPreferencesProviderImpl
+import com.example.core_impl.utils.string_provider.StringProviderImpl
+import com.example.core_impl.utils.time.AppSystemClockImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Binds
@@ -23,6 +25,9 @@ internal interface UtilsModule {
 
     @Binds
     fun provideStringProvider(stringProvider: StringProviderImpl): StringProvider
+
+    @Binds
+    fun provideSystemClock(systemClock: AppSystemClockImpl): AppSystemClock
 
     @ApplicationScope
     @Binds

@@ -1,8 +1,10 @@
 package com.example.aheena.presentation.main_view_model.mvi.handler
 
+import android.util.Log
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core.controller.theme.ThemeManager
+import com.example.data_sdk_api.interactor.user_activity.UserActivityInteractor
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MainDomainSideEffectHandler @Inject constructor(
     private val themeManager: ThemeManager,
+    private val userActivityInteractor: UserActivityInteractor,
 ) :
     SideEffectHandler<MainEvent, MainSideEffect.Domain> {
 
@@ -35,6 +38,7 @@ internal class MainDomainSideEffectHandler @Inject constructor(
             when (sideEffect) {
                 is MainSideEffect.Domain.LoadData -> handleLoadData()
                 is MainSideEffect.Domain.ChangeViewScale -> handleChangeViewScale(sideEffect)
+                is MainSideEffect.Domain.SaveUserActivity -> handleSaveUserActivity(sideEffect)
             }
         }
             .flowOn(Dispatchers.IO)
@@ -53,6 +57,16 @@ internal class MainDomainSideEffectHandler @Inject constructor(
         return flow {
             themeManager.saveScale(sideEffect.viewScaleDomain)
             emit(MainEvent.Domain.OnScaleChanged(themeManager.getScale()))
+        }
+    }
+
+    private fun handleSaveUserActivity(
+        sideEffect: MainSideEffect.Domain.SaveUserActivity,
+    ): Flow<MainEvent.Domain> {
+        return flow {
+            Log.d("check111", "millis: ${sideEffect.millis}")
+            userActivityInteractor.setLastUserActivityTime(sideEffect.millis)
+            emit(MainEvent.Domain.None)
         }
     }
 }
