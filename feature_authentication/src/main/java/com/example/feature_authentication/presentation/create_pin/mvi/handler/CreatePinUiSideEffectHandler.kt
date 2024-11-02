@@ -1,9 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
-import androidx.navigation.NavHostController
-import com.example.core.navigation.extension.replaceAll
 import com.example.core.navigation.feature_destination.FeaturesDestination
 import com.example.core.navigation.router.AppRouter
+import com.example.core.navigation.router.FeatureRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect
@@ -21,7 +20,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CreatePinUiSideEffectHandler @Inject constructor(
     private val router: AppRouter,
-    private val navHostController: NavHostController,
+    private val featureRouter: FeatureRouter,
 ) : SideEffectHandler<CreatePinEvent, CreatePinSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -47,7 +46,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleBack(): Flow<CreatePinEvent.Ui> {
         return flow {
-            navHostController.popBackStack()
+            featureRouter.popBackStack()
             emit(CreatePinEvent.Ui.None)
         }
     }
@@ -68,7 +67,7 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
         return flow {
-            navHostController.replaceAll(LocalDestinationAuthentication.Biometrics)
+            featureRouter.replaceAll(LocalDestinationAuthentication.Biometrics)
             emit(CreatePinEvent.Ui.None)
         }
     }

@@ -1,7 +1,7 @@
 package com.example.feature_authentication.presentation.login.mvi.handler
 
-import androidx.navigation.NavHostController
 import com.example.core.navigation.router.AppRouter
+import com.example.core.navigation.router.FeatureRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class LoginUiSideEffectHandler @Inject constructor(
     private val router: AppRouter,
-    private val navHostController: NavHostController,
+    private val featureRouter: FeatureRouter,
 ) : SideEffectHandler<LoginEvent, LoginSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<LoginSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -50,7 +50,7 @@ internal class LoginUiSideEffectHandler @Inject constructor(
 
     private fun handleOpenPinScreen(): Flow<LoginEvent.Ui> {
         return flow {
-            navHostController.navigate(LocalDestinationAuthentication.CreatePin)
+            featureRouter.navigate(LocalDestinationAuthentication.CreatePin)
             emit(LoginEvent.Ui.None)
         }
     }

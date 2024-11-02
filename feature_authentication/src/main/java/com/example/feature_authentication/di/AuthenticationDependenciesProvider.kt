@@ -1,9 +1,9 @@
 package com.example.feature_authentication.di
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
+import com.example.core.navigation.router.FeatureRouter
 
 interface AuthenticationDependenciesProvider {
-    fun provideNavController(): NavHostController
+    fun provideFeatureRouter(): FeatureRouter
     fun provideViewModelFactory(): ViewModelProvider.Factory
 }

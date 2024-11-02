@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.core.di.extension.clearComponent
 import com.example.core.di.extension.getComponent
 import com.example.feature_authentication.di.AuthenticationComponent
@@ -20,9 +21,12 @@ fun AuthenticationContainer() {
     val context = LocalContext.current
     val component = context.getComponent<AuthenticationComponent>()
 
-    val navController = component.provideNavController()
+    val featureRouter = component.provideFeatureRouter()
     val viewModelFactory = component.provideViewModelFactory()
     val viewModel = viewModel<AuthenticationContainerViewModel>(factory = viewModelFactory)
+
+    val navController = rememberNavController()
+    featureRouter.setNavController(navController)
 
     val startDestination = if (viewModel.isRefreshTokenExist()) {
         LocalDestinationAuthentication.Pin

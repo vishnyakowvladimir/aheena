@@ -1,13 +1,10 @@
 package com.example.feature_authentication.di
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.DialogNavigator
 import com.example.core.di.key.ViewModelKey
 import com.example.core.di.scope.FeatureScope
+import com.example.core.navigation.router.FeatureRouter
 import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.biometric.BiometricsViewModel
 import com.example.feature_authentication.presentation.container.AuthenticationContainerViewModel
@@ -54,11 +51,8 @@ internal interface AuthenticationModule {
 
         @FeatureScope
         @Provides
-        fun provideNavHostController(context: Context): NavHostController {
-            return NavHostController(context).apply {
-                navigatorProvider.addNavigator(ComposeNavigator())
-                navigatorProvider.addNavigator(DialogNavigator())
-            }
+        fun provideFeatureRouter(): FeatureRouter {
+            return FeatureRouter()
         }
     }
 }
