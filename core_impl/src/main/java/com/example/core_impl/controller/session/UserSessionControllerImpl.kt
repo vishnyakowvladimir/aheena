@@ -21,7 +21,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 private const val DELAY = 2000L
-private const val WITHOUT_USER_ACTIVITY_DURATION = 10000
+
+// если пользователь неактивен(не нажимал экран) в течение этого времени,
+// тогда закрываем сессию(открываем экран ввода пин-кода)
+private const val WITHOUT_USER_ACTIVITY_DURATION = 60000
 
 @OptIn(FlowPreview::class)
 class UserSessionControllerImpl @Inject constructor(
