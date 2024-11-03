@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MainExternalDependencies @Inject constructor(
     val applicationContext: Context,
     val activityHolder: ActivityHolder,
-    @get:MainRouter @MainRouter val mainRouter2: NavRouter,
+    @get:MainRouter @MainRouter val mainRouter: NavRouter,
     val stringProvider: StringProvider,
     val userSessionController: UserSessionController,
 )
