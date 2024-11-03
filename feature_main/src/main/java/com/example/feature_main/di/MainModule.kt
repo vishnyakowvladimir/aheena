@@ -3,7 +3,6 @@ package com.example.feature_main.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.di.key.ViewModelKey
-import com.example.core.di.qualifier.MainRouter
 import com.example.core.di.scope.FeatureScope
 import com.example.core.navigation.router.FeatureRouterImp
 import com.example.core.navigation.router.NavControllerHolder
@@ -13,7 +12,6 @@ import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_main.container.MainContainerViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module
@@ -31,18 +29,7 @@ internal interface MainModule {
     @Binds
     fun provideNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
 
-    companion object {
-
-        @FeatureScope
-        @Provides
-        fun provideRouter(
-            @MainRouter mainRouter: NavRouter,
-            navControllerHolder: NavControllerHolder,
-        ): NavRouter {
-            return FeatureRouterImp(
-                appRouter = mainRouter,
-                navControllerHolder = navControllerHolder,
-            )
-        }
-    }
+    @FeatureScope
+    @Binds
+    fun bindRouter(holder: FeatureRouterImp): NavRouter
 }

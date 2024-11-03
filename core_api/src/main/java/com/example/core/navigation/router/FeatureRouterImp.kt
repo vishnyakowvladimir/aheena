@@ -1,8 +1,11 @@
 package com.example.core.navigation.router
 
-class FeatureRouterImp(
+import com.example.core.di.qualifier.MainRouter
+import javax.inject.Inject
+
+class FeatureRouterImp @Inject constructor(
     private val navControllerHolder: NavControllerHolder,
-    private val appRouter: NavRouter,
+    @MainRouter private val appRouter: NavRouter,
 ) : AbstractNavRouter(navControllerHolder) {
 
     override fun popBackStack(): Boolean {
