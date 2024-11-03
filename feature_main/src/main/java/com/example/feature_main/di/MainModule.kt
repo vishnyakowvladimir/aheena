@@ -27,13 +27,11 @@ internal interface MainModule {
     @ViewModelKey(MainContainerViewModel::class)
     fun bindMainContainerViewModel(viewModel: MainContainerViewModel): ViewModel
 
-    companion object {
+    @FeatureScope
+    @Binds
+    fun provideNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
 
-        @FeatureScope
-        @Provides
-        fun provideNavControllerHolder(): NavControllerHolder {
-            return NavControllerHolderImpl()
-        }
+    companion object {
 
         @FeatureScope
         @Provides

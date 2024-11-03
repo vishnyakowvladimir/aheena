@@ -19,13 +19,11 @@ interface NavigationModule {
     @Binds
     fun bindMainRouter(router: AppRouterImpl): NavRouter
 
-    companion object {
+    @ApplicationScope
+    @Binds
+    fun bindNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
 
-        @ApplicationScope
-        @Provides
-        fun provideNavControllerHolder(): NavControllerHolder {
-            return NavControllerHolderImpl()
-        }
+    companion object {
 
         @ApplicationScope
         @Provides

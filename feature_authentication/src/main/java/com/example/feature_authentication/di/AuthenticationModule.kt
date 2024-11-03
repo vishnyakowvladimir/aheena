@@ -51,13 +51,11 @@ internal interface AuthenticationModule {
     @ViewModelKey(PinViewModel::class)
     fun bindPinCodeViewModel(viewModel: PinViewModel): ViewModel
 
-    companion object {
+    @FeatureScope
+    @Binds
+    fun bindNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
 
-        @FeatureScope
-        @Provides
-        fun provideNavControllerHolder(): NavControllerHolder {
-            return NavControllerHolderImpl()
-        }
+    companion object {
 
         @FeatureScope
         @Provides
