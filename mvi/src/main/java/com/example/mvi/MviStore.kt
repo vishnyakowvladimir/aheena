@@ -12,7 +12,7 @@ class MviStore<Event, State, SideEffect, UiCommand>(
     private val sideEffectHandler: SideEffectHandler<Event, SideEffect>,
     private val transitionListener: TransitionListener<Event, State, SideEffect, UiCommand>? = null
 ) {
-    private val eventSharedFlow = MutableSharedFlow<Event>()
+    private val eventSharedFlow = MutableSharedFlow<Event>(replay = Int.MAX_VALUE)
 
     suspend fun onEvent(event: Event) {
         eventSharedFlow.emit(event)
