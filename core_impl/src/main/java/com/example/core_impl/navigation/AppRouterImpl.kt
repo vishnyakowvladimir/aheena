@@ -3,8 +3,9 @@ package com.example.core_impl.navigation
 import com.example.core.holder.ActivityHolder
 import com.example.core.navigation.router.AbstractNavRouter
 import com.example.core.navigation.router.NavControllerHolder
+import javax.inject.Inject
 
-class AppRouterImpl(
+class AppRouterImpl @Inject constructor(
     private val navControllerHolder: NavControllerHolder,
     private val activityHolder: ActivityHolder,
 ) : AbstractNavRouter(navControllerHolder) {
