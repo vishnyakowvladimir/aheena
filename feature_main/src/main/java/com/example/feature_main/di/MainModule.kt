@@ -9,7 +9,7 @@ import com.example.core.navigation.router.NavControllerHolder
 import com.example.core.navigation.router.NavControllerHolderImpl
 import com.example.core.navigation.router.NavRouter
 import com.example.core.utils.view_model_factory.AppViewModelFactory
-import com.example.feature_main.container.MainContainerViewModel
+import com.example.feature_main.presentation.container.MainContainerViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

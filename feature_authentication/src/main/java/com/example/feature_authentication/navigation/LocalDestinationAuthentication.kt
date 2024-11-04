@@ -4,6 +4,7 @@ import com.example.core.navigation.base.BaseDestination
 import kotlinx.serialization.Serializable
 
 internal sealed interface LocalDestinationAuthentication : BaseDestination {
+
     @Serializable
     data object PhoneAndPassword : LocalDestinationAuthentication
 
