@@ -37,7 +37,7 @@ internal fun MainContainer() {
     ) {
 
         composable<LocalDestinationMain.Main> {
-            MainScreen()
+            MainScreen(viewModel(factory = viewModelFactory))
         }
     }
 }
