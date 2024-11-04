@@ -22,14 +22,14 @@ internal class LoginDomainSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<LoginSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<LoginEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: LoginSideEffect.Domain) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<LoginEvent> {
+    private fun handleSideEffect(): Flow<LoginEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is LoginSideEffect.Domain.SaveRefreshToken -> handleSaveRefreshToken(sideEffect)

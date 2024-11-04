@@ -25,14 +25,14 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Ui>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<CreatePinEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: CreatePinSideEffect.Ui) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<CreatePinEvent> {
+    private fun handleSideEffect(): Flow<CreatePinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is CreatePinSideEffect.Ui.Back -> handleBack()

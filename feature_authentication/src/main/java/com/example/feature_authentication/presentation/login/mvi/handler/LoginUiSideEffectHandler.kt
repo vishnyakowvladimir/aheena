@@ -23,14 +23,14 @@ internal class LoginUiSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<LoginSideEffect.Ui>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<LoginEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: LoginSideEffect.Ui) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<LoginEvent> {
+    private fun handleSideEffect(): Flow<LoginEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is LoginSideEffect.Ui.Back -> handleBack()

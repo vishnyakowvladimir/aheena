@@ -26,14 +26,14 @@ internal class BiometricsDomainSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<BiometricsSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<BiometricsEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: BiometricsSideEffect.Domain) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<BiometricsEvent> {
+    private fun handleSideEffect(): Flow<BiometricsEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is BiometricsSideEffect.Domain.SavePinCode -> handleSavePinCode()

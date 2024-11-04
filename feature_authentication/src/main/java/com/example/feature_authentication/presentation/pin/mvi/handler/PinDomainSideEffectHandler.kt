@@ -2,7 +2,6 @@ package com.example.feature_authentication.presentation.pin.mvi.handler
 
 import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
 import com.example.feature_authentication.constants.REFRESH_TOKEN
-import com.example.feature_authentication.domain.LocalAuthenticationInteractor
 import com.example.feature_authentication.presentation.pin.mvi.model.PinEvent
 import com.example.feature_authentication.presentation.pin.mvi.model.PinSideEffect
 import com.example.mvi.SideEffectHandler
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class PinDomainSideEffectHandler @Inject constructor(
-    private val localAuthenticationInteractor: LocalAuthenticationInteractor,
     private val authenticationInteractor: AuthenticationInteractor,
 ) :
     SideEffectHandler<PinEvent, PinSideEffect.Domain> {
@@ -26,14 +24,14 @@ internal class PinDomainSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<PinSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<PinEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: PinSideEffect.Domain) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<PinEvent> {
+    private fun handleSideEffect(): Flow<PinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is PinSideEffect.Domain.AuthenticationByBiometricNeeded -> {

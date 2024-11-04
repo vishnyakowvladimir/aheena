@@ -24,14 +24,14 @@ internal class PinUiSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<PinSideEffect.Ui>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<PinEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: PinSideEffect.Ui) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<PinEvent> {
+    private fun handleSideEffect(): Flow<PinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is PinSideEffect.Ui.Back -> handleBack()

@@ -26,14 +26,14 @@ internal class CreatePinDomainSideEffectHandler @Inject constructor(
     private val sideEffectSharedFlow = MutableSharedFlow<CreatePinSideEffect.Domain>(Int.MAX_VALUE)
 
     override fun getEventSource(): Flow<CreatePinEvent> {
-        return postListSideEffectHandler()
+        return handleSideEffect()
     }
 
     override suspend fun onSideEffect(sideEffect: CreatePinSideEffect.Domain) {
         sideEffectSharedFlow.emit(sideEffect)
     }
 
-    private fun postListSideEffectHandler(): Flow<CreatePinEvent> {
+    private fun handleSideEffect(): Flow<CreatePinEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is CreatePinSideEffect.Domain.SaveRefreshToken -> handleSaveRefreshToken(sideEffect)
