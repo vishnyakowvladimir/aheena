@@ -48,9 +48,9 @@ internal class PinUiReducer @Inject constructor(
     }
 
     private fun reduceOnEnableBiometricsNeeded(state: PinDomainState): Update<PinDomainState, PinSideEffect, PinUiCommand> {
-        return if (state.isBiometricsReady && state.cryptoObject != null) {
+        return if (state.isBiometricsReady && state.cipher != null) {
             Update.uiCommands(
-                listOf(PinUiCommand.ShowBiometricsDialog(state.cryptoObject)),
+                listOf(PinUiCommand.ShowBiometricsDialog(state.cipher)),
             )
         } else {
             Update.nothing()
@@ -128,9 +128,9 @@ internal class PinUiReducer @Inject constructor(
             }
 
             key == PinKey.BIOMETRICS -> {
-                if (state.isBiometricsReady && state.cryptoObject != null) {
+                if (state.isBiometricsReady && state.cipher != null) {
                     Update.uiCommands(
-                        listOf(PinUiCommand.ShowBiometricsDialog(state.cryptoObject)),
+                        listOf(PinUiCommand.ShowBiometricsDialog(state.cipher)),
                     )
                 } else {
                     Update.nothing()

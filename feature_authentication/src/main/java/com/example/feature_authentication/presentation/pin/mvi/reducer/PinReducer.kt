@@ -30,7 +30,7 @@ internal class PinReducer @Inject constructor(
     fun getInitialState(): PinDomainState {
         val isBiometricsReady = biometricController.isReady()
 
-        val cryptoObject = if (isBiometricsReady) {
+        val cipher = if (isBiometricsReady) {
             authenticationInteractor.getCipher()
         } else {
             null
@@ -38,7 +38,7 @@ internal class PinReducer @Inject constructor(
 
         return PinDomainState(
             pin = emptyList(),
-            cryptoObject = cryptoObject,
+            cipher = cipher,
             isBiometricsReady = biometricController.isReady(),
             biometricPromptHandler = null,
         )

@@ -5,7 +5,7 @@ import com.example.feature_authentication.biometric.BiometricPromptHandler
 
 internal data class PinDomainState(
     val pin: List<Int>,
-    val cryptoObject: CipherHolder?,
+    val cipher: CipherHolder?,
     val biometricPromptHandler: BiometricPromptHandler?,
     val isBiometricsReady: Boolean,
     val isError: Boolean = false,
