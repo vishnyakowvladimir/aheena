@@ -1,6 +1,6 @@
 package com.example.data_source_impl.repository.authentication
 
-import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.model.CipherHolder
 import com.example.data_source_api.repository.authentication.AuthenticationRepository
 import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject
@@ -29,15 +29,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
         return authenticationSource.savePin(pinCode)
     }
 
-    override fun getPin(authenticatedCryptoObject: AuthenticationCryptoObject): CharSequence {
-        return authenticationSource.getPin(authenticatedCryptoObject)
+    override fun getPin(cipher: CipherHolder): CharSequence {
+        return authenticationSource.getPin(cipher)
     }
 
     override fun clearPin() {
         authenticationSource.clearPin()
     }
 
-    override fun getAuthenticationCryptoObject(): AuthenticationCryptoObject {
-        return authenticationSource.getAuthenticationCryptoObject()
+    override fun getCipher(): CipherHolder {
+        return authenticationSource.getCipher()
     }
 }

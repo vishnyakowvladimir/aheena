@@ -3,8 +3,8 @@ package com.example.data_source_impl.storage.authentication
 import android.util.Base64
 import androidx.core.content.edit
 import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
-import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.RsaCipher
+import com.example.core.crypto.rsa.cipher.model.CipherHolder
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject
@@ -15,7 +15,7 @@ private const val PIN_CODE_KEY = "pin_code"
 class AuthenticationStorageImpl @Inject constructor(
     private val preferencesProvider: AndroidPreferencesProvider,
     private val refreshTokenCipher: RefreshTokenCipher,
-    private val rsaCipher: AuthenticationRsaCipher,
+    private val rsaCipher: RsaCipher,
 ) : AuthenticationStorage {
     override fun saveRefreshToken(refreshToken: CharSequence, pinCode: CharSequence) {
         preferencesProvider.cryptoPrefs.edit {
@@ -54,12 +54,12 @@ class AuthenticationStorageImpl @Inject constructor(
         }
     }
 
-    override fun getPin(authenticatedCryptoObject: AuthenticationCryptoObject): CharSequence {
+    override fun getPin(cipher: CipherHolder): CharSequence {
         return try {
             val base64PinCode = preferencesProvider.cryptoPrefs.getString(PIN_CODE_KEY, null)
                 ?: return ""
             val encryptedPinCode = Base64.decode(base64PinCode, Base64.NO_WRAP)
-            val decryptedPinCode = rsaCipher.decrypt(encryptedPinCode, authenticatedCryptoObject)
+            val decryptedPinCode = rsaCipher.decrypt(encryptedPinCode, cipher)
             String(decryptedPinCode, Charsets.UTF_8)
         } catch (throwable: Throwable) {
             ""
@@ -72,7 +72,7 @@ class AuthenticationStorageImpl @Inject constructor(
         }
     }
 
-    override fun getAuthenticationCryptoObject(): AuthenticationCryptoObject {
-        return rsaCipher.getAuthenticationCryptoObject()
+    override fun getCipher(): CipherHolder {
+        return rsaCipher.getCipher()
     }
 }

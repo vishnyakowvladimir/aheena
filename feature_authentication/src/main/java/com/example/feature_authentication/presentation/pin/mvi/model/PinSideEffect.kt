@@ -1,6 +1,6 @@
 package com.example.feature_authentication.presentation.pin.mvi.model
 
-import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
+import com.example.core.crypto.rsa.cipher.model.CipherHolder
 
 internal sealed interface PinSideEffect {
 
@@ -12,7 +12,7 @@ internal sealed interface PinSideEffect {
 
     sealed interface Domain : PinSideEffect {
         data class AuthenticationByPinNeeded(val pin: CharSequence) : Domain
-        data class AuthenticationByBiometricNeeded(val cryptoObject: AuthenticationCryptoObject) : Domain
+        data class AuthenticationByBiometricNeeded(val cipher: CipherHolder) : Domain
     }
 }
 

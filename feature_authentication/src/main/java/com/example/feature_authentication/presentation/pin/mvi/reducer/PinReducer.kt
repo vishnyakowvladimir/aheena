@@ -31,7 +31,7 @@ internal class PinReducer @Inject constructor(
         val isBiometricsReady = biometricController.isReady()
 
         val cryptoObject = if (isBiometricsReady) {
-            authenticationInteractor.getAuthenticationCryptoObject()
+            authenticationInteractor.getCipher()
         } else {
             null
         }

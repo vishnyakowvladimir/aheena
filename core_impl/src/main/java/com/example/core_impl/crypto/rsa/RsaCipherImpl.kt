@@ -1,9 +1,9 @@
 package com.example.core_impl.crypto.rsa
 
 import android.security.keystore.KeyPermanentlyInvalidatedException
-import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
+import com.example.core.crypto.rsa.cipher.RsaCipher
+import com.example.core.crypto.rsa.cipher.model.CipherHolder
 import com.example.core.crypto.rsa.store.RsaCipherKeyStore
-import com.example.core.crypto.rsa.cipher.model.AuthenticationCryptoObject
 import com.example.core_impl.crypto.rsa.model.RsaCipherConfig
 import java.security.KeyFactory
 import java.security.spec.X509EncodedKeySpec
@@ -12,23 +12,23 @@ import javax.crypto.spec.OAEPParameterSpec
 import javax.crypto.spec.PSource
 import javax.inject.Inject
 
-class AuthenticationRsaCipherImpl @Inject constructor(
+class RsaCipherImpl @Inject constructor(
     private val keyStore: RsaCipherKeyStore,
     private val config: RsaCipherConfig,
-) : AuthenticationRsaCipher {
+) : RsaCipher {
 
     override fun encrypt(bytes: ByteArray): ByteArray {
         val encryptCipher = createCipher() { initEncryptCipher(it) }
         return encryptCipher.doFinal(bytes)
     }
 
-    override fun decrypt(bytes: ByteArray, authenticatedCryptoObject: AuthenticationCryptoObject): ByteArray {
-        return authenticatedCryptoObject.cipher.doFinal(bytes)
+    override fun decrypt(bytes: ByteArray, cipher: CipherHolder): ByteArray {
+        return cipher.cipher.doFinal(bytes)
     }
 
-    override fun getAuthenticationCryptoObject(): AuthenticationCryptoObject {
+    override fun getCipher(): CipherHolder {
         val decryptCipher = createCipher() { initDecryptCipher(it) }
-        return AuthenticationCryptoObject(decryptCipher)
+        return CipherHolder(decryptCipher)
     }
 
     override fun refuseCryptoKey(): Boolean {

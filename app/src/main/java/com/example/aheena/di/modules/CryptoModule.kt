@@ -2,11 +2,11 @@ package com.example.aheena.di.modules
 
 import android.security.keystore.KeyProperties
 import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
+import com.example.core.crypto.rsa.cipher.RsaCipher
 import com.example.core.crypto.rsa.store.RsaCipherKeyStore
 import com.example.core.crypto.vizhener.VizhenerCipher
 import com.example.core_impl.crypto.authentication.RefreshTokenCipherImpl
-import com.example.core_impl.crypto.rsa.AuthenticationRsaCipherImpl
+import com.example.core_impl.crypto.rsa.RsaCipherImpl
 import com.example.core_impl.crypto.rsa.RsaCipherKeyStoreImpl
 import com.example.core_impl.crypto.rsa.RsaSecretKeyConfig
 import com.example.core_impl.crypto.rsa.model.CipherMode
@@ -32,7 +32,7 @@ internal interface CryptoModule {
     fun bindRsaCipherKeyStore(store: RsaCipherKeyStoreImpl): RsaCipherKeyStore
 
     @Binds
-    fun bindAuthenticationRsaCipher(cipher: AuthenticationRsaCipherImpl): AuthenticationRsaCipher
+    fun bindAuthenticationRsaCipher(cipher: RsaCipherImpl): RsaCipher
 
     companion object {
 

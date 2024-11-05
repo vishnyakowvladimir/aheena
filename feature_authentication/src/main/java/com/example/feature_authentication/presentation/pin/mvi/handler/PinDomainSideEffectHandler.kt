@@ -51,7 +51,7 @@ internal class PinDomainSideEffectHandler @Inject constructor(
     ): Flow<PinEvent> {
         return flow {
             delay(1000)
-            val pin = authenticationInteractor.getPin(sideEffect.cryptoObject)
+            val pin = authenticationInteractor.getPin(sideEffect.cipher)
             val refreshToken = authenticationInteractor.getRefreshToken(pin)
 
             // по идее еще должен отправляться запрос авторизации, где должен прийти успешный или нет ответ
