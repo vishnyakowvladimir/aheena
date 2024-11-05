@@ -12,13 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 // если пользователь неактивен(не нажимал экран) в течение этого времени,
 // тогда закрываем сессию(открываем экран ввода пин-кода)
-private const val CRITICA_USER_INACTIVITY_DURATION = 30000L
+private const val CRITICAL_USER_INACTIVITY_DURATION = 30000L
 
 @OptIn(FlowPreview::class)
 class UserSessionControllerImpl @Inject constructor(
@@ -46,12 +47,10 @@ class UserSessionControllerImpl @Inject constructor(
     private fun subscribeUserActivity() {
         userActivityInteractor
             .getLastUserActivityTime()
-            .debounce(CRITICA_USER_INACTIVITY_DURATION)
-            .withLatestFrom(isEnabledFlow) { millis, isEnabled ->
-                val isCriticalUserInactivity =
-                    systemClock.getCurrentTimeMillis() - millis >= CRITICA_USER_INACTIVITY_DURATION
-
-                if (isEnabled && isCriticalUserInactivity) {
+            .debounce(CRITICAL_USER_INACTIVITY_DURATION)
+            .flowOn(Dispatchers.Default)
+            .withLatestFrom(isEnabledFlow) { _, isEnabled ->
+                if (isEnabled) {
                     disable()
                     withContext(Dispatchers.Main) {
                         mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
