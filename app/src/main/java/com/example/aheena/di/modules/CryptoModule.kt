@@ -4,7 +4,7 @@ import android.security.keystore.KeyProperties
 import com.example.core.crypto.authentication.RefreshTokenCipher
 import com.example.core.crypto.rsa.cipher.AuthenticationRsaCipher
 import com.example.core.crypto.rsa.store.RsaCipherKeyStore
-import com.example.core.crypto.vizhener.IVizhenerCipher
+import com.example.core.crypto.vizhener.VizhenerCipher
 import com.example.core_impl.crypto.authentication.RefreshTokenCipherImpl
 import com.example.core_impl.crypto.rsa.AuthenticationRsaCipherImpl
 import com.example.core_impl.crypto.rsa.RsaCipherKeyStoreImpl
@@ -12,7 +12,7 @@ import com.example.core_impl.crypto.rsa.RsaSecretKeyConfig
 import com.example.core_impl.crypto.rsa.model.CipherMode
 import com.example.core_impl.crypto.rsa.model.EncryptionPadding
 import com.example.core_impl.crypto.rsa.model.RsaCipherConfig
-import com.example.core_impl.crypto.vizhener.VizhenerCipher
+import com.example.core_impl.crypto.vizhener.VizhenerCipherImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -37,8 +37,8 @@ internal interface CryptoModule {
     companion object {
 
         @Provides
-        fun provideVizhenerCipher(): IVizhenerCipher {
-            return VizhenerCipher(LETTERS_DIGITS_ALPHABET)
+        fun provideVizhenerCipher(): VizhenerCipher {
+            return VizhenerCipherImpl(LETTERS_DIGITS_ALPHABET)
         }
 
         @Provides

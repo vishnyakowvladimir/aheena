@@ -1,12 +1,12 @@
 package com.example.core_impl.crypto.vizhener
 
-import com.example.core.crypto.vizhener.IVizhenerCipher
+import com.example.core.crypto.vizhener.VizhenerCipher
 
 private const val EMPTY_STRING = ""
 
-class VizhenerCipher(
+class VizhenerCipherImpl(
     private val alphabet: String,
-) : IVizhenerCipher {
+) : VizhenerCipher {
 
     private val alphabetMap by lazy { alphabet.mapIndexed { index, char -> char to index }.toMap() }
 
