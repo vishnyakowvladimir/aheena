@@ -18,12 +18,26 @@ internal class MainUiReducer @Inject constructor() :
         return when (event) {
             is MainEvent.Ui.None -> Update.nothing()
             is MainEvent.Ui.OnBackPressed -> reduceOnBackPressed()
+            is MainEvent.Ui.OnBottomBarItemClick -> reduceOnBottomBarItemClick(state, event)
         }
     }
 
     private fun reduceOnBackPressed(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Ui.Back),
+        )
+    }
+
+    private fun reduceOnBottomBarItemClick(
+        state: MainDomainState,
+        event: MainEvent.Ui.OnBottomBarItemClick,
+    ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        val updatedBottomBarState = state.bottomBarState.updateStateByIndex(selectedIndex = event.index)
+
+        return Update.state(
+            state.copy(
+                bottomBarState = updatedBottomBarState,
+            )
         )
     }
 }
