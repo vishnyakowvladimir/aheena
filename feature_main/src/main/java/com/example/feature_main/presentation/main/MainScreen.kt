@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +23,7 @@ import com.example.feature_main.presentation.features.FeaturesScreen
 import com.example.feature_main.presentation.main.model.MainUiState
 import com.example.feature_main.presentation.main.model.PagerScreen
 import com.example.feature_main.presentation.main.mvi.model.MainEvent
+import com.example.feature_main.presentation.settings.SettingsScreen
 import com.example.lib_ui.components.bottom_bar.AppBottomBar
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.utils.SetSystemBarsColor
@@ -85,9 +85,7 @@ private fun Content(
                 }
 
                 PagerScreen.SETTINGS.index -> {
-                    Text(
-                        text = "Hello $pageIndex",
-                    )
+                    SettingsScreen(viewModel = viewModel(factory = viewModelFactory))
                 }
 
                 else -> Unit

@@ -21,7 +21,6 @@ internal class FeaturesReducer @Inject constructor(
             is FeaturesEvent.None -> Update.nothing()
             is FeaturesEvent.Ui -> uiReducer.update(state, event)
             is FeaturesEvent.Domain -> domainReducer.update(state, event)
-            else -> Update.nothing()
         }
     }
 

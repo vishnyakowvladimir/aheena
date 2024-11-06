@@ -1,6 +1,7 @@
 package com.example.feature_main.di
 
 import android.content.Context
+import com.example.core.controller.logout.LogoutController
 import com.example.core.controller.session.UserSessionController
 import com.example.core.di.qualifier.MainRouter
 import com.example.core.holder.ActivityHolder
@@ -14,4 +15,5 @@ class MainExternalDependencies @Inject constructor(
     @get:MainRouter @MainRouter val mainRouter: NavRouter,
     val stringProvider: StringProvider,
     val userSessionController: UserSessionController,
+    val logoutController: LogoutController,
 )

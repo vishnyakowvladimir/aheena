@@ -12,6 +12,7 @@ import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_main.presentation.container.MainContainerViewModel
 import com.example.feature_main.presentation.features.FeaturesViewModel
 import com.example.feature_main.presentation.main.MainViewModel
+import com.example.feature_main.presentation.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -36,6 +37,11 @@ internal interface MainModule {
     @IntoMap
     @ViewModelKey(FeaturesViewModel::class)
     fun bindFeaturesViewModel(viewModel: FeaturesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 
     @FeatureScope
     @Binds
