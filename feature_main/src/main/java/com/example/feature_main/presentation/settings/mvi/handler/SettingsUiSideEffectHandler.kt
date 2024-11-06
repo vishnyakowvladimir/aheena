@@ -1,6 +1,7 @@
 package com.example.feature_main.presentation.settings.mvi.handler
 
 import com.example.core.controller.logout.LogoutController
+import com.example.core.controller.theme.ThemeManager
 import com.example.feature_main.presentation.settings.mvi.model.SettingsEvent
 import com.example.feature_main.presentation.settings.mvi.model.SettingsSideEffect
 import com.example.mvi.SideEffectHandler
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SettingsUiSideEffectHandler @Inject constructor(
     private val logoutController: LogoutController,
+    private val themeManager: ThemeManager,
 ) : SideEffectHandler<SettingsEvent, SettingsSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<SettingsSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -31,6 +33,9 @@ internal class SettingsUiSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 SettingsSideEffect.Ui.Logout -> handleLogout()
+                SettingsSideEffect.Ui.ApplyThemeLight -> handleApplyThemeLight()
+                SettingsSideEffect.Ui.ApplyThemeDark -> handleApplyThemeDark()
+                SettingsSideEffect.Ui.ApplyThemeSystem -> handleApplyThemeSystem()
             }
         }
             .flowOn(Dispatchers.Main)
@@ -39,6 +44,27 @@ internal class SettingsUiSideEffectHandler @Inject constructor(
     private fun handleLogout(): Flow<SettingsEvent> {
         return flow {
             logoutController.logout()
+            emit(SettingsEvent.None)
+        }
+    }
+
+    private fun handleApplyThemeLight(): Flow<SettingsEvent> {
+        return flow {
+            themeManager.applyThemeModeLight()
+            emit(SettingsEvent.None)
+        }
+    }
+
+    private fun handleApplyThemeDark(): Flow<SettingsEvent> {
+        return flow {
+            themeManager.applyThemeModeDark()
+            emit(SettingsEvent.None)
+        }
+    }
+
+    private fun handleApplyThemeSystem(): Flow<SettingsEvent> {
+        return flow {
+            themeManager.applyThemeModeSystem()
             emit(SettingsEvent.None)
         }
     }
