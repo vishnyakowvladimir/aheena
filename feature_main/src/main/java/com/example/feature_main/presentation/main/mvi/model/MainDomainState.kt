@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 
 internal data class MainDomainState(
     val bottomBarState: BottomBarState,
+    val pagerState: PagerState,
 ) {
     data class BottomBarState(
         val items: List<BottomBarItemState>
@@ -23,4 +24,8 @@ internal data class MainDomainState(
             return copy(items = updatedItems)
         }
     }
+
+    data class PagerState(
+        val currentPage: Int,
+    )
 }

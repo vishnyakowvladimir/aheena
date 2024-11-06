@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,12 +63,17 @@ private fun Content(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        Column(
+
+        HorizontalPager(
+            state = state.pagerState,
+            userScrollEnabled = false,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-        ) {
-            Text(text = "Hello")
+        ) { pageIndex ->
+            Text(
+                text = "Hello $pageIndex",
+            )
         }
 
         AppBottomBar(

@@ -34,9 +34,15 @@ internal class MainUiReducer @Inject constructor() :
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         val updatedBottomBarState = state.bottomBarState.updateStateByIndex(selectedIndex = event.index)
 
+        val currentPagerState = state.pagerState
+        val updatedPagerState = currentPagerState.copy(
+            currentPage = event.index,
+        )
+
         return Update.state(
             state.copy(
                 bottomBarState = updatedBottomBarState,
+                pagerState = updatedPagerState,
             )
         )
     }

@@ -7,10 +7,13 @@ import com.example.lib_ui.components.bottom_bar.model.AppBottomBarState
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
+private const val PAGE_COUNT = 2
+
 internal class MainMapper @Inject constructor() {
     fun map(domainState: MainDomainState): MainUiState {
         return MainUiState(
             bottomBarState = mapBottomBarState(domainState.bottomBarState),
+            pagerState = mapPagerState(domainState.pagerState),
         )
     }
 
@@ -29,6 +32,15 @@ internal class MainMapper @Inject constructor() {
             title = domainState.title,
             iconRes = domainState.iconRes,
             isSelected = domainState.isSelected,
+        )
+    }
+
+    private fun mapPagerState(
+        domainState: MainDomainState.PagerState,
+    ): MainUiState.UiPagerState {
+        return MainUiState.UiPagerState(
+            page = domainState.currentPage,
+            pageCount = PAGE_COUNT,
         )
     }
 }

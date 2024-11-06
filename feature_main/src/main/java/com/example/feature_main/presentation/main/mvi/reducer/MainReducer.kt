@@ -41,7 +41,10 @@ internal class MainReducer @Inject constructor(
                         iconRes = LibUiR.drawable.ic_24dp_actions_settings,
                     ),
                 ),
-            )
+            ),
+            pagerState = MainDomainState.PagerState(
+                currentPage = 0,
+            ),
         )
     }
 }
