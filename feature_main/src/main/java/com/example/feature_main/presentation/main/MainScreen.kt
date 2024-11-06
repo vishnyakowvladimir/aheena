@@ -15,8 +15,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.core.di.extension.getComponent
 import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.feature_main.di.MainComponent
+import com.example.feature_main.presentation.features.FeaturesScreen
 import com.example.feature_main.presentation.main.model.MainUiState
+import com.example.feature_main.presentation.main.model.PagerScreen
 import com.example.feature_main.presentation.main.mvi.model.MainEvent
 import com.example.lib_ui.components.bottom_bar.AppBottomBar
 import com.example.lib_ui.theme.AppTheme
@@ -60,10 +66,12 @@ private fun Content(
     state: MainUiState,
     onBottomBarItemClick: (Int) -> Unit,
 ) {
+
+    val viewModelFactory = LocalContext.current.getComponent<MainComponent>().provideViewModelFactory()
+
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-
         HorizontalPager(
             state = state.pagerState,
             userScrollEnabled = false,
@@ -71,9 +79,19 @@ private fun Content(
                 .fillMaxWidth()
                 .weight(1f),
         ) { pageIndex ->
-            Text(
-                text = "Hello $pageIndex",
-            )
+            when (pageIndex) {
+                PagerScreen.FEATURES.index -> {
+                    FeaturesScreen(viewModel = viewModel(factory = viewModelFactory))
+                }
+
+                PagerScreen.SETTINGS.index -> {
+                    Text(
+                        text = "Hello $pageIndex",
+                    )
+                }
+
+                else -> Unit
+            }
         }
 
         AppBottomBar(

@@ -1,13 +1,12 @@
 package com.example.feature_main.presentation.main.mapper
 
 import com.example.feature_main.presentation.main.model.MainUiState
+import com.example.feature_main.presentation.main.model.PagerScreen
 import com.example.feature_main.presentation.main.mvi.model.MainDomainState
 import com.example.lib_ui.components.bottom_bar.model.AppBottomBarItemState
 import com.example.lib_ui.components.bottom_bar.model.AppBottomBarState
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
-
-private const val PAGE_COUNT = 2
 
 internal class MainMapper @Inject constructor() {
     fun map(domainState: MainDomainState): MainUiState {
@@ -40,7 +39,7 @@ internal class MainMapper @Inject constructor() {
     ): MainUiState.UiPagerState {
         return MainUiState.UiPagerState(
             page = domainState.currentPage,
-            pageCount = PAGE_COUNT,
+            pageCount = PagerScreen.entries.size,
         )
     }
 }

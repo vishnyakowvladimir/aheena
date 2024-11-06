@@ -10,6 +10,7 @@ import com.example.core.navigation.router.NavControllerHolderImpl
 import com.example.core.navigation.router.NavRouter
 import com.example.core.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_main.presentation.container.MainContainerViewModel
+import com.example.feature_main.presentation.features.FeaturesViewModel
 import com.example.feature_main.presentation.main.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -30,6 +31,11 @@ internal interface MainModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FeaturesViewModel::class)
+    fun bindFeaturesViewModel(viewModel: FeaturesViewModel): ViewModel
 
     @FeatureScope
     @Binds
