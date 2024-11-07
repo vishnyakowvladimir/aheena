@@ -16,7 +16,6 @@ internal class BiometricsUiReducer @Inject constructor() :
         event: BiometricsEvent.Ui,
     ): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return when (event) {
-            is BiometricsEvent.Ui.None -> Update.nothing()
             is BiometricsEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is BiometricsEvent.Ui.OnEnableButtonClick -> reduceOnEnableButtonClick()
             is BiometricsEvent.Ui.OnSkipButtonClick -> reduceOnSkipButtonClick()

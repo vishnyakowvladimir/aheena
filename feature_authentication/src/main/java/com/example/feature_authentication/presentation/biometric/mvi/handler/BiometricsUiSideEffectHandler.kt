@@ -39,17 +39,17 @@ internal class BiometricsUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<BiometricsEvent.Ui> {
+    private fun handleBack(): Flow<BiometricsEvent> {
         return flow {
             mainRouter.popBackStack()
-            emit(BiometricsEvent.Ui.None)
+            emit(BiometricsEvent.None)
         }
     }
 
-    private fun handleOpenMainScreen(): Flow<BiometricsEvent.Ui> {
+    private fun handleOpenMainScreen(): Flow<BiometricsEvent> {
         return flow {
             mainRouter.replaceAll(FeaturesDestination.MainDestination)
-            emit(BiometricsEvent.Ui.None)
+            emit(BiometricsEvent.None)
         }
     }
 }

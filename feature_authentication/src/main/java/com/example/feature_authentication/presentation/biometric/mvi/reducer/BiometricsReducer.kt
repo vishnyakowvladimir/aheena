@@ -18,6 +18,7 @@ internal class BiometricsReducer @Inject constructor(
         event: BiometricsEvent,
     ): Update<BiometricsDomainState, BiometricsSideEffect, BiometricsUiCommand> {
         return when (event) {
+            is BiometricsEvent.None -> Update.nothing()
             is BiometricsEvent.Ui -> uiReducer.update(state, event)
             is BiometricsEvent.Domain -> domainReducer.update(state, event)
         }

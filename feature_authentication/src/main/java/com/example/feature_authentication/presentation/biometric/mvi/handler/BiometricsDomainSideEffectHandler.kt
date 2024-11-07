@@ -55,7 +55,7 @@ internal class BiometricsDomainSideEffectHandler @Inject constructor(
     private fun handleSaveBiometricsFlag(sideEffect: BiometricsSideEffect.Domain.SaveBiometricsFlag): Flow<BiometricsEvent> {
         return flow {
             biometricsController.saveEnabledBiometricsFlag(sideEffect.flag)
-            emit(BiometricsEvent.Domain.None)
+            emit(BiometricsEvent.None)
         }
     }
 }
