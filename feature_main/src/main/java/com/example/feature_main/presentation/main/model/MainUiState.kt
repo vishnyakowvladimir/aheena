@@ -12,6 +12,6 @@ data class MainUiState(
     @Immutable
     data class UiPagerState(
         val page: Int,
-        override val pageCount: Int
+        override val pageCount: Int,
     ) : PagerState(currentPage = page)
 }
