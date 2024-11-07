@@ -111,6 +111,7 @@ dependencies {
     api project(':feature_splash')
     api project(':feature_authentication')
     api project(':feature_main')
+    api project(':feature_itunes')
 
 //    implementation("androidx.core:core-ktx:1.13.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")

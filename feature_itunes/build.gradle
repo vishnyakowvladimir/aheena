@@ -1,0 +1,14 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+applyAndroidConfiguration(this, "com.example.feature_itunes")
+applyDagger(this)
+applyCompose(this, KotlinCompile)
+
+dependencies {
+    implementation androidXAppCompat
+
+    api project(':core_api')
+    api project(':data_sdk_api')
+    api project(':mvi')
+    api project(":ui:aheena-lib-ui")
+}

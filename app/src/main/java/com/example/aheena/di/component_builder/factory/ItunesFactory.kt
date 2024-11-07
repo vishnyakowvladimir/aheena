@@ -1,0 +1,21 @@
+package com.example.aheena.di.component_builder.factory
+
+import com.example.aheena.di.AppComponent
+import com.example.core.di.component.DaggerComponent
+import com.example.core.di.component.FactoryProvider
+import com.example.feature_itunes.di.ItunesComponent
+
+internal class ItunesFactory() : FactoryProvider {
+
+    private val factory: DaggerComponent.Factory by lazy {
+        DaggerComponent.Factory.builder()
+            .fromSingleDependency<AppComponent> { component ->
+                ItunesComponent.build(component.itunesDependencies())
+            }
+            .build()
+    }
+
+    override fun getFactory(dependencyType: String?): DaggerComponent.Factory {
+        return factory
+    }
+}
