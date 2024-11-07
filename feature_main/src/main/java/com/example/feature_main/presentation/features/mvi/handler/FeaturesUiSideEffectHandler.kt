@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -30,9 +30,18 @@ internal class FeaturesUiSideEffectHandler @Inject constructor(
 
     private fun handleSideEffect(): Flow<FeaturesEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
-            emptyFlow<FeaturesEvent>()
+            when (sideEffect) {
+                is FeaturesSideEffect.Ui.OpenFeature -> handleOpenFeature(sideEffect)
+            }
         }
             .flowOn(Dispatchers.Main)
+    }
+
+    private fun handleOpenFeature(sideEffect: FeaturesSideEffect.Ui.OpenFeature): Flow<FeaturesEvent> {
+        return flow {
+            mainRouter.navigate(sideEffect.destination)
+            emit(FeaturesEvent.None)
+        }
     }
 }
 

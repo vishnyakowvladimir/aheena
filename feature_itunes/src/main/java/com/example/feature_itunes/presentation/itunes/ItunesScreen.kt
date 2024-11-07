@@ -17,6 +17,7 @@ import com.example.lib_ui.components.nav_bar.AppNavBar
 import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.utils.SetSystemBarsColor
+import com.example.lib_ui.R as LibUiR
 
 @Composable
 internal fun ItunesScreen(viewModel: ItunesViewModel) {
@@ -36,7 +37,12 @@ internal fun ItunesScreen(viewModel: ItunesViewModel) {
             AppNavBar(
                 state = AppNavBarState(
                     rightPart = null,
-                    leftPart = null,
+                    leftPart = AppNavBarState.LeftPart(
+                        iconRes = LibUiR.drawable.ic_24dp_navigation_back,
+                        onClick = {
+                            viewModel.onBackPressed()
+                        },
+                    ),
                     middlePart = AppNavBarState.MiddlePart(
                         title = stringResource(id = R.string.itunes_title)
                     ),

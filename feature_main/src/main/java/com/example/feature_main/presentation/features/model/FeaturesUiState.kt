@@ -1,5 +1,5 @@
 package com.example.feature_main.presentation.features.model
 
-data class FeaturesUiState(
-    val isLoading: Boolean,
+internal data class FeaturesUiState(
+    val featuresScreens: List<FeatureScreen>,
 )

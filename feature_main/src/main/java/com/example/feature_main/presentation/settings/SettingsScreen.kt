@@ -1,8 +1,6 @@
 package com.example.feature_main.presentation.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -133,25 +131,13 @@ private fun Title(text: String) {
 private fun LogoutBlock(
     onClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(2.dp)
-                .background(color = AppTheme.palette.text.secondary),
-        )
-
-        Text(
-            text = stringResource(id = R.string.settings_logout_button),
-            style = AppTheme.typography.text1Regular,
-            color = AppTheme.palette.text.secondary,
-            modifier = Modifier
-                .clickable { onClick() }
-                .padding(vertical = 12.dp),
-        )
-    }
+    Text(
+        text = stringResource(id = R.string.settings_logout_button),
+        style = AppTheme.typography.text1Regular,
+        color = AppTheme.palette.text.secondary,
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(vertical = 12.dp),
+    )
 }
 

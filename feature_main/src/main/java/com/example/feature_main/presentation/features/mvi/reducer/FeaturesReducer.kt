@@ -25,8 +25,6 @@ internal class FeaturesReducer @Inject constructor(
     }
 
     fun getInitialState(): FeaturesDomainState {
-        return FeaturesDomainState(
-            isLoading = false,
-        )
+        return FeaturesDomainState()
     }
 }

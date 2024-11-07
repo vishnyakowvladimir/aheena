@@ -7,7 +7,7 @@ import javax.inject.Inject
 internal class FeaturesMapper @Inject constructor() {
     fun map(domainState: FeaturesDomainState): FeaturesUiState {
         return FeaturesUiState(
-            isLoading = domainState.isLoading,
+            featuresScreens = domainState.featuresScreens,
         )
     }
 }
