@@ -12,5 +12,6 @@ dependencies {
     api project(":ui:aheena-lib-ui")
     api project(':core_api')
     api project(':domain_models')
+    api project(':data_source_api')
     api project(':data_sdk_api')
 }
