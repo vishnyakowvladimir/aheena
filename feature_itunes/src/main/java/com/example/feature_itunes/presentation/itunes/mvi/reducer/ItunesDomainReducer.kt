@@ -8,6 +8,8 @@ import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject
 
+private const val LOAD_ITEMS_LIMIT = 20
+
 internal class ItunesDomainReducer @Inject constructor() :
     Reducer<ItunesEvent.Domain, ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
 
@@ -16,17 +18,28 @@ internal class ItunesDomainReducer @Inject constructor() :
         event: ItunesEvent.Domain,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
         return when (event) {
-            is ItunesEvent.Domain.LoadDataNeeded -> reduceLoadData()
+            is ItunesEvent.Domain.LoadDataNeeded -> reduceLoadDataNeeded(state)
             is ItunesEvent.Domain.OnDataLoaded -> reduceOnDataLoaded(state, event)
         }
     }
 
-    private fun reduceLoadData(): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
-        return Update.sideEffects(
-            listOf(
+    private fun reduceLoadDataNeeded(
+        state: ItunesDomainState,
+    ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
+        if (state.isAllLoaded) {
+            return Update.nothing()
+        }
+
+        val page = state.page
+
+        return Update.stateWithSideEffects(
+            state = state.copy(
+                page = page.inc(),
+            ),
+            sideEffects = listOf(
                 ItunesSideEffect.Domain.LoadData(
-                    offset = 0,
-                    limit = 20,
+                    offset = page * LOAD_ITEMS_LIMIT,
+                    limit = LOAD_ITEMS_LIMIT,
                     term = "Often overlooked",
                 )
             )
@@ -37,11 +50,16 @@ internal class ItunesDomainReducer @Inject constructor() :
         state: ItunesDomainState,
         event: ItunesEvent.Domain.OnDataLoaded,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
+        val currentList = state.tracks
+        val loadedList = event.tracks.filter { track -> track.name.isNotEmpty() }
+        val allList = currentList + loadedList
+
         return Update.state(
             state.copy(
+                isAllLoaded = loadedList.isEmpty(),
                 isError = false,
                 isLoading = false,
-                tracks = event.tracks.filter { track -> track.name.isNotEmpty() },
+                tracks = allList,
             )
         )
     }
