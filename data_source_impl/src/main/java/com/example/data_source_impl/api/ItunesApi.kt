@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface ItunesApi {
 
     @GET("search")
-    fun loadItunesTrackList(
+    suspend fun loadItunesTrackList(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Query("term") term: String
