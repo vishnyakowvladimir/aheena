@@ -13,15 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -125,8 +121,6 @@ private fun DataContent(
     data: ItunesData.Data,
     onListEndReached: () -> Unit,
 ) {
-    val scrollState = rememberLazyListState()
-
     LazyColumn(
         state = rememberLazyListState(),
         modifier = Modifier
@@ -149,21 +143,6 @@ private fun DataContent(
             }
         }
     }
-
-    val endOfListReached by remember {
-        derivedStateOf {
-            scrollState.isScrolledToEnd()
-        }
-    }
-
-//    LaunchedEffect(endOfListReached) {
-//        if (endOfListReached) {
-//            Log.d("check111", "endOfListReached")
-//            onListEndReached()
-//        } else {
-//            Log.d("check111", "none")
-//        }
-//    }
 }
 
 @Composable
@@ -199,8 +178,4 @@ private fun Divider() {
             .fillMaxWidth()
             .background(color = AppTheme.palette.icon.secondary),
     )
-}
-
-fun LazyListState.isScrolledToEnd(): Boolean {
-    return layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1
 }
