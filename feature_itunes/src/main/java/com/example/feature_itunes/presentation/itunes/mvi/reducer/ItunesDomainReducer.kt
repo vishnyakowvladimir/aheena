@@ -26,7 +26,7 @@ internal class ItunesDomainReducer @Inject constructor() :
     private fun reduceLoadDataNeeded(
         state: ItunesDomainState,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
-        if (state.isAllLoaded) {
+        if (state.isLoading || state.isAllLoaded) {
             return Update.nothing()
         }
 
@@ -34,6 +34,7 @@ internal class ItunesDomainReducer @Inject constructor() :
 
         return Update.stateWithSideEffects(
             state = state.copy(
+                isLoading = true,
                 page = page.inc(),
             ),
             sideEffects = listOf(
@@ -57,8 +58,9 @@ internal class ItunesDomainReducer @Inject constructor() :
         return Update.state(
             state.copy(
                 isAllLoaded = loadedList.isEmpty(),
-                isError = false,
                 isLoading = false,
+                isError = false,
+                isShowLoading = false,
                 tracks = allList,
             )
         )
