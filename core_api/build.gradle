@@ -5,6 +5,7 @@ applyCompose(this, KotlinCompile)
 applyDagger(this)
 
 dependencies {
+    implementation network
     api project(":ui:aheena-lib-ui")
     api project(':domain_models')
 }

@@ -1,0 +1,64 @@
+def emptyUrls = new Urls('""', '""')
+
+def testUrls = new Urls(
+        '"https://itunes.apple.com"',
+        '"https://api.openbrewerydb.org"',
+)
+
+def prodUrls = new Urls(
+        '"https://itunes.apple.com"',
+        '"https://api.openbrewerydb.org"',
+)
+
+def incorrectUrls = new Urls(
+        '"https://itunes111.apple.com"',
+        '"https://api.openbrewerydb111.org"',
+)
+
+ext {
+    applyBaseUrls = { module ->
+        module.configure(module) {
+            android {
+                buildTypes {
+
+                    debug {
+                        testUrls.buildConfigFields('TEST', owner)
+                        prodUrls.buildConfigFields('PROD', owner)
+                        incorrectUrls.buildConfigFields('INCORRECT', owner)
+                    }
+
+                    release {
+                        prodUrls.buildConfigFields(null, owner)
+                        emptyUrls.buildConfigFields('TEST', owner)
+                        emptyUrls.buildConfigFields('INCORRECT', owner)
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+class Urls {
+
+    private static final String KEY_URL_ITUNES = 'URL_ITUNES',
+                                KEY_URL_BREW = 'URL_BREW'
+
+    final Map<String, String> urls = new LinkedHashMap<String, String>()
+
+    Urls(final String itunes,
+         final String brew
+    ) {
+
+        urls[KEY_URL_ITUNES] = itunes
+        urls[KEY_URL_BREW] = brew
+    }
+
+    void buildConfigFields(final String prefix, final buildType) {
+        def mapPrefix = prefix == null ? '' : (prefix + '_')
+
+        for (def urlEntry : urls.entrySet()) {
+            buildType.buildConfigField('String', mapPrefix + urlEntry.key, urlEntry.value)
+        }
+    }
+}
