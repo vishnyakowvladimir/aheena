@@ -9,4 +9,8 @@ interface InterceptorProvider {
     fun provideItunesHostInterceptor(): Interceptor
 
     fun provideBrewHostInterceptor(): Interceptor
+
+    fun provideConnectivityInterceptor(): Interceptor
+
+    fun provideExceptionInterceptor(): Interceptor
 }
