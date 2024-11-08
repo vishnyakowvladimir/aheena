@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class RetrofitBuilderFactoryImpl @Inject constructor() : RetrofitBuilderFactory {
 
-    override fun create(): Retrofit.Builder {
+    override fun createBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

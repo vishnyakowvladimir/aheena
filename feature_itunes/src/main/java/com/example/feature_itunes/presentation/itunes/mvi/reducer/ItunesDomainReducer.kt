@@ -15,7 +15,35 @@ internal class ItunesDomainReducer @Inject constructor() :
         state: ItunesDomainState,
         event: ItunesEvent.Domain,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
-        return Update.nothing()
+        return when (event) {
+            is ItunesEvent.Domain.LoadDataNeeded -> reduceLoadData()
+            is ItunesEvent.Domain.OnDataLoaded -> reduceOnDataLoaded(state, event)
+        }
+    }
+
+    private fun reduceLoadData(): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
+        return Update.sideEffects(
+            listOf(
+                ItunesSideEffect.Domain.LoadData(
+                    offset = 0,
+                    limit = 10,
+                    term = "Often overlooked",
+                )
+            )
+        )
+    }
+
+    private fun reduceOnDataLoaded(
+        state: ItunesDomainState,
+        event: ItunesEvent.Domain.OnDataLoaded,
+    ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
+        return Update.state(
+            state.copy(
+                isError = false,
+                isLoading = false,
+                tracks = event.tracks,
+            )
+        )
     }
 }
 

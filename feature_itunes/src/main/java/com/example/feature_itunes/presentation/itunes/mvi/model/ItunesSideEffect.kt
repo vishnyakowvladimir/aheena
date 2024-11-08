@@ -6,7 +6,9 @@ internal sealed interface ItunesSideEffect {
         data object Back : Ui
     }
 
-    sealed interface Domain : ItunesSideEffect
+    sealed interface Domain : ItunesSideEffect {
+        data class LoadData(val offset: Int, val limit: Int, val term: String) : Domain
+    }
 }
 
 

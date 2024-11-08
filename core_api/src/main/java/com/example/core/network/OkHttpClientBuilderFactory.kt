@@ -4,5 +4,5 @@ import okhttp3.OkHttpClient
 
 interface OkHttpClientBuilderFactory {
 
-    fun create(): OkHttpClient.Builder
+    fun createBuilder(): OkHttpClient.Builder
 }

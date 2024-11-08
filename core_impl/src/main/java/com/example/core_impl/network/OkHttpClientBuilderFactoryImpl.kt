@@ -9,7 +9,7 @@ class OkHttpClientBuilderFactoryImpl @Inject constructor(
     private val interceptorProvider: InterceptorProvider,
 ) : OkHttpClientBuilderFactory {
 
-    override fun create(): OkHttpClient.Builder {
+    override fun createBuilder(): OkHttpClient.Builder {
         return OkHttpClient.Builder()
             .addInterceptor(interceptorProvider.provideHttpLoggingInterceptor())
     }

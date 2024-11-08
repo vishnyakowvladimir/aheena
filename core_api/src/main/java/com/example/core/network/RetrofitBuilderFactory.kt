@@ -8,5 +8,5 @@ interface RetrofitBuilderFactory {
         const val BASE_URL = "127.0.0.1"
     }
 
-    fun create(): Retrofit.Builder
+    fun createBuilder(): Retrofit.Builder
 }

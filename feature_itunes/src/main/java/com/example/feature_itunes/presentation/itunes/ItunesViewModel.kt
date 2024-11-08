@@ -33,6 +33,7 @@ internal class ItunesViewModel @Inject constructor(
 
     init {
         createMvi()
+        onEvent(ItunesEvent.Domain.LoadDataNeeded)
     }
 
     fun onEvent(event: ItunesEvent) {
