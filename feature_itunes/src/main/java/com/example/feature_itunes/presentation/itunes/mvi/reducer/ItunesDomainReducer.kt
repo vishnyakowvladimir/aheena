@@ -41,7 +41,7 @@ internal class ItunesDomainReducer @Inject constructor() :
             state.copy(
                 isError = false,
                 isLoading = false,
-                tracks = event.tracks,
+                tracks = event.tracks.filter { track -> track.name.isNotEmpty() },
             )
         )
     }

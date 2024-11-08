@@ -31,8 +31,8 @@ internal class ItunesDomainSideEffectHandler @Inject constructor(
 
     private fun handleSideEffect(): Flow<ItunesEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
-            when(sideEffect) {
-                is ItunesSideEffect.Domain.LoadData ->handleLoadData(sideEffect)
+            when (sideEffect) {
+                is ItunesSideEffect.Domain.LoadData -> handleLoadData(sideEffect)
             }
         }
             .flowOn(Dispatchers.IO)
@@ -44,11 +44,9 @@ internal class ItunesDomainSideEffectHandler @Inject constructor(
         return itunesInteractor.loadTracks(
             offset = sideEffect.offset,
             limit = sideEffect.limit,
-            term =  sideEffect.term,
+            term = sideEffect.term,
         )
-            .map { tracks ->
-                ItunesEvent.Domain.OnDataLoaded(tracks)
-            }
+            .map(ItunesEvent.Domain::OnDataLoaded)
     }
 }
 

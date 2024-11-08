@@ -1,6 +1,7 @@
 package com.example.feature_itunes.presentation.itunes
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -69,8 +70,8 @@ internal fun ItunesScreen(viewModel: ItunesViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center,
+                .padding(paddingValues)
+                .padding(12.dp),
         ) {
             Content(
                 state = state.value,
@@ -101,7 +102,7 @@ private fun Loading() {
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        GradientCircularLoader.XL
+        GradientCircularLoader.XL(color = AppTheme.palette.element.accent)
     }
 }
 
@@ -128,7 +129,8 @@ private fun Cell(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
     ) {
         Text(
             text = track.name,
@@ -151,6 +153,7 @@ private fun Divider() {
     Box(
         modifier = Modifier
             .height(1.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(color = AppTheme.palette.icon.secondary),
     )
 }
