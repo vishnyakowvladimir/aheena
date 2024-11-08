@@ -69,6 +69,8 @@ android {
     }
 }
 
+applyBaseUrls(this)
+
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
         freeCompilerArgs += [

@@ -1,5 +1,6 @@
 package com.example.aheena.di.modules
 
+import com.example.aheena.BuildConfig
 import com.example.core.network.InterceptorProvider
 import com.example.core.network.OkHttpClientBuilderFactory
 import com.example.core.network.RetrofitBuilderFactory
@@ -32,16 +33,16 @@ interface NetworkModule {
         fun provideUrlProvider(preferencesProvider: AndroidPreferencesProvider): UrlProvider {
             return UrlProviderImpl(
                 incorrectUrls = BaseUrls(
-                    itunesUrl = "",
-                    brewUrl = "",
+                    itunesUrl = BuildConfig.INCORRECT_URL_ITUNES,
+                    brewUrl = BuildConfig.INCORRECT_URL_BREW,
                 ),
                 prodUrls = BaseUrls(
-                    itunesUrl = "",
-                    brewUrl = "",
+                    itunesUrl = BuildConfig.PROD_URL_ITUNES,
+                    brewUrl = BuildConfig.PROD_URL_BREW,
                 ),
                 testUrls = BaseUrls(
-                    itunesUrl = "",
-                    brewUrl = "",
+                    itunesUrl = BuildConfig.TEST_URL_ITUNES,
+                    brewUrl = BuildConfig.TEST_URL_BREW,
                 ),
                 preferencesProvider = preferencesProvider,
             )
