@@ -9,7 +9,9 @@ class ItunesMapper @Inject constructor() {
     fun map(infoDto: ItunesTracksInfoDto): List<ItunesTrack> {
         return infoDto.results?.map { track ->
             ItunesTrack(
+                trackId = track.trackId,
                 name = track.trackName.orEmpty(),
+                artistName = track.artistName.orEmpty(),
             )
         }.orEmpty()
     }

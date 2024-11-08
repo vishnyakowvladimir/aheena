@@ -141,7 +141,7 @@ private fun Cell(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = track.name,
+            text = track.artistName,
             color = AppTheme.palette.text.secondary,
             style = AppTheme.typography.text1Regular,
         )

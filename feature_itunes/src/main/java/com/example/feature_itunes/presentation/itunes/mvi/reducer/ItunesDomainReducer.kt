@@ -26,7 +26,7 @@ internal class ItunesDomainReducer @Inject constructor() :
             listOf(
                 ItunesSideEffect.Domain.LoadData(
                     offset = 0,
-                    limit = 10,
+                    limit = 20,
                     term = "Often overlooked",
                 )
             )
