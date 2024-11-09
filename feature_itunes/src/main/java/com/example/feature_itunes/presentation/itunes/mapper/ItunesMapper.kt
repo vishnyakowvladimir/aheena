@@ -14,7 +14,7 @@ internal class ItunesMapper @Inject constructor() {
                 ItunesData.Error
             }
 
-            domainState.isShowLoading -> {
+            domainState.showLoading -> {
                 ItunesData.Loading
             }
 

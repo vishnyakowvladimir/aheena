@@ -1,6 +1,6 @@
 package com.example.core_impl.network.interceptor
 
-import com.example.core.network.model.BaseNetworkException
+import com.example.core.network.model.BaseApiException
 import com.example.core.utils.connectivity_checker.ConnectivityChecker
 import com.example.core.utils.eventbus.AppEventBus
 import com.example.core.utils.eventbus.model.AppEvent
@@ -14,7 +14,7 @@ class ConnectivityInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!connectivityChecker.isNetworkAvailable()) {
             eventBus.sendEvent(AppEvent.OnNoInternetConnection)
-            throw BaseNetworkException.ConnectivityException()
+            throw BaseApiException.ConnectivityException()
         }
 
         val httpUrlBuilder = chain

@@ -1,5 +1,6 @@
 package com.example.feature_itunes.presentation.itunes.mvi.reducer
 
+import com.example.core.network.model.ApiResult
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesDomainState
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesEvent
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesSideEffect
@@ -26,7 +27,7 @@ internal class ItunesDomainReducer @Inject constructor() :
     private fun reduceLoadDataNeeded(
         state: ItunesDomainState,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
-        if (state.isLoading || state.isAllLoaded) {
+        if (state.isTracksLoading || state.isAllLoaded) {
             return Update.nothing()
         }
 
@@ -34,7 +35,7 @@ internal class ItunesDomainReducer @Inject constructor() :
 
         return Update.stateWithSideEffects(
             state = state.copy(
-                isLoading = true,
+                isTracksLoading = true,
                 page = page.inc(),
             ),
             sideEffects = listOf(
@@ -51,19 +52,36 @@ internal class ItunesDomainReducer @Inject constructor() :
         state: ItunesDomainState,
         event: ItunesEvent.Domain.OnDataLoaded,
     ): Update<ItunesDomainState, ItunesSideEffect, ItunesUiCommand> {
-        val currentList = state.tracks
-        val loadedList = event.tracks.filter { track -> track.name.isNotEmpty() }
-        val allList = currentList + loadedList
+        return when (val result = event.result) {
+            is ApiResult.Error -> {
+                Update.state(
+                    state.copy(
+                        isAllLoaded = false,
+                        isTracksLoading = false,
+                        showLoading = false,
+                        isError = true,
+                        tracks = emptyList(),
+                    )
+                )
+            }
 
-        return Update.state(
-            state.copy(
-                isAllLoaded = loadedList.isEmpty(),
-                isLoading = false,
-                isError = false,
-                isShowLoading = false,
-                tracks = allList,
-            )
-        )
+            is ApiResult.Success -> {
+                val currentList = state.tracks
+                val loadedList = result.data.filter { track -> track.name.isNotEmpty() }
+                val allList = currentList + loadedList
+
+                Update.state(
+                    state.copy(
+                        isAllLoaded = loadedList.isEmpty(),
+                        isTracksLoading = false,
+                        isError = false,
+                        showLoading = false,
+                        tracks = allList,
+                    )
+                )
+            }
+        }
+
     }
 }
 

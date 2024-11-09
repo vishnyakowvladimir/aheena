@@ -1,5 +1,6 @@
 package com.example.feature_itunes.presentation.itunes.mvi.model
 
+import com.example.core.network.model.ApiResult
 import com.example.domain_models.itunes.ItunesTrack
 
 internal sealed interface ItunesEvent {
@@ -12,6 +13,6 @@ internal sealed interface ItunesEvent {
 
     sealed interface Domain : ItunesEvent {
         data object LoadDataNeeded : Domain
-        data class OnDataLoaded(val tracks: List<ItunesTrack>): Domain
+        data class OnDataLoaded(val result: ApiResult<List<ItunesTrack>>): Domain
     }
 }

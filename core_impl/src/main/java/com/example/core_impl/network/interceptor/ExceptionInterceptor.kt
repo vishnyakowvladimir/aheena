@@ -1,6 +1,6 @@
 package com.example.core_impl.network.interceptor
 
-import com.example.core.network.model.BaseNetworkException
+import com.example.core.network.model.BaseApiException
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -14,13 +14,13 @@ class ExceptionInterceptor() : Interceptor {
             throwExceptionWhenResponseIsNotSuccessful(response)
             response
         } catch (exception: Exception) {
-            throw BaseNetworkException.NetworkException(message = exception.message)
+            throw BaseApiException.DefaultApiException(message = exception.message)
         }
     }
 
     private fun throwExceptionWhenResponseIsNotSuccessful(response: Response) {
         if (!response.isSuccessful) {
-            throw BaseNetworkException.NetworkException(
+            throw BaseApiException.DefaultApiException(
                 message = response.message,
             )
         }

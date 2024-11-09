@@ -94,7 +94,9 @@ private fun Content(
             Loading()
         }
 
-        is ItunesData.Error -> {}
+        is ItunesData.Error -> {
+            Error()
+        }
 
         is ItunesData.Data -> {
             DataContent(
@@ -113,6 +115,21 @@ private fun Loading() {
         contentAlignment = Alignment.Center,
     ) {
         GradientCircularLoader.XL(color = AppTheme.palette.element.accent)
+    }
+}
+
+@Composable
+private fun Error() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringResource(id = R.string.itunes_error),
+            style = AppTheme.typography.text1Regular,
+            color = AppTheme.palette.text.secondary,
+        )
     }
 }
 

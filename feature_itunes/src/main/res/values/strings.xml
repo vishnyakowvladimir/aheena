@@ -1,3 +1,4 @@
 <resources>
     <string name="itunes_title">Список треков</string>
+    <string name="itunes_error">Произошла ошибка</string>
 </resources>

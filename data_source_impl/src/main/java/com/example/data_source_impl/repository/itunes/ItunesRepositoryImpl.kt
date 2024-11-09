@@ -1,5 +1,9 @@
 package com.example.data_source_impl.repository.itunes
 
+import com.example.core.network.model.ApiResult
+import com.example.core.network.model.mapResultSuccess
+import com.example.core.network.model.toApiResult
+import com.example.core.network.model.toResultError
 import com.example.data_source_api.repository.itunes.ItunesRepository
 import com.example.data_source_impl.api.ItunesApi
 import com.example.data_source_impl.mapper.itunes.ItunesMapper
@@ -14,18 +18,20 @@ class ItunesRepositoryImpl @Inject constructor(
     private val mapper: ItunesMapper,
 ) : ItunesRepository {
 
-    override fun loadTracks(offset: Int, limit: Int, term: String): Flow<List<ItunesTrack>> {
+    override fun loadTracks(offset: Int, limit: Int, term: String): Flow<ApiResult<List<ItunesTrack>>> {
         return flow {
             val result = api.loadItunesTrackList(
                 offset = offset,
                 limit = limit,
                 term = term,
             )
+                .toApiResult()
+                .mapResultSuccess(mapper::map)
 
-            emit(mapper.map(result))
+            emit(result)
         }
-            .catch {
-                emit(emptyList())
+            .catch { throwable ->
+                emit(throwable.toResultError())
             }
     }
 }
