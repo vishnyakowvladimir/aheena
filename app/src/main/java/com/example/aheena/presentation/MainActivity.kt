@@ -35,9 +35,6 @@ internal class MainActivity : BaseActivity() {
     @Inject
     lateinit var composablesHolder: FeatureComposablesHolder
 
-//    @Inject
-//    lateinit var themeManager: ThemeManager
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -116,49 +113,4 @@ private fun SetComposableContent(
         }
     }
 }
-
-//@Composable
-//private fun SetComposableContent(
-//    mainViewModel: MainViewModel,
-//    viewModelFactory: ViewModelProvider.Factory,
-//    composablesHolder: FeatureComposablesHolder,
-//    navController: NavHostController,
-//    themeManager: ThemeManager,
-//) {
-//    val state = mainViewModel.uiState.collectAsStateLifecycleAware()
-//
-//    AppThemeContainer(
-//        viewScale = state.value.themeState.viewScale,
-//    ) {
-//        Surface {
-//            BackHandler {
-//                mainViewModel.onEvent(MainEvent.Ui.OnBackPressed)
-//            }
-//
-//            val isDarkTheme = isSystemInDarkTheme()
-//
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//            ) {
-//                Text(
-//                    text = "Change theme",
-//                    style = AppTheme.typography.title1Bold,
-//                    color = AppTheme.palette.text.primary,
-//                    modifier = Modifier.clickable {
-//                        if (isDarkTheme) {
-//                            themeManager.applyThemeModeLight()
-//                        } else {
-//                            themeManager.applyThemeModeDark()
-//                        }
-//                    }
-//                )
-//                AppNavGraph(
-//                    navController = navController,
-//                    viewModelFactory = viewModelFactory,
-//                    composablesHolder = composablesHolder,
-//                )
-//            }
-//        }
-//    }
-//}
 

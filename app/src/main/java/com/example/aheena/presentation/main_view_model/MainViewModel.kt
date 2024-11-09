@@ -1,11 +1,14 @@
 package com.example.aheena.presentation.main_view_model
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.aheena.presentation.main_view_model.mapper.MainMapper
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
 import com.example.core.presentation.base.BaseViewModel
+import com.example.core.utils.eventbus.AppEventBus
+import com.example.core.utils.eventbus.model.AppEvent
 import com.example.core.utils.extension.mapData
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
@@ -22,6 +25,7 @@ internal class MainViewModel @Inject constructor(
     private val mapper: MainMapper,
     private val sideEffectHandler: MainSideEffectHandler,
     private val reducer: MainReducer,
+    private val eventBus: AppEventBus,
 ) : BaseViewModel() {
 
     private val uiEvent = MutableSharedFlow<MainEvent>(replay = Int.MAX_VALUE)
@@ -34,11 +38,24 @@ internal class MainViewModel @Inject constructor(
 
     init {
         createMvi()
+        subscribe()
         onEvent(MainEvent.Ui.OnApplyThemeNeeded)
     }
 
     fun onEvent(event: MainEvent) {
         viewModelScope.launch { uiEvent.emit(event) }
+    }
+
+    private fun subscribe() {
+        eventBus.subscribe()
+            .onEach { event ->
+                when (event) {
+                    is AppEvent.OnNoInternetConnection -> {
+                        Log.d("check111", "show snackbar")
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun createMvi() {

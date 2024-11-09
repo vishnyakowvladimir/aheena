@@ -5,6 +5,7 @@ import com.example.data_source_impl.api.ItunesApi
 import com.example.data_source_impl.mapper.itunes.ItunesMapper
 import com.example.domain_models.itunes.ItunesTrack
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -23,5 +24,8 @@ class ItunesRepositoryImpl @Inject constructor(
 
             emit(mapper.map(result))
         }
+            .catch {
+                emit(emptyList())
+            }
     }
 }

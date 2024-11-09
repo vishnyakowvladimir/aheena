@@ -14,18 +14,7 @@ class ExceptionInterceptor() : Interceptor {
             throwExceptionWhenResponseIsNotSuccessful(response)
             response
         } catch (exception: Exception) {
-            when (exception) {
-                is BaseNetworkException.ConnectivityException -> {
-                    throw BaseNetworkException.ConnectivityException()
-                }
-
-                else -> {
-                    throw BaseNetworkException.NetworkException(
-                        message = exception.message,
-                        throwable = exception,
-                    )
-                }
-            }
+            throw BaseNetworkException.NetworkException(message = exception.message)
         }
     }
 
