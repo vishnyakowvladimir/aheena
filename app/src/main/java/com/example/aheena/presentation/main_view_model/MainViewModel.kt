@@ -1,10 +1,10 @@
 package com.example.aheena.presentation.main_view_model
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.aheena.presentation.main_view_model.mapper.MainMapper
 import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
+import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
 import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
 import com.example.core.presentation.base.BaseViewModel
 import com.example.core.utils.eventbus.AppEventBus
@@ -12,11 +12,13 @@ import com.example.core.utils.eventbus.model.AppEvent
 import com.example.core.utils.extension.mapData
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +38,9 @@ internal class MainViewModel @Inject constructor(
         mapper = { domainState -> mapper.map(domainState) },
     )
 
+    private val _uiCommand = Channel<MainUiCommand>()
+    val uiCommand = _uiCommand.receiveAsFlow()
+
     init {
         createMvi()
         subscribe()
@@ -51,7 +56,7 @@ internal class MainViewModel @Inject constructor(
             .onEach { event ->
                 when (event) {
                     is AppEvent.OnNoInternetConnection -> {
-                        Log.d("check111", "show snackbar")
+                        onEvent(MainEvent.Domain.OnNoInternetConnection)
                     }
                 }
             }
@@ -71,7 +76,9 @@ internal class MainViewModel @Inject constructor(
             actionState = { state ->
                 _uiState.update { state }
             },
-            actionUiCommand = {},
+            actionUiCommand = { command ->
+                _uiCommand.send(command)
+            },
         )
 
         uiEvent

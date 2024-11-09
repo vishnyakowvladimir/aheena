@@ -1,14 +1,18 @@
 package com.example.aheena.presentation.main_view_model.mvi.reducer
 
+import com.example.aheena.R
 import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.core.utils.string_provider.StringProvider
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject
 
-internal class MainDomainReducer @Inject constructor() :
+internal class MainDomainReducer @Inject constructor(
+    private val stringProvider: StringProvider,
+) :
     Reducer<MainEvent.Domain, MainDomainState, MainSideEffect, MainUiCommand> {
 
     override fun update(
@@ -20,6 +24,7 @@ internal class MainDomainReducer @Inject constructor() :
             is MainEvent.Domain.OnLoadDataNeeded -> reduceOnLoadDataNeeded()
             is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded()
             is MainEvent.Domain.OnScaleChanged -> reduceOnScaleChanged(state, event)
+            is MainEvent.Domain.OnNoInternetConnection -> reduceOnNoInternetConnection()
         }
     }
 
@@ -47,6 +52,14 @@ internal class MainDomainReducer @Inject constructor() :
         return Update.state(
             state = state.copy(
                 themeState = updatedThemeState,
+            ),
+        )
+    }
+
+    private fun reduceOnNoInternetConnection(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        return Update.uiCommands(
+            listOf(
+                MainUiCommand.ShowSnackbar(stringProvider.getString(R.string.connectivity_error)),
             ),
         )
     }

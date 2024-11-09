@@ -18,5 +18,6 @@ internal sealed interface MainEvent {
         data object OnLoadDataNeeded : Domain
         data object OnDataLoaded : Domain
         data class OnScaleChanged(val scale: ViewScaleDomain) : Domain
+        data object OnNoInternetConnection : Domain
     }
 }

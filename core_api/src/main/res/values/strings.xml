@@ -1,4 +1,2 @@
 <resources>
-    <string name="connectivity_error">Нет интернет - соединение</string>
-    <string name="default_network_error">Произошла ошибка</string>
 </resources>
