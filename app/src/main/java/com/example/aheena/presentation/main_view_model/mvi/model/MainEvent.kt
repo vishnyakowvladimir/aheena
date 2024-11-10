@@ -4,8 +4,9 @@ import com.example.domain_models.theme.ViewScaleDomain
 
 internal sealed interface MainEvent {
 
+    data object None : MainEvent
+
     sealed interface Ui : MainEvent {
-        data object None : Ui
         data object OnBackPressed : Ui
         data object OnApplyThemeNeeded : Ui
         data object OnThemeApplied : Ui
@@ -14,7 +15,6 @@ internal sealed interface MainEvent {
     }
 
     sealed interface Domain : MainEvent {
-        data object None : Domain
         data object OnLoadDataNeeded : Domain
         data object OnDataLoaded : Domain
         data class OnScaleChanged(val scale: ViewScaleDomain) : Domain

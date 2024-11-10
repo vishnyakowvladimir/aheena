@@ -43,7 +43,7 @@ internal class MainDomainSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
-    private fun handleLoadData(): Flow<MainEvent.Domain> {
+    private fun handleLoadData(): Flow<MainEvent> {
         return flow {
             delay(1000)
             emit(MainEvent.Domain.OnDataLoaded)
@@ -52,7 +52,7 @@ internal class MainDomainSideEffectHandler @Inject constructor(
 
     private fun handleChangeViewScale(
         sideEffect: MainSideEffect.Domain.ChangeViewScale,
-    ): Flow<MainEvent.Domain> {
+    ): Flow<MainEvent> {
         return flow {
             themeManager.saveScale(sideEffect.viewScaleDomain)
             emit(MainEvent.Domain.OnScaleChanged(themeManager.getScale()))
@@ -61,10 +61,10 @@ internal class MainDomainSideEffectHandler @Inject constructor(
 
     private fun handleSaveUserActivity(
         sideEffect: MainSideEffect.Domain.SaveUserActivity,
-    ): Flow<MainEvent.Domain> {
+    ): Flow<MainEvent> {
         return flow {
             userActivityInteractor.setLastUserActivityTime(sideEffect.millis)
-            emit(MainEvent.Domain.None)
+            emit(MainEvent.None)
         }
     }
 }

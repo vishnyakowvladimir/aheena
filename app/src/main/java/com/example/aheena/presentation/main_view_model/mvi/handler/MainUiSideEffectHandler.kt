@@ -42,24 +42,24 @@ internal class MainUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<MainEvent.Ui> {
+    private fun handleBack(): Flow<MainEvent> {
         return flow {
             mainRouter.popBackStack()
-            emit(MainEvent.Ui.None)
+            emit(MainEvent.None)
         }
     }
 
-    private fun handleApplyTheme(): Flow<MainEvent.Ui> {
+    private fun handleApplyTheme(): Flow<MainEvent> {
         return flow {
             themeManager.applyThemeMode()
             emit(MainEvent.Ui.OnThemeApplied)
         }
     }
 
-    private fun handleOpenAuthentication(): Flow<MainEvent.Ui> {
+    private fun handleOpenAuthentication(): Flow<MainEvent> {
         return flow {
             mainRouter.replace(FeaturesDestination.AuthenticationDestination)
-            emit(MainEvent.Ui.None)
+            emit(MainEvent.None)
         }
     }
 }

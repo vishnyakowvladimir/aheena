@@ -41,17 +41,17 @@ internal class LoginUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<LoginEvent.Ui> {
+    private fun handleBack(): Flow<LoginEvent> {
         return flow {
             mainRouter.popBackStack()
-            emit(LoginEvent.Ui.None)
+            emit(LoginEvent.None)
         }
     }
 
-    private fun handleOpenPinScreen(): Flow<LoginEvent.Ui> {
+    private fun handleOpenPinScreen(): Flow<LoginEvent> {
         return flow {
             router.navigate(LocalDestinationAuthentication.CreatePin)
-            emit(LoginEvent.Ui.None)
+            emit(LoginEvent.None)
         }
     }
 }

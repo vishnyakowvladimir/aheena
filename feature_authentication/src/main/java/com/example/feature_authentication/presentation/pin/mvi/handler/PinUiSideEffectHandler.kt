@@ -42,24 +42,24 @@ internal class PinUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<PinEvent.Ui> {
+    private fun handleBack(): Flow<PinEvent> {
         return flow {
             mainRouter.popBackStack()
-            emit(PinEvent.Ui.None)
+            emit(PinEvent.None)
         }
     }
 
-    private fun handleLogout(): Flow<PinEvent.Ui> {
+    private fun handleLogout(): Flow<PinEvent> {
         return flow {
             logoutController.logout()
-            emit(PinEvent.Ui.None)
+            emit(PinEvent.None)
         }
     }
 
-    private fun handleOpenMainScreen(): Flow<PinEvent.Ui> {
+    private fun handleOpenMainScreen(): Flow<PinEvent> {
         return flow {
             mainRouter.replaceAll(FeaturesDestination.MainDestination)
-            emit(PinEvent.Ui.None)
+            emit(PinEvent.None)
         }
     }
 }

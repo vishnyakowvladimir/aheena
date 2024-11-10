@@ -22,6 +22,7 @@ internal class PinReducer @Inject constructor(
         event: PinEvent,
     ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
         return when (event) {
+            is PinEvent.None -> Update.nothing()
             is PinEvent.Ui -> uiReducer.update(state, event)
             is PinEvent.Domain -> domainReducer.update(state, event)
         }

@@ -43,7 +43,7 @@ internal class LoginDomainSideEffectHandler @Inject constructor(
     ): Flow<LoginEvent> {
         return flow {
             localAuthenticationInteractor.saveRefreshToken(sideEffect.refreshToken)
-            emit(LoginEvent.Domain.None)
+            emit(LoginEvent.None)
         }
     }
 }

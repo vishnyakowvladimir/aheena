@@ -22,6 +22,7 @@ internal class MainReducer @Inject constructor(
         event: MainEvent,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
+            is MainEvent.None -> Update.nothing()
             is MainEvent.Ui -> uiReducer.update(state, event)
             is MainEvent.Domain -> domainReducer.update(state, event)
         }

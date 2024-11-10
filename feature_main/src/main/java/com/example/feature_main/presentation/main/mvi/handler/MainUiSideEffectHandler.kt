@@ -37,10 +37,10 @@ internal class MainUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<MainEvent.Ui> {
+    private fun handleBack(): Flow<MainEvent> {
         return flow {
             mainRouter.popBackStack()
-            emit(MainEvent.Ui.None)
+            emit(MainEvent.None)
         }
     }
 }

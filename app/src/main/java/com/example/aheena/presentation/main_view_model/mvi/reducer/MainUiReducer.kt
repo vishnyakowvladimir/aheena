@@ -19,7 +19,6 @@ internal class MainUiReducer @Inject constructor(
         event: MainEvent.Ui,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
-            is MainEvent.Ui.None -> Update.nothing()
             is MainEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is MainEvent.Ui.OnApplyThemeNeeded -> reduceOnApplyThemeNeeded()
             is MainEvent.Ui.OnThemeApplied -> reduceOnThemeApplied()

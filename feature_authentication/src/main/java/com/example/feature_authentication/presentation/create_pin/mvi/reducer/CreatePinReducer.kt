@@ -18,6 +18,7 @@ internal class CreatePinReducer @Inject constructor(
         event: CreatePinEvent,
     ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
         return when (event) {
+            is CreatePinEvent.None -> Update.nothing()
             is CreatePinEvent.Ui -> uiReducer.update(state, event)
             is CreatePinEvent.Domain -> domainReducer.update(state, event)
         }

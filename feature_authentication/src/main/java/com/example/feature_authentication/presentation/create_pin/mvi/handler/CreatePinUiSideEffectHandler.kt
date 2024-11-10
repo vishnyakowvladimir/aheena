@@ -44,31 +44,31 @@ internal class CreatePinUiSideEffectHandler @Inject constructor(
             .flowOn(Dispatchers.Main)
     }
 
-    private fun handleBack(): Flow<CreatePinEvent.Ui> {
+    private fun handleBack(): Flow<CreatePinEvent> {
         return flow {
             router.popBackStack()
-            emit(CreatePinEvent.Ui.None)
+            emit(CreatePinEvent.None)
         }
     }
 
-    private fun handleDelayBeforeChangeMode(): Flow<CreatePinEvent.Ui> {
+    private fun handleDelayBeforeChangeMode(): Flow<CreatePinEvent> {
         return flow {
             delay(400)
             emit(CreatePinEvent.Ui.OnDelayBeforeChangeMode)
         }
     }
 
-    private fun handleOpenMainScreen(): Flow<CreatePinEvent.Ui> {
+    private fun handleOpenMainScreen(): Flow<CreatePinEvent> {
         return flow {
             mainRouter.replaceAll(FeaturesDestination.MainDestination)
-            emit(CreatePinEvent.Ui.None)
+            emit(CreatePinEvent.None)
         }
     }
 
-    private fun handleOpenBiometricScreen(): Flow<CreatePinEvent.Ui> {
+    private fun handleOpenBiometricScreen(): Flow<CreatePinEvent> {
         return flow {
             router.replaceAll(LocalDestinationAuthentication.Biometrics)
-            emit(CreatePinEvent.Ui.None)
+            emit(CreatePinEvent.None)
         }
     }
 }

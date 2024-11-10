@@ -20,7 +20,6 @@ internal class MainDomainReducer @Inject constructor(
         event: MainEvent.Domain
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
-            is MainEvent.Domain.None -> Update.nothing()
             is MainEvent.Domain.OnLoadDataNeeded -> reduceOnLoadDataNeeded()
             is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded()
             is MainEvent.Domain.OnScaleChanged -> reduceOnScaleChanged(state, event)

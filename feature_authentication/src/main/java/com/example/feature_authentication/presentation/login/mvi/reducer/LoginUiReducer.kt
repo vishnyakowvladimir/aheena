@@ -19,7 +19,6 @@ internal class LoginUiReducer @Inject constructor() :
         event: LoginEvent.Ui,
     ): Update<LoginDomainState, LoginSideEffect, LoginUiCommand> {
         return when (event) {
-            is LoginEvent.Ui.None -> Update.nothing()
             is LoginEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is LoginEvent.Ui.OnPhoneChanged -> reduceOnPhoneChanged(state, event)
             is LoginEvent.Ui.OnResetPhoneIconClick -> reduceOnResetPhoneIconClick(state)

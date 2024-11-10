@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ internal class MainDomainSideEffectHandler @Inject constructor() :
 
     private fun handleSideEffect(): Flow<MainEvent> {
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
-            flow<MainEvent> { }
+            emptyFlow<MainEvent>()
         }
             .flowOn(Dispatchers.IO)
     }

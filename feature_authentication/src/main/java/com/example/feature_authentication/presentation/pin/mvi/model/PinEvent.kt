@@ -6,8 +6,9 @@ import com.example.lib_ui.components.keyboard.model.PinKey
 
 internal sealed interface PinEvent {
 
+    data object None : PinEvent
+
     sealed interface Ui : PinEvent {
-        data object None : Ui
         data object OnBackPressed : Ui
         data class OnKeyboardClick(val key: PinKey) : Ui
         data object OnEnableBiometricsNeeded : Ui

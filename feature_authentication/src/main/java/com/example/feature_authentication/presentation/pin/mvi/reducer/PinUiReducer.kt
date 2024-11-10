@@ -25,7 +25,6 @@ internal class PinUiReducer @Inject constructor(
         event: PinEvent.Ui,
     ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
         return when (event) {
-            is PinEvent.Ui.None -> Update.nothing()
             is PinEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is PinEvent.Ui.OnEnableBiometricsNeeded -> reduceOnEnableBiometricsNeeded(state)
             is PinEvent.Ui.OnKeyboardClick -> reduceOnKeyboardClick(state, event)

@@ -17,7 +17,6 @@ internal class CreatePinUiReducer @Inject constructor() :
         event: CreatePinEvent.Ui,
     ): Update<CreatePinDomainState, CreatePinSideEffect, CreatePinUiCommand> {
         return when (event) {
-            is CreatePinEvent.Ui.None -> Update.nothing()
             is CreatePinEvent.Ui.OnBackPressed -> reduceOnBackPressed()
             is CreatePinEvent.Ui.OnKeyboardClick -> reduceOnKeyboardClick(state, event)
             is CreatePinEvent.Ui.OnDelayBeforeChangeMode -> reduceOnDelayBeforeChangeMode(state)

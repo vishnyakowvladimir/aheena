@@ -4,8 +4,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 
 internal sealed interface LoginEvent {
 
+    data object None : LoginEvent
+
     sealed interface Ui : LoginEvent {
-        data object None : Ui
         data object OnBackPressed : Ui
         data class OnPhoneChanged(val value: TextFieldValue) : Ui
         data object OnResetPhoneIconClick : Ui
@@ -15,7 +16,5 @@ internal sealed interface LoginEvent {
         data object OnConfirmButtonClick : Ui
     }
 
-    sealed interface Domain : LoginEvent {
-        data object None : Domain
-    }
+    sealed interface Domain : LoginEvent
 }
