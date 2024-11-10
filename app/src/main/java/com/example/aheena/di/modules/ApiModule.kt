@@ -19,8 +19,6 @@ class ApiModule {
         val okHttpClient = okHttpClientBuilderFactory
             .createBuilder()
             .addInterceptor(interceptorProvider.provideItunesHostInterceptor())
-            .addInterceptor(interceptorProvider.provideConnectivityInterceptor())
-            .addInterceptor(interceptorProvider.provideExceptionInterceptor())
             .build()
 
         return retrofitBuilderFactory

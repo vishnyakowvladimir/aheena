@@ -8,8 +8,6 @@ import com.example.data_source_api.models.network.UrlsType
 import com.example.data_source_api.storage.network.UrlProvider
 
 private const val PREF_KEY_URLS_TYPE = "PREF_KEY_URLS_TYPE"
-private const val PREF_KEY_ITUNES_URL = "PREF_KEY_ITUNES_URL"
-private const val PREF_KEY_BREW_URL = "PREF_KEY_BREW_URL"
 
 class UrlProviderImpl(
     private val prodUrls: BaseUrls,
@@ -33,7 +31,7 @@ class UrlProviderImpl(
 
     override val currentUrls: BaseUrls
         get() {
-            return when(selectedUrlsType) {
+            return when (selectedUrlsType) {
                 UrlsType.TEST -> testUrls
                 UrlsType.PROD -> prodUrls
                 UrlsType.INCORRECT -> incorrectUrls
