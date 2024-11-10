@@ -21,10 +21,11 @@ class ApiModule {
             .addInterceptor(interceptorProvider.provideItunesHostInterceptor())
             .build()
 
-        return retrofitBuilderFactory
+        val retrofit = retrofitBuilderFactory
             .createBuilder()
             .client(okHttpClient)
             .build()
-            .create(ItunesApi::class.java)
+
+        return retrofit.create(ItunesApi::class.java)
     }
 }
