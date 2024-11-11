@@ -52,7 +52,7 @@ internal class MainViewModel @Inject constructor(
     }
 
     private fun subscribe() {
-        eventBus.subscribe()
+        eventBus.sharedFlow
             .onEach { event ->
                 when (event) {
                     is AppEvent.OnNoInternetConnection -> {

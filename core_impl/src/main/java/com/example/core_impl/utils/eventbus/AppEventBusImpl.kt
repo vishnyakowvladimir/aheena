@@ -9,17 +9,13 @@ import javax.inject.Inject
 
 class AppEventBusImpl @Inject constructor() : AppEventBus {
 
-    private val sharedFlow = MutableSharedFlow<AppEvent>(
+    private val _sharedFlow = MutableSharedFlow<AppEvent>(
         replay = Int.MAX_VALUE,
     )
-
-    override fun subscribe(): SharedFlow<AppEvent> {
-        return sharedFlow.asSharedFlow()
-    }
+    
+    override val sharedFlow: SharedFlow<AppEvent> = _sharedFlow.asSharedFlow()
 
     override fun sendEvent(event: AppEvent) {
-        sharedFlow.tryEmit(event)
+        _sharedFlow.tryEmit(event)
     }
-
-
 }

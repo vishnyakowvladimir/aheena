@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface AppEventBus {
 
-    fun subscribe(): SharedFlow<AppEvent>
+    val sharedFlow: SharedFlow<AppEvent>
     fun sendEvent(event: AppEvent)
 }
