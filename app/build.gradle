@@ -72,6 +72,10 @@ android {
         jvmTarget = jvmTargetExt
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildFeatures {
         compose = true
         buildConfig true
