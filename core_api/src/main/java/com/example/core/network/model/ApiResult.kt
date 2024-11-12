@@ -7,9 +7,13 @@ val COMPLETABLE_RESULT = ApiResult.Success(Completable)
 
 object Completable : Any()
 
-sealed interface ApiResult<out T> {
-    data class Success<out T : Any>(val data: T) : ApiResult<T>
-    data class Error(val error: Throwable, val cachedData: Any? = null) : ApiResult<Nothing>
+sealed class ApiResult<out T> {
+    data class Success<out T : Any>(val data: T) : ApiResult<T>()
+    data class Error(val error: Throwable, val cachedData: Any? = null) : ApiResult<Nothing>()
+
+    fun getDataIfSuccess(): T? {
+        return if (this is Success) data else null
+    }
 }
 
 fun ApiResult<*>.toCompletableResult() = when (this) {
@@ -17,7 +21,7 @@ fun ApiResult<*>.toCompletableResult() = when (this) {
     is ApiResult.Error -> this
 }
 
-inline fun <reified T : Any> T.toApiResult(): ApiResult<T> {
+fun <T : Any> T.toApiResult(): ApiResult<T> {
     return when {
         this !is Exception -> ApiResult.Success(this)
         else -> ApiResult.Error(error = this)

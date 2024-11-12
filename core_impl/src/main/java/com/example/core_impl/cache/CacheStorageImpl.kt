@@ -11,7 +11,7 @@ class CacheStorageImpl @Inject constructor(
     private val clock: AppSystemClock,
 ) : CacheStorage {
 
-    private val cache = ConcurrentHashMap<CachedDataKey, Map<String, CachedData<out Any>>>()
+    private val cache = ConcurrentHashMap<CachedDataKey, MutableMap<String, CachedData<out Any>>>()
 
     override fun <T : Any> save(
         data: T,
@@ -23,7 +23,8 @@ class CacheStorageImpl @Inject constructor(
             time = clock.getCurrentTimeMillis(),
         )
 
-        val map = mapOf(postfixKey to cachedData)
+        val map = cache[key] ?: mutableMapOf()
+        map[postfixKey] = cachedData
         cache[key] = map
     }
 

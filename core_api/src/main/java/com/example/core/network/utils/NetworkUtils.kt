@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
-inline fun <reified Dto : Any> sendRequest(
-    crossinline request: suspend () -> Dto,
+fun <Dto : Any> sendRequest(
+    request: suspend () -> Dto,
 ): Flow<ApiResult<Dto>> {
     return flow {
         val result = request().toApiResult()
