@@ -1,6 +1,7 @@
 package com.example.data_source_impl.repository.itunes
 
 import com.example.core.network.model.ApiResult
+import com.example.core.network.model.mapDtoToDomain
 import com.example.core.network.utils.sendRequest
 import com.example.data_source_api.repository.itunes.ItunesRepository
 import com.example.data_source_impl.api.ItunesApi
@@ -15,12 +16,13 @@ class ItunesRepositoryImpl @Inject constructor(
 ) : ItunesRepository {
 
     override fun loadTracks(offset: Int, limit: Int, term: String): Flow<ApiResult<List<ItunesTrack>>> {
-        return sendRequest(mapper = mapper::map) {
+        return sendRequest {
             api.loadItunesTrackList(
                 offset = offset,
                 limit = limit,
                 term = term,
             )
         }
+            .mapDtoToDomain(mapper::map)
     }
 }

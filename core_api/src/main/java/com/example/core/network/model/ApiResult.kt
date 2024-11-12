@@ -1,5 +1,8 @@
 package com.example.core.network.model
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
 val COMPLETABLE_RESULT = ApiResult.Success(Completable)
 
 object Completable : Any()
@@ -21,9 +24,22 @@ inline fun <reified T : Any> T.toApiResult(): ApiResult<T> {
     }
 }
 
-inline fun <T : Any, R : Any> ApiResult<T>.mapResultSuccess(mapper: (T) -> R): ApiResult<R> = when (this) {
+inline fun <Dto : Any, Domain : Any> ApiResult<Dto>.mapDtoToDomain(
+    mapper: (Dto) -> Domain,
+): ApiResult<Domain> = when (this) {
     is ApiResult.Success -> ApiResult.Success(mapper(data))
     is ApiResult.Error -> this
+}
+
+inline fun <Dto : Any, Domain : Any> Flow<ApiResult<Dto>>.mapDtoToDomain(
+    crossinline mapper: (Dto) -> Domain,
+): Flow<ApiResult<Domain>> {
+    return this.map { result ->
+        when (result) {
+            is ApiResult.Success -> ApiResult.Success(mapper(result.data))
+            is ApiResult.Error -> result
+        }
+    }
 }
 
 fun Throwable.toResultError() = ApiResult.Error(this)
