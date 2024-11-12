@@ -73,7 +73,7 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        disable "Instantiatable"
     }
 
     buildFeatures {
