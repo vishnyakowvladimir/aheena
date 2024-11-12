@@ -11,6 +11,7 @@ class OkHttpClientBuilderFactoryImpl @Inject constructor(
 
     override fun createBuilder(): OkHttpClient.Builder {
         return OkHttpClient.Builder()
+            .addInterceptor(interceptorProvider.provideChuckerInterceptor())
             .addInterceptor(interceptorProvider.provideHttpLoggingInterceptor())
             .addInterceptor(interceptorProvider.provideConnectivityInterceptor())
             .addInterceptor(interceptorProvider.provideExceptionInterceptor())

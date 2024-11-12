@@ -6,6 +6,8 @@ interface InterceptorProvider {
 
     fun provideHttpLoggingInterceptor(): Interceptor
 
+    fun provideChuckerInterceptor(): Interceptor
+
     fun provideItunesHostInterceptor(): Interceptor
 
     fun provideBrewHostInterceptor(): Interceptor

@@ -8,6 +8,8 @@ dependencies {
     implementation androidXSecurity
     implementation androidXPreference
     implementation network
+    debugImplementation chuckerDebug
+    releaseImplementation chuckerRelease
 
     api project(":ui:aheena-lib-ui")
     api project(':core_api')
