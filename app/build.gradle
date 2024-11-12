@@ -26,6 +26,24 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file('/Users/vladimir/projects/aheena/keystore.jks')
+            storePassword '123456'
+            keyAlias 'aheenaAlias'
+            keyPassword '123456'
+        }
+//        release {
+//            File signFile = file(telecardRootPath('debug_keystore.properties'))
+//            Properties props = new Properties()
+//            props.load(new FileInputStream(signFile))
+//            storeFile file(props['keystore'])
+//            storePassword props['storePassword']
+//            keyAlias props['keyAlias']
+//            keyPassword props['keyPassword']
+//        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled = false
@@ -41,6 +59,7 @@ android {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
             )
+            signingConfig signingConfigs.release
         }
     }
 
