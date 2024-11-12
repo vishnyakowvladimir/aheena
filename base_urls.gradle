@@ -28,8 +28,8 @@ ext {
                     }
 
                     release {
+                        prodUrls.buildConfigFields('PROD', owner)
                         emptyUrls.buildConfigFields('TEST', owner)
-                        emptyUrls.buildConfigFields('PROD', owner)
                         emptyUrls.buildConfigFields('INCORRECT', owner)
                     }
                 }
