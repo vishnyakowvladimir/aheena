@@ -1,4 +1,6 @@
-package com.example.core.cache
+package com.example.core.cache.storage
+
+import com.example.core.cache.model.CachedDataKey
 
 private const val POSTFIX_KEY_DEFAULT = "POSTFIX_KEY_DEFAULT"
 

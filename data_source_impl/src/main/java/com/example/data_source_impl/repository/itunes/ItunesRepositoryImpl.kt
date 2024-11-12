@@ -1,7 +1,7 @@
 package com.example.data_source_impl.repository.itunes
 
-import com.example.core.cache.CacheDataSource
-import com.example.core.cache.CachedDataKey
+import com.example.core.cache.data_source.CacheDataSource
+import com.example.core.cache.model.CachedDataKey
 import com.example.core.network.model.ApiResult
 import com.example.core.network.model.mapDtoToDomain
 import com.example.data_source_api.repository.itunes.ItunesRepository
@@ -20,6 +20,18 @@ class ItunesRepositoryImpl @Inject constructor(
 ) : ItunesRepository {
 
     override fun loadTracks(offset: Int, limit: Int, term: String): Flow<ApiResult<List<ItunesTrack>>> {
+
+//        просто запрос, если не надо кэшировать
+//        return sendRequest {
+//            api.loadItunesTrackList(
+//                offset = offset,
+//                limit = limit,
+//                term = term,
+//            )
+//        }
+//            .mapDtoToDomain(mapper::map)
+//            .flowOn(Dispatchers.IO)
+
         return cacheDataSource.get(
             key = CachedDataKey.ITUNES,
             postfixKey = "$term $offset $limit",

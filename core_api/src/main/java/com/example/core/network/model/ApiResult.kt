@@ -38,12 +38,7 @@ inline fun <Dto : Any, Domain : Any> ApiResult<Dto>.mapDtoToDomain(
 inline fun <Dto : Any, Domain : Any> Flow<ApiResult<Dto>>.mapDtoToDomain(
     crossinline mapper: (Dto) -> Domain,
 ): Flow<ApiResult<Domain>> {
-    return this.map { result ->
-        when (result) {
-            is ApiResult.Success -> ApiResult.Success(mapper(result.data))
-            is ApiResult.Error -> result
-        }
-    }
+    return this.map { result -> result.mapDtoToDomain(mapper) }
 }
 
 fun Throwable.toResultError() = ApiResult.Error(this)

@@ -1,5 +1,6 @@
-package com.example.core.cache
+package com.example.core.cache.data_source
 
+import com.example.core.cache.model.CachedDataKey
 import com.example.core.network.model.ApiResult
 import kotlinx.coroutines.flow.Flow
 
