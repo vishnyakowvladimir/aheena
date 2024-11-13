@@ -12,4 +12,6 @@ dependencies {
     api project(':data_sdk_api')
     api project(':mvi')
     api project(":ui:aheena-lib-ui")
+
+    api project(':feature_main_api')
 }

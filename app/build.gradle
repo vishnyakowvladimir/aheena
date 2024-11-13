@@ -149,6 +149,7 @@ dependencies {
     api project(':feature_splash')
     api project(':feature_authentication_api')
     api project(':feature_authentication')
+    api project(':feature_main_api')
     api project(':feature_main')
     api project(':feature_itunes')
 

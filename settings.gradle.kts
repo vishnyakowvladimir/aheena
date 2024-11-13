@@ -23,4 +23,3 @@ rootProject.name = "aheena"
 include(":app")
 
 apply(from = "team-directory.gradle.kts")
-include(":feature_splash_api")
