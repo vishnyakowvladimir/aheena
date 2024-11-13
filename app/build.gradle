@@ -151,6 +151,7 @@ dependencies {
     api project(':feature_authentication')
     api project(':feature_main_api')
     api project(':feature_main')
+    api project(':feature_itunes_api')
     api project(':feature_itunes')
 
 //    implementation("androidx.core:core-ktx:1.13.1")

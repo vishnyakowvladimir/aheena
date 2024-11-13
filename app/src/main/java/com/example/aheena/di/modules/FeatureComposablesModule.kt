@@ -2,6 +2,8 @@ package com.example.aheena.di.modules
 
 import com.example.feature_authentication.navigation.FeatureComposableAuthenticationImpl
 import com.example.feature_authentication_api.FeatureComposableAuthentication
+import com.example.feature_itunes.navigation.FeatureComposableItunesImpl
+import com.example.feature_itunes_api.FeatureComposableItunes
 import com.example.feature_main.navigation.FeatureComposableMainImpl
 import com.example.feature_main_api.FeatureComposableMain
 import com.example.feature_splash_api.FeatureComposableSplash
@@ -20,4 +22,7 @@ internal interface FeatureComposablesModule {
 
     @Binds
     fun bindMain(composable: FeatureComposableMainImpl): FeatureComposableMain
+
+    @Binds
+    fun bindItunes(composable: FeatureComposableItunesImpl): FeatureComposableItunes
 }
