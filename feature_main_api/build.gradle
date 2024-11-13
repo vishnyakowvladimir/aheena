@@ -1,5 +1,5 @@
 applyAndroidConfiguration(this, "com.example.feature_main_api")
 
 dependencies {
-    api project(':core_api')
+    implementation project(':core_api')
 }
