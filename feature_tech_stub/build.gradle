@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-applyAndroidConfiguration(this, "com.example.feature_tech_stub")
+applyAndroidConfiguration(this, "com.example.feature_tech")
+applyDagger(this)
 applyCompose(this, KotlinCompile)
 
 dependencies {
