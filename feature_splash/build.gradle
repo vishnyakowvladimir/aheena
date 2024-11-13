@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 applyAndroidConfiguration(this, "com.example.splash")
+applyDagger(this)
 applyCompose(this, KotlinCompile)
 
 dependencies {
@@ -8,4 +9,6 @@ dependencies {
 
     api project(':core_api')
     api project(":ui:aheena-lib-ui")
+
+    api project(':feature_splash_api')
 }

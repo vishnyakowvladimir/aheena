@@ -145,6 +145,7 @@ dependencies {
     api project(':data_source_api')
     api project(':data_source_impl')
     api project(':mvi')
+    api project(':feature_splash_api')
     api project(':feature_splash')
     api project(':feature_authentication_api')
     api project(':feature_authentication')
