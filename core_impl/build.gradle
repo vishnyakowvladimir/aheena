@@ -11,9 +11,10 @@ dependencies {
     debugImplementation chuckerDebug
     releaseImplementation chuckerRelease
 
-    api project(":ui:aheena-lib-ui")
+    implementation project(":ui:aheena-lib-ui")
+    implementation project(':domain_models')
+    implementation project(':data_source_api')
+    implementation project(':data_sdk_api')
+
     api project(':core_api')
-    api project(':domain_models')
-    api project(':data_source_api')
-    api project(':data_sdk_api')
 }

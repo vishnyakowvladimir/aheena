@@ -9,6 +9,7 @@ dependencies {
     implementation androidXBiometric
 
     implementation project(':core_api')
+    implementation project(':domain_models')
     implementation project(':data_sdk_api')
     implementation project(':mvi')
     implementation project(":ui:aheena-lib-ui")

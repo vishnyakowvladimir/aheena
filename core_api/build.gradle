@@ -6,6 +6,7 @@ applyDagger(this)
 
 dependencies {
     implementation network
-    api project(":ui:aheena-lib-ui")
-    api project(':domain_models')
+
+    implementation project(":ui:aheena-lib-ui")
+    implementation project(':domain_models')
 }
