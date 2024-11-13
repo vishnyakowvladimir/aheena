@@ -46,6 +46,11 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+
+            resValue "string", "app_name", "Aheena debug"
+
             minifyEnabled = false
             debuggable true
             proguardFiles(
@@ -55,6 +60,8 @@ android {
         }
 
         release {
+            resValue "string", "app_name", "Aheena release"
+
             minifyEnabled = true
             debuggable false
             proguardFiles(

@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">Aheena</string>
-
     <string name="connectivity_error">Нет интернет - соединения</string>
 </resources>
