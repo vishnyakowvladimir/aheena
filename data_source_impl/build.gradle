@@ -4,6 +4,7 @@ applyDagger(this)
 dependencies {
     implementation network
 
+    implementation project(':domain_models')
+    implementation project(':core_api')
     api project(':data_source_api')
-    api project(':domain_models')
 }
