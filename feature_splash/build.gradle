@@ -7,8 +7,8 @@ applyCompose(this, KotlinCompile)
 dependencies {
     implementation androidXAppCompat
 
-    api project(':core_api')
-    api project(":ui:aheena-lib-ui")
+    implementation project(':core_api')
+    implementation project(":ui:aheena-lib-ui")
 
     api project(':feature_splash_api')
 }
