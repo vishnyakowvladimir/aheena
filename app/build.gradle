@@ -146,6 +146,9 @@ dependencies {
     implementation project(':feature_authentication')
     implementation project(':feature_main')
     implementation project(':feature_itunes')
+    implementation project(':feature_tech_api')
+//    releaseImplementation project(':feature_tech_stub')
+    debugImplementation project(':feature_tech')
 
 //    implementation("androidx.core:core-ktx:1.13.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")

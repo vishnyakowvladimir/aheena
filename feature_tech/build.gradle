@@ -1,0 +1,17 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+applyAndroidConfiguration(this, "com.example.feature_tech")
+applyDagger(this)
+applyCompose(this, KotlinCompile)
+
+dependencies {
+    implementation androidXAppCompat
+
+    implementation project(':core_api')
+    implementation project(':domain_models')
+    implementation project(':data_sdk_api')
+    implementation project(':mvi')
+    implementation project(":ui:aheena-lib-ui")
+
+    implementation project(':feature_tech_api')
+}

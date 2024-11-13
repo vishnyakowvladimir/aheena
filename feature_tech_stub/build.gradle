@@ -1,0 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+applyAndroidConfiguration(this, "com.example.feature_tech_stub")
+applyCompose(this, KotlinCompile)
+
+dependencies {
+    implementation project(':core_api')
+    implementation project(':feature_tech_api')
+}
