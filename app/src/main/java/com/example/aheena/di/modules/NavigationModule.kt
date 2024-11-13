@@ -1,6 +1,5 @@
 package com.example.aheena.di.modules
 
-import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.core.di.qualifier.MainRouter
 import com.example.core.di.scope.ApplicationScope
 import com.example.core.navigation.router.NavControllerHolder
@@ -9,7 +8,6 @@ import com.example.core.navigation.router.NavRouter
 import com.example.core_impl.navigation.AppRouterImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
 interface NavigationModule {
@@ -22,13 +20,4 @@ interface NavigationModule {
     @ApplicationScope
     @Binds
     fun bindNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
-
-    companion object {
-
-        @ApplicationScope
-        @Provides
-        fun provideComposablesHolder(): FeatureComposablesHolder {
-            return FeatureComposablesHolder()
-        }
-    }
 }

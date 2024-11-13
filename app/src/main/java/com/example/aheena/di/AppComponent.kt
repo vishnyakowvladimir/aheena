@@ -6,6 +6,7 @@ import com.example.aheena.di.modules.ApiModule
 import com.example.aheena.di.modules.CacheModule
 import com.example.aheena.di.modules.ControllerModule
 import com.example.aheena.di.modules.CryptoModule
+import com.example.aheena.di.modules.FeatureComposablesModule
 import com.example.aheena.di.modules.InteractorModule
 import com.example.aheena.di.modules.NavigationModule
 import com.example.aheena.di.modules.NetworkModule
@@ -28,6 +29,7 @@ import dagger.Component
     modules = [
         UtilsModule::class,
         NavigationModule::class,
+        FeatureComposablesModule::class,
         ViewModelsModule::class,
         NetworkModule::class,
         CacheModule::class,
