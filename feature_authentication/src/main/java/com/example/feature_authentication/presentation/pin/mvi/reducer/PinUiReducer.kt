@@ -26,6 +26,7 @@ internal class PinUiReducer @Inject constructor(
     ): Update<PinDomainState, PinSideEffect, PinUiCommand> {
         return when (event) {
             is PinEvent.Ui.OnBackPressed -> reduceOnBackPressed()
+            is PinEvent.Ui.OnOpenTechClick -> reduceOnOpenTechClick()
             is PinEvent.Ui.OnEnableBiometricsNeeded -> reduceOnEnableBiometricsNeeded(state)
             is PinEvent.Ui.OnKeyboardClick -> reduceOnKeyboardClick(state, event)
             is PinEvent.Ui.OnLogoutClick -> reduceOnLogoutClick()
@@ -37,6 +38,12 @@ internal class PinUiReducer @Inject constructor(
     private fun reduceOnBackPressed(): Update<PinDomainState, PinSideEffect, PinUiCommand> {
         return Update.sideEffects(
             sideEffects = listOf(PinSideEffect.Ui.Back),
+        )
+    }
+
+    private fun reduceOnOpenTechClick(): Update<PinDomainState, PinSideEffect, PinUiCommand> {
+        return Update.sideEffects(
+            sideEffects = listOf(PinSideEffect.Ui.OpenTechScreen),
         )
     }
 

@@ -10,6 +10,7 @@ internal sealed interface PinEvent {
 
     sealed interface Ui : PinEvent {
         data object OnBackPressed : Ui
+        data object OnOpenTechClick : Ui
         data class OnKeyboardClick(val key: PinKey) : Ui
         data object OnEnableBiometricsNeeded : Ui
         data class OnBiometricsShowed(val biometricPromptHandler: BiometricPromptHandler) : Ui

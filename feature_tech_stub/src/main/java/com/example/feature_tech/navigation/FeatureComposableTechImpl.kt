@@ -1,4 +1,4 @@
-package com.example.feature_tech
+package com.example.feature_tech.navigation
 
 import androidx.compose.material3.Text
 import androidx.navigation.NavGraphBuilder

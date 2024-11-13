@@ -1,5 +1,6 @@
 package com.example.feature_authentication.presentation.pin.mvi.reducer
 
+import com.example.core_api.application_info.ApplicationInfo
 import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
 import com.example.feature_authentication.biometric.BiometricController
 import com.example.feature_authentication.presentation.pin.mvi.model.PinDomainState
@@ -15,6 +16,7 @@ internal class PinReducer @Inject constructor(
     private val domainReducer: PinDomainReducer,
     private val biometricController: BiometricController,
     private val authenticationInteractor: AuthenticationInteractor,
+    private val applicationInfo: ApplicationInfo,
 ) : Reducer<PinEvent, PinDomainState, PinSideEffect, PinUiCommand> {
 
     override fun update(
@@ -40,6 +42,7 @@ internal class PinReducer @Inject constructor(
         return PinDomainState(
             pin = emptyList(),
             cipher = cipher,
+            isDebug = applicationInfo.isDebug,
             isBiometricsReady = biometricController.isReady(),
             biometricPromptHandler = null,
         )

@@ -7,6 +7,7 @@ internal data class PinDomainState(
     val pin: List<Int>,
     val cipher: CipherHolder?,
     val biometricPromptHandler: BiometricPromptHandler?,
+    val isDebug: Boolean,
     val isBiometricsReady: Boolean,
     val isError: Boolean = false,
     val isLoading: Boolean = false,

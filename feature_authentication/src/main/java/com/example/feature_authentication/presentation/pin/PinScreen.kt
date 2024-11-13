@@ -36,6 +36,7 @@ import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.theme.AppThemeContainer
 import com.example.lib_ui.theme.typography.ViewScale
 import com.example.lib_ui.utils.SetSystemBarsColor
+import com.example.lib_ui.R as LibUiR
 
 @Composable
 internal fun PinScreen(viewModel: PinViewModel) {
@@ -54,10 +55,28 @@ internal fun PinScreen(viewModel: PinViewModel) {
         topBar = {
             AppNavBar(
                 state = AppNavBarState(
-                    rightPart = null,
+                    rightPart = AppNavBarState.RightPart(
+                        iconRes = LibUiR.drawable.ic_24dp_actions_settings,
+                        elementColor = AppTheme.palette.icon.primary,
+                        onClick = {
+                            viewModel.onEvent(PinEvent.Ui.OnOpenTechClick)
+                        },
+                    ),
+//                    rightPart = if (state.value.isTechVisible) {
+//                        AppNavBarState.RightPart(
+//                            iconRes = LibUiR.drawable.ic_24dp_actions_settings,
+//                            elementColor = AppTheme.palette.icon.primary,
+//                            onClick = {
+//                                viewModel.onEvent(PinEvent.Ui.OnOpenTechClick)
+//                            },
+//                        )
+//                    } else {
+//                        null
+//                    },
                     leftPart = null,
                     middlePart = AppNavBarState.MiddlePart(
-                        title = stringResource(id = R.string.authentication_pin_title)
+                        title = stringResource(id = R.string.authentication_pin_title),
+                        elementColor = AppTheme.palette.icon.primary,
                     ),
                     backgroundColor = AppTheme.palette.background.primary,
                 ),
@@ -140,6 +159,7 @@ private fun ContentPreview() {
                     ),
                 ),
                 withBiometrics = true,
+                isTechVisible = true,
             ),
             onKeyboardClick = {},
             onLogoutClick = {},

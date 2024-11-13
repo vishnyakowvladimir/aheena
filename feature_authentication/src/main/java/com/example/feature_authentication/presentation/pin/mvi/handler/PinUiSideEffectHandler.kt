@@ -35,6 +35,7 @@ internal class PinUiSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is PinSideEffect.Ui.Back -> handleBack()
+                is PinSideEffect.Ui.OpenTechScreen -> handleOpenTechScreen()
                 is PinSideEffect.Ui.OpenMainScreen -> handleOpenMainScreen()
                 is PinSideEffect.Ui.Logout -> handleLogout()
             }
@@ -52,6 +53,13 @@ internal class PinUiSideEffectHandler @Inject constructor(
     private fun handleLogout(): Flow<PinEvent> {
         return flow {
             logoutController.logout()
+            emit(PinEvent.None)
+        }
+    }
+
+    private fun handleOpenTechScreen(): Flow<PinEvent> {
+        return flow {
+            mainRouter.navigate(FeaturesDestination.TechDestination)
             emit(PinEvent.None)
         }
     }

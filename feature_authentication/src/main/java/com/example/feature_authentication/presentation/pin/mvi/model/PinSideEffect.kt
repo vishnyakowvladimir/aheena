@@ -7,6 +7,7 @@ internal sealed interface PinSideEffect {
     sealed interface Ui : PinSideEffect {
         data object Back : Ui
         data object Logout : Ui
+        data object OpenTechScreen : Ui
         data object OpenMainScreen : Ui
     }
 
