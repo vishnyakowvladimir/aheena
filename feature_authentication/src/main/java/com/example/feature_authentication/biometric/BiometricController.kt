@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import com.example.core.holder.ActivityHolder
+import com.example.core_api.holder.ActivityHolder
 import com.example.data_sdk_api.interactor.biometrics.BiometricsInteractor
 import com.example.feature_authentication.biometric.model.AuthenticationErrorType
 import com.example.feature_authentication.biometric.model.BiometricAuthenticationPossibility

@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_main.presentation.features.model.FeatureScreen
 import com.example.feature_main.presentation.features.mvi.model.FeaturesEvent
 import com.example.lib_ui.theme.AppTheme

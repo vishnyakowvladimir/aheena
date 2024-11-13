@@ -16,10 +16,10 @@ import com.example.aheena.di.modules.StorageModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.aheena.di.modules.ViewModelsModule
 import com.example.aheena.presentation.MainActivity
-import com.example.core.application_info.ApplicationInfo
-import com.example.core.di.component.DaggerComponent
-import com.example.core.di.scope.ApplicationScope
-import com.example.core.presentation.base.BaseApplication
+import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.di.component.DaggerComponent
+import com.example.core_api.di.scope.ApplicationScope
+import com.example.core_api.presentation.base.BaseApplication
 import dagger.BindsInstance
 import dagger.Component
 

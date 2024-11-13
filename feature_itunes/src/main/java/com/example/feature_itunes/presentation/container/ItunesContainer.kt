@@ -6,8 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.core.di.extension.clearComponent
-import com.example.core.di.extension.getComponent
+import com.example.core_api.di.extension.clearComponent
+import com.example.core_api.di.extension.getComponent
 import com.example.feature_itunes.di.ItunesComponent
 import com.example.feature_itunes.navigation.LocalDestinationItunes
 import com.example.feature_itunes.presentation.itunes.ItunesScreen

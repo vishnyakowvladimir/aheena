@@ -1,6 +1,6 @@
 package com.example.feature_itunes.presentation.itunes.mvi.model
 
-import com.example.core.network.model.ApiResult
+import com.example.core_api.network.model.ApiResult
 import com.example.domain_models.itunes.ItunesTrack
 
 internal sealed interface ItunesEvent {

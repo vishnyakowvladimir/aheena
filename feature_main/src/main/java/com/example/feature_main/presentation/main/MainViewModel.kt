@@ -1,8 +1,8 @@
 package com.example.feature_main.presentation.main
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
 import com.example.feature_main.presentation.main.mapper.MainMapper
 import com.example.feature_main.presentation.main.mvi.handler.MainSideEffectHandler
 import com.example.feature_main.presentation.main.mvi.model.MainEvent

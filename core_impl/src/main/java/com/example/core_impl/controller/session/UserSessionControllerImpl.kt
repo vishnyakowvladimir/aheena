@@ -1,12 +1,12 @@
 package com.example.core_impl.controller.session
 
-import com.example.core.controller.session.UserSessionController
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.NavRouter
-import com.example.core.utils.coroutines.AppCoroutineScope
-import com.example.core.utils.extension.withLatestFrom
-import com.example.core.utils.time.AppSystemClock
+import com.example.core_api.controller.session.UserSessionController
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.utils.coroutines.AppCoroutineScope
+import com.example.core_api.utils.extension.withLatestFrom
+import com.example.core_api.utils.time.AppSystemClock
 import com.example.data_sdk_api.interactor.user_activity.UserActivityInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

@@ -1,7 +1,7 @@
 package com.example.feature_tech.di
 
-import com.example.core.di.component.DaggerComponent
-import com.example.core.di.scope.FeatureScope
+import com.example.core_api.di.component.DaggerComponent
+import com.example.core_api.di.scope.FeatureScope
 import dagger.Component
 
 @FeatureScope

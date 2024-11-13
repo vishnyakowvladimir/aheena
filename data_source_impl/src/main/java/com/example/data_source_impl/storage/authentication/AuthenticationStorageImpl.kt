@@ -2,10 +2,10 @@ package com.example.data_source_impl.storage.authentication
 
 import android.util.Base64
 import androidx.core.content.edit
-import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.rsa.cipher.RsaCipher
-import com.example.core.crypto.rsa.cipher.model.CipherHolder
-import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
+import com.example.core_api.crypto.authentication.RefreshTokenCipher
+import com.example.core_api.crypto.rsa.cipher.RsaCipher
+import com.example.core_api.crypto.rsa.cipher.model.CipherHolder
+import com.example.core_api.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import javax.inject.Inject
 

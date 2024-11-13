@@ -1,7 +1,7 @@
 package com.example.core_impl.crypto.authentication
 
-import com.example.core.crypto.authentication.RefreshTokenCipher
-import com.example.core.crypto.vizhener.VizhenerCipher
+import com.example.core_api.crypto.authentication.RefreshTokenCipher
+import com.example.core_api.crypto.vizhener.VizhenerCipher
 import javax.inject.Inject
 
 private const val EMPTY_STRING = ""

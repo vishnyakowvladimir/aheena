@@ -1,0 +1,6 @@
+package com.example.core_api.controller.session
+
+interface UserSessionController {
+    fun enable()
+    fun disable()
+}

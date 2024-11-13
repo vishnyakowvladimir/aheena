@@ -1,6 +1,6 @@
 package com.example.data_sdk_impl.interactor.interactor
 
-import com.example.core.network.model.ApiResult
+import com.example.core_api.network.model.ApiResult
 import com.example.data_sdk_api.interactor.itunes.ItunesInteractor
 import com.example.data_source_api.repository.itunes.ItunesRepository
 import com.example.domain_models.itunes.ItunesTrack

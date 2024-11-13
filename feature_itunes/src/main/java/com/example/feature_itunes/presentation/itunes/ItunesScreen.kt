@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.domain_models.itunes.ItunesTrack
 import com.example.feature_itunes.R
 import com.example.feature_itunes.presentation.itunes.model.ItunesData

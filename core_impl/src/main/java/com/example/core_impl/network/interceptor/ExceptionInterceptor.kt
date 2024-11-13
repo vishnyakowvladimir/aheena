@@ -1,6 +1,6 @@
 package com.example.core_impl.network.interceptor
 
-import com.example.core.network.model.BaseApiException
+import com.example.core_api.network.model.BaseApiException
 import okhttp3.Interceptor
 import okhttp3.Response
 

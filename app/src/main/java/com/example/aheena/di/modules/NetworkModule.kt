@@ -1,11 +1,11 @@
 package com.example.aheena.di.modules
 
 import com.example.aheena.BuildConfig
-import com.example.core.application_info.ApplicationInfo
-import com.example.core.network.InterceptorProvider
-import com.example.core.network.OkHttpClientBuilderFactory
-import com.example.core.network.RetrofitBuilderFactory
-import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
+import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.network.InterceptorProvider
+import com.example.core_api.network.OkHttpClientBuilderFactory
+import com.example.core_api.network.RetrofitBuilderFactory
+import com.example.core_api.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.core_impl.network.InterceptorProviderImpl
 import com.example.core_impl.network.OkHttpClientBuilderFactoryImpl
 import com.example.core_impl.network.RetrofitBuilderFactoryImpl

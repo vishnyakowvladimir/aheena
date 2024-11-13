@@ -1,6 +1,6 @@
 package com.example.data_sdk_api.interactor.itunes
 
-import com.example.core.network.model.ApiResult
+import com.example.core_api.network.model.ApiResult
 import com.example.domain_models.itunes.ItunesTrack
 import kotlinx.coroutines.flow.Flow
 

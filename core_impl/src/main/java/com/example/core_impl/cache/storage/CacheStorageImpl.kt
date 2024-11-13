@@ -1,8 +1,8 @@
 package com.example.core_impl.cache.storage
 
-import com.example.core.cache.model.CachedDataKey
-import com.example.core.cache.storage.CacheStorage
-import com.example.core.utils.time.AppSystemClock
+import com.example.core_api.cache.model.CachedDataKey
+import com.example.core_api.cache.storage.CacheStorage
+import com.example.core_api.utils.time.AppSystemClock
 import com.example.core_impl.cache.model.CachedData
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject

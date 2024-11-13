@@ -1,6 +1,6 @@
 package com.example.feature_authentication.presentation.pin.mapper
 
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.utils.string_provider.StringProvider
 import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.pin.model.PinUiState
 import com.example.feature_authentication.presentation.pin.mvi.model.PinDomainState

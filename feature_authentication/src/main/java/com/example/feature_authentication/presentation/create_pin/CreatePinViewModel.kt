@@ -1,8 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
 import com.example.feature_authentication.presentation.create_pin.mapper.CreatePinMapper
 import com.example.feature_authentication.presentation.create_pin.mvi.handler.CreatePinSideEffectHandler
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent

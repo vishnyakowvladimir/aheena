@@ -1,7 +1,7 @@
 package com.example.core_impl.network
 
-import com.example.core.network.InterceptorProvider
-import com.example.core.network.OkHttpClientBuilderFactory
+import com.example.core_api.network.InterceptorProvider
+import com.example.core_api.network.OkHttpClientBuilderFactory
 import okhttp3.OkHttpClient
 import javax.inject.Inject
 

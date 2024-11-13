@@ -2,10 +2,10 @@ package com.example.core_impl.network
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.core.application_info.ApplicationInfo
-import com.example.core.network.InterceptorProvider
-import com.example.core.utils.connectivity_checker.ConnectivityChecker
-import com.example.core.utils.eventbus.AppEventBus
+import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.network.InterceptorProvider
+import com.example.core_api.utils.connectivity_checker.ConnectivityChecker
+import com.example.core_api.utils.eventbus.AppEventBus
 import com.example.core_impl.network.interceptor.BrewHostInterceptor
 import com.example.core_impl.network.interceptor.ConnectivityInterceptor
 import com.example.core_impl.network.interceptor.ExceptionInterceptor

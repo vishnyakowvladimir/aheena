@@ -6,10 +6,10 @@ import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffec
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
 import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.eventbus.AppEventBus
-import com.example.core.utils.eventbus.model.AppEvent
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.eventbus.AppEventBus
+import com.example.core_api.utils.eventbus.model.AppEvent
+import com.example.core_api.utils.extension.mapData
 import com.example.mvi.MviStore
 import com.example.mvi.StateMachine
 import kotlinx.coroutines.channels.Channel

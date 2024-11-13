@@ -1,8 +1,8 @@
 package com.example.feature_authentication.presentation.biometric
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
 import com.example.feature_authentication.presentation.biometric.mapper.BiometricsMapper
 import com.example.feature_authentication.presentation.biometric.mvi.handler.BiometricsSideEffectHandler
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent

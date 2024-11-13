@@ -1,6 +1,6 @@
 package com.example.feature_authentication.data
 
-import com.example.core.di.scope.FeatureScope
+import com.example.core_api.di.scope.FeatureScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject

@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.pin.model.PinUiState
 import com.example.feature_authentication.presentation.pin.mvi.model.PinEvent

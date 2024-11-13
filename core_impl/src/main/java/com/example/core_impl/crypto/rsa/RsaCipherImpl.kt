@@ -1,9 +1,9 @@
 package com.example.core_impl.crypto.rsa
 
 import android.security.keystore.KeyPermanentlyInvalidatedException
-import com.example.core.crypto.rsa.cipher.RsaCipher
-import com.example.core.crypto.rsa.cipher.model.CipherHolder
-import com.example.core.crypto.rsa.store.RsaCipherKeyStore
+import com.example.core_api.crypto.rsa.cipher.RsaCipher
+import com.example.core_api.crypto.rsa.cipher.model.CipherHolder
+import com.example.core_api.crypto.rsa.store.RsaCipherKeyStore
 import com.example.core_impl.crypto.rsa.model.RsaCipherConfig
 import java.security.KeyFactory
 import java.security.spec.X509EncodedKeySpec

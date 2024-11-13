@@ -1,6 +1,6 @@
 package com.example.feature_authentication.presentation.pin.mvi.model
 
-import com.example.core.crypto.rsa.cipher.model.CipherHolder
+import com.example.core_api.crypto.rsa.cipher.model.CipherHolder
 import com.example.feature_authentication.biometric.BiometricPromptHandler
 
 internal data class PinDomainState(

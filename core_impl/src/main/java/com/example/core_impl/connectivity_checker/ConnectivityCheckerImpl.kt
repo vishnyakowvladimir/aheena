@@ -3,7 +3,7 @@ package com.example.core_impl.connectivity_checker
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.core.utils.connectivity_checker.ConnectivityChecker
+import com.example.core_api.utils.connectivity_checker.ConnectivityChecker
 import javax.inject.Inject
 
 class ConnectivityCheckerImpl @Inject constructor(

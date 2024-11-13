@@ -1,8 +1,8 @@
 package com.example.feature_authentication.presentation.create_pin.mvi.handler
 
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.router.NavRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinEvent
 import com.example.feature_authentication.presentation.create_pin.mvi.model.CreatePinSideEffect

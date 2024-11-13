@@ -1,6 +1,6 @@
 package com.example.core_impl.utils.coroutine
 
-import com.example.core.utils.coroutines.AppCoroutineScope
+import com.example.core_api.utils.coroutines.AppCoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext

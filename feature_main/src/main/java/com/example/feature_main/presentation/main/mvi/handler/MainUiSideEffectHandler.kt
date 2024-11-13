@@ -1,7 +1,7 @@
 package com.example.feature_main.presentation.main.mvi.handler
 
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.router.NavRouter
 import com.example.feature_main.presentation.main.mvi.model.MainEvent
 import com.example.feature_main.presentation.main.mvi.model.MainSideEffect
 import com.example.mvi.SideEffectHandler

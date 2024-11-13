@@ -1,8 +1,8 @@
 package com.example.core_impl.navigation
 
-import com.example.core.holder.ActivityHolder
-import com.example.core.navigation.router.AbstractNavRouter
-import com.example.core.navigation.router.NavControllerHolder
+import com.example.core_api.holder.ActivityHolder
+import com.example.core_api.navigation.router.AbstractNavRouter
+import com.example.core_api.navigation.router.NavControllerHolder
 import javax.inject.Inject
 
 class AppRouterImpl @Inject constructor(

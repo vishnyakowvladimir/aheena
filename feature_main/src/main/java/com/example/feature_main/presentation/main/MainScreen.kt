@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.core.di.extension.getComponent
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.di.extension.getComponent
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_main.di.MainComponent
 import com.example.feature_main.presentation.features.FeaturesScreen
 import com.example.feature_main.presentation.main.model.MainUiState

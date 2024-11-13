@@ -1,7 +1,7 @@
 package com.example.feature_authentication.presentation.login.mvi.handler
 
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.router.NavRouter
 import com.example.feature_authentication.navigation.LocalDestinationAuthentication
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent
 import com.example.feature_authentication.presentation.login.mvi.model.LoginSideEffect

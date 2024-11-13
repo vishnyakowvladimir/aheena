@@ -1,7 +1,7 @@
 package com.example.feature_main.presentation.settings.mvi.reducer
 
-import com.example.core.controller.theme.ThemeManager
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.controller.theme.ThemeManager
+import com.example.core_api.utils.string_provider.StringProvider
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.feature_main.R
 import com.example.feature_main.presentation.settings.mvi.model.SettingsDomainState

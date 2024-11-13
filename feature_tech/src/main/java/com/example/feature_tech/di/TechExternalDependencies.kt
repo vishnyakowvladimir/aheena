@@ -1,10 +1,10 @@
 package com.example.feature_tech.di
 
 import android.content.Context
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.holder.ActivityHolder
-import com.example.core.navigation.router.NavRouter
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.holder.ActivityHolder
+import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.utils.string_provider.StringProvider
 import javax.inject.Inject
 
 class TechExternalDependencies @Inject constructor(

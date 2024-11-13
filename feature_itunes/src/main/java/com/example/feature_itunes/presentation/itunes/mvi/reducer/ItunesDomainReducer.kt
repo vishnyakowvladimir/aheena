@@ -1,6 +1,6 @@
 package com.example.feature_itunes.presentation.itunes.mvi.reducer
 
-import com.example.core.network.model.ApiResult
+import com.example.core_api.network.model.ApiResult
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesDomainState
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesEvent
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesSideEffect

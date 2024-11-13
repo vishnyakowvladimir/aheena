@@ -1,13 +1,13 @@
 package com.example.feature_main.di
 
 import android.content.Context
-import com.example.core.controller.logout.LogoutController
-import com.example.core.controller.session.UserSessionController
-import com.example.core.controller.theme.ThemeManager
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.holder.ActivityHolder
-import com.example.core.navigation.router.NavRouter
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.controller.logout.LogoutController
+import com.example.core_api.controller.session.UserSessionController
+import com.example.core_api.controller.theme.ThemeManager
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.holder.ActivityHolder
+import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.utils.string_provider.StringProvider
 import javax.inject.Inject
 
 class MainExternalDependencies @Inject constructor(

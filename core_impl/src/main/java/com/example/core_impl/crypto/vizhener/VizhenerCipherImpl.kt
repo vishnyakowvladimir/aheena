@@ -1,6 +1,6 @@
 package com.example.core_impl.crypto.vizhener
 
-import com.example.core.crypto.vizhener.VizhenerCipher
+import com.example.core_api.crypto.vizhener.VizhenerCipher
 
 private const val EMPTY_STRING = ""
 

@@ -27,11 +27,11 @@ import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
-import com.example.core.di.extension.getComponent
-import com.example.core.holder.ActivityHolder
-import com.example.core.navigation.router.NavControllerHolder
-import com.example.core.presentation.base.BaseActivity
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.di.extension.getComponent
+import com.example.core_api.holder.ActivityHolder
+import com.example.core_api.navigation.router.NavControllerHolder
+import com.example.core_api.presentation.base.BaseActivity
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.lib_ui.R
 import com.example.lib_ui.components.snackbar.AppSnackbarVisuals
 import com.example.lib_ui.components.snackbar.AppSwipeableSnackbarHost

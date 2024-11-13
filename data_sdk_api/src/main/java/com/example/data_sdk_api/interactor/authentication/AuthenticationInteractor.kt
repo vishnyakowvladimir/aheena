@@ -1,6 +1,6 @@
 package com.example.data_sdk_api.interactor.authentication
 
-import com.example.core.crypto.rsa.cipher.model.CipherHolder
+import com.example.core_api.crypto.rsa.cipher.model.CipherHolder
 
 interface AuthenticationInteractor {
 

@@ -1,7 +1,7 @@
 package com.example.feature_authentication.presentation.pin.mapper
 
 import androidx.biometric.BiometricPrompt
-import com.example.core.crypto.rsa.cipher.model.CipherHolder
+import com.example.core_api.crypto.rsa.cipher.model.CipherHolder
 import javax.inject.Inject
 
 class CryptoObjectMapper @Inject constructor() {

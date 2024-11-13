@@ -1,7 +1,7 @@
 package com.example.core_impl.utils.time
 
 import android.os.SystemClock
-import com.example.core.utils.time.AppSystemClock
+import com.example.core_api.utils.time.AppSystemClock
 import javax.inject.Inject
 
 class AppSystemClockImpl @Inject constructor() : AppSystemClock {

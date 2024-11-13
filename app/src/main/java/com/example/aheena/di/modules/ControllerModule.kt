@@ -1,9 +1,9 @@
 package com.example.aheena.di.modules
 
-import com.example.core.controller.logout.LogoutController
-import com.example.core.controller.session.UserSessionController
-import com.example.core.controller.theme.ThemeManager
-import com.example.core.di.scope.ApplicationScope
+import com.example.core_api.controller.logout.LogoutController
+import com.example.core_api.controller.session.UserSessionController
+import com.example.core_api.controller.theme.ThemeManager
+import com.example.core_api.di.scope.ApplicationScope
 import com.example.core_impl.controller.logout.LogoutControllerImpl
 import com.example.core_impl.controller.session.UserSessionControllerImpl
 import com.example.core_impl.controller.theme.ThemeManagerImpl

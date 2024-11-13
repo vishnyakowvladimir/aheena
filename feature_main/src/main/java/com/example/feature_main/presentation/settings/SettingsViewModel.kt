@@ -1,8 +1,8 @@
 package com.example.feature_main.presentation.settings
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
 import com.example.feature_main.presentation.settings.mapper.SettingsMapper
 import com.example.feature_main.presentation.settings.mvi.handler.SettingsSideEffectHandler
 import com.example.feature_main.presentation.settings.mvi.model.SettingsEvent

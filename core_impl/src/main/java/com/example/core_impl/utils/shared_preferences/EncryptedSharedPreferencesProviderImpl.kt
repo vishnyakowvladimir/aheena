@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.core.utils.shared_preferences.EncryptedSharedPreferencesProvider
+import com.example.core_api.utils.shared_preferences.EncryptedSharedPreferencesProvider
 import java.security.KeyStore
 import javax.inject.Inject
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.biometric.model.BiometricsUiState
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent

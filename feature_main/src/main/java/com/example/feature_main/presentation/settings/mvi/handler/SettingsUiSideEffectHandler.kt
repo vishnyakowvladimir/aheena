@@ -1,7 +1,7 @@
 package com.example.feature_main.presentation.settings.mvi.handler
 
-import com.example.core.controller.logout.LogoutController
-import com.example.core.controller.theme.ThemeManager
+import com.example.core_api.controller.logout.LogoutController
+import com.example.core_api.controller.theme.ThemeManager
 import com.example.feature_main.presentation.settings.mvi.model.SettingsEvent
 import com.example.feature_main.presentation.settings.mvi.model.SettingsSideEffect
 import com.example.mvi.SideEffectHandler

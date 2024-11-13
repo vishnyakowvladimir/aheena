@@ -1,8 +1,8 @@
 package com.example.data_source_impl.storage.network
 
 import androidx.core.content.edit
-import com.example.core.application_info.ApplicationInfo
-import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
+import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.models.network.BaseUrls
 import com.example.data_source_api.models.network.UrlsType
 import com.example.data_source_api.storage.network.UrlProvider

@@ -1,8 +1,8 @@
 package com.example.feature_authentication.presentation.biometric.mvi.handler
 
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.router.NavRouter
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsEvent
 import com.example.feature_authentication.presentation.biometric.mvi.model.BiometricsSideEffect
 import com.example.mvi.SideEffectHandler

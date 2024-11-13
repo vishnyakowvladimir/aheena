@@ -1,8 +1,8 @@
 package com.example.aheena.di.modules
 
-import com.example.core.network.InterceptorProvider
-import com.example.core.network.OkHttpClientBuilderFactory
-import com.example.core.network.RetrofitBuilderFactory
+import com.example.core_api.network.InterceptorProvider
+import com.example.core_api.network.OkHttpClientBuilderFactory
+import com.example.core_api.network.RetrofitBuilderFactory
 import com.example.data_source_impl.api.ItunesApi
 import dagger.Module
 import dagger.Provides

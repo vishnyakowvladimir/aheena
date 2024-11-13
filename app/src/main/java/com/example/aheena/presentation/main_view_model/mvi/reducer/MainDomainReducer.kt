@@ -5,7 +5,7 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.utils.string_provider.StringProvider
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update
 import javax.inject.Inject

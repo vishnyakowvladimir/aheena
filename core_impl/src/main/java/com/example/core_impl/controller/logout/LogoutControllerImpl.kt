@@ -1,9 +1,9 @@
 package com.example.core_impl.controller.logout
 
-import com.example.core.controller.logout.LogoutController
-import com.example.core.di.qualifier.MainRouter
-import com.example.core.navigation.feature_destination.FeaturesDestination
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.controller.logout.LogoutController
+import com.example.core_api.di.qualifier.MainRouter
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.router.NavRouter
 import com.example.data_sdk_api.interactor.authentication.AuthenticationInteractor
 import javax.inject.Inject
 

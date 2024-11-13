@@ -2,9 +2,9 @@ package com.example.feature_authentication.presentation.pin
 
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
+import com.example.core_api.utils.string_provider.StringProvider
 import com.example.feature_authentication.R
 import com.example.feature_authentication.biometric.BiometricController
 import com.example.feature_authentication.biometric.model.BiometricAuthenticators

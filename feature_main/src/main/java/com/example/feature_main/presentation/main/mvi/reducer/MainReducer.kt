@@ -1,6 +1,6 @@
 package com.example.feature_main.presentation.main.mvi.reducer
 
-import com.example.core.utils.string_provider.StringProvider
+import com.example.core_api.utils.string_provider.StringProvider
 import com.example.feature_main.R
 import com.example.feature_main.presentation.main.mvi.model.MainDomainState
 import com.example.feature_main.presentation.main.mvi.model.MainEvent

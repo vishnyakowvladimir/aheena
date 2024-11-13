@@ -1,8 +1,8 @@
 package com.example.feature_itunes.presentation.itunes
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.base.BaseViewModel
-import com.example.core.utils.extension.mapData
+import com.example.core_api.presentation.base.BaseViewModel
+import com.example.core_api.utils.extension.mapData
 import com.example.feature_itunes.presentation.itunes.mapper.ItunesMapper
 import com.example.feature_itunes.presentation.itunes.mvi.handler.ItunesSideEffectHandler
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesEvent

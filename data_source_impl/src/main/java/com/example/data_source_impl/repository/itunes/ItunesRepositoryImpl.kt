@@ -1,9 +1,9 @@
 package com.example.data_source_impl.repository.itunes
 
-import com.example.core.cache.data_source.CacheDataSource
-import com.example.core.cache.model.CachedDataKey
-import com.example.core.network.model.ApiResult
-import com.example.core.network.model.mapDtoToDomain
+import com.example.core_api.cache.data_source.CacheDataSource
+import com.example.core_api.cache.model.CachedDataKey
+import com.example.core_api.network.model.ApiResult
+import com.example.core_api.network.model.mapDtoToDomain
 import com.example.data_source_api.repository.itunes.ItunesRepository
 import com.example.data_source_impl.api.ItunesApi
 import com.example.data_source_impl.mapper.itunes.ItunesMapper

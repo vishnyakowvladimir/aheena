@@ -1,10 +1,10 @@
 package com.example.core_impl.cache.data_source
 
-import com.example.core.cache.data_source.CacheDataSource
-import com.example.core.cache.model.CachedDataKey
-import com.example.core.network.model.ApiResult
-import com.example.core.network.utils.sendRequest
-import com.example.core.cache.storage.CacheStorage
+import com.example.core_api.cache.data_source.CacheDataSource
+import com.example.core_api.cache.model.CachedDataKey
+import com.example.core_api.network.model.ApiResult
+import com.example.core_api.network.utils.sendRequest
+import com.example.core_api.cache.storage.CacheStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

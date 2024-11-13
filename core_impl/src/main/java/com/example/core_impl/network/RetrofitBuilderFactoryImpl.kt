@@ -1,7 +1,7 @@
 package com.example.core_impl.network
 
-import com.example.core.network.RetrofitBuilderFactory
-import com.example.core.network.RetrofitBuilderFactory.Companion.BASE_URL
+import com.example.core_api.network.RetrofitBuilderFactory
+import com.example.core_api.network.RetrofitBuilderFactory.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory

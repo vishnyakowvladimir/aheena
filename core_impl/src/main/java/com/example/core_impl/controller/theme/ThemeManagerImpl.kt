@@ -1,9 +1,9 @@
 package com.example.core_impl.controller.theme
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.core.holder.ActivityHolder
-import com.example.core.controller.theme.ThemeManager
-import com.example.core.controller.theme.mapToUi
+import com.example.core_api.holder.ActivityHolder
+import com.example.core_api.controller.theme.ThemeManager
+import com.example.core_api.controller.theme.mapToUi
 import com.example.data_sdk_api.interactor.theme.ThemeInteractor
 import com.example.domain_models.theme.AppThemeModeDomain
 import com.example.domain_models.theme.ViewScaleDomain

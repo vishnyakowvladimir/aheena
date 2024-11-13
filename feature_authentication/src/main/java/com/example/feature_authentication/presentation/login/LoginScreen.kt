@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.extension.collectAsStateLifecycleAware
+import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.feature_authentication.R
 import com.example.feature_authentication.presentation.login.model.LoginUiState
 import com.example.feature_authentication.presentation.login.mvi.model.LoginEvent

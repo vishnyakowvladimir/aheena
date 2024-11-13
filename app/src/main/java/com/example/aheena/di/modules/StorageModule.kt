@@ -1,6 +1,6 @@
 package com.example.aheena.di.modules
 
-import com.example.core.di.scope.ApplicationScope
+import com.example.core_api.di.scope.ApplicationScope
 import com.example.data_source_api.storage.authentication.AuthenticationStorage
 import com.example.data_source_api.storage.biometrics.BiometricsStorage
 import com.example.data_source_api.storage.theme.ThemeStorage

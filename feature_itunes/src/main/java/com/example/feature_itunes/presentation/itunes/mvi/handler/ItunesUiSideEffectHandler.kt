@@ -1,6 +1,6 @@
 package com.example.feature_itunes.presentation.itunes.mvi.handler
 
-import com.example.core.navigation.router.NavRouter
+import com.example.core_api.navigation.router.NavRouter
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesEvent
 import com.example.feature_itunes.presentation.itunes.mvi.model.ItunesSideEffect
 import com.example.mvi.SideEffectHandler

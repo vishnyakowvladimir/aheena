@@ -1,7 +1,7 @@
 package com.example.core_impl.utils.eventbus
 
-import com.example.core.utils.eventbus.AppEventBus
-import com.example.core.utils.eventbus.model.AppEvent
+import com.example.core_api.utils.eventbus.AppEventBus
+import com.example.core_api.utils.eventbus.model.AppEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

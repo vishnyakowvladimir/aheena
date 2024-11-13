@@ -6,7 +6,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.core.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
 
 @Composable
 internal fun AppNavGraph(

@@ -2,13 +2,13 @@ package com.example.feature_authentication.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core.di.key.ViewModelKey
-import com.example.core.di.scope.FeatureScope
-import com.example.core.navigation.router.FeatureRouterImp
-import com.example.core.navigation.router.NavControllerHolder
-import com.example.core.navigation.router.NavControllerHolderImpl
-import com.example.core.navigation.router.NavRouter
-import com.example.core.utils.view_model_factory.AppViewModelFactory
+import com.example.core_api.di.key.ViewModelKey
+import com.example.core_api.di.scope.FeatureScope
+import com.example.core_api.navigation.router.FeatureRouterImp
+import com.example.core_api.navigation.router.NavControllerHolder
+import com.example.core_api.navigation.router.NavControllerHolderImpl
+import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_authentication.presentation.biometric.BiometricsViewModel
 import com.example.feature_authentication.presentation.container.AuthenticationContainerViewModel
 import com.example.feature_authentication.presentation.create_pin.CreatePinViewModel

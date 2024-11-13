@@ -1,7 +1,7 @@
 package com.example.data_source_impl.storage.theme
 
 import androidx.core.content.edit
-import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
+import com.example.core_api.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.models.theme.AppThemeModeDto
 import com.example.data_source_api.models.theme.ViewScaleDto
 import com.example.data_source_api.storage.theme.ThemeStorage

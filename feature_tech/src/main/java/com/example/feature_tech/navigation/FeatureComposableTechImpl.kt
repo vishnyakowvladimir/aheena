@@ -2,7 +2,7 @@ package com.example.feature_tech.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.core.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
 import com.example.feature_tech.presentation.container.TechContainer
 import com.example.feature_tech_api.FeatureComposableTech
 import javax.inject.Inject

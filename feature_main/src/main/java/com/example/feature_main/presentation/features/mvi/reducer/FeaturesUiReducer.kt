@@ -1,6 +1,6 @@
 package com.example.feature_main.presentation.features.mvi.reducer
 
-import com.example.core.navigation.feature_destination.FeaturesDestination
+import com.example.core_api.navigation.feature_destination.FeaturesDestination
 import com.example.feature_main.presentation.features.model.FeatureScreen
 import com.example.feature_main.presentation.features.mvi.model.FeaturesDomainState
 import com.example.feature_main.presentation.features.mvi.model.FeaturesEvent
