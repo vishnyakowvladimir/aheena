@@ -1,8 +1,8 @@
 package com.example.core_impl.network
 
 import android.content.Context
-import android.support.multidex.BuildConfig
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.example.core.application_info.ApplicationInfo
 import com.example.core.network.InterceptorProvider
 import com.example.core.utils.connectivity_checker.ConnectivityChecker
 import com.example.core.utils.eventbus.AppEventBus
@@ -20,13 +20,18 @@ class InterceptorProviderImpl @Inject constructor(
     private val connectivityChecker: ConnectivityChecker,
     private val eventBus: AppEventBus,
     private val context: Context,
+    private val applicationInfo: ApplicationInfo,
 ) : InterceptorProvider {
 
     override fun provideHttpLoggingInterceptor(): Interceptor {
         return HttpLoggingInterceptor()
             .apply {
                 level =
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
+                    if (applicationInfo.isDebug) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.BASIC
+                    }
             }
     }
 

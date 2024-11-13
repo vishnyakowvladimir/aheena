@@ -1,7 +1,7 @@
 package com.example.data_source_impl.storage.network
 
-import android.support.multidex.BuildConfig
 import androidx.core.content.edit
+import com.example.core.application_info.ApplicationInfo
 import com.example.core.utils.shared_preferences.AndroidPreferencesProvider
 import com.example.data_source_api.models.network.BaseUrls
 import com.example.data_source_api.models.network.UrlsType
@@ -14,13 +14,14 @@ class UrlProviderImpl(
     private val testUrls: BaseUrls,
     private val incorrectUrls: BaseUrls,
     private val preferencesProvider: AndroidPreferencesProvider,
+    private val applicationInfo: ApplicationInfo,
 ) : UrlProvider {
 
     override var selectedUrlsType: UrlsType
         get() = preferencesProvider.prefs.getString(PREF_KEY_URLS_TYPE, "")
             .orEmpty()
             .ifEmpty {
-                if (BuildConfig.DEBUG) {
+                if (applicationInfo.isDebug) {
                     UrlsType.TEST.name
                 } else {
                     UrlsType.PROD.name

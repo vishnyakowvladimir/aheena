@@ -15,6 +15,7 @@ import com.example.aheena.di.modules.StorageModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.aheena.di.modules.ViewModelsModule
 import com.example.aheena.presentation.MainActivity
+import com.example.core.application_info.ApplicationInfo
 import com.example.core.di.component.DaggerComponent
 import com.example.core.di.scope.ApplicationScope
 import com.example.core.presentation.base.BaseApplication
@@ -45,12 +46,14 @@ internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider 
 
         fun init(
             app: BaseApplication,
+            applicationInfo: ApplicationInfo,
         ): AppComponent {
             val dependencies = AppComponentDependencies(app)
             return DaggerAppComponent
                 .factory()
                 .create(
                     dependencies = dependencies,
+                    applicationInfo = applicationInfo,
                     applicationContext = app,
                 )
         }
@@ -61,6 +64,7 @@ internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider 
 
         fun create(
             dependencies: AppComponentDependencies,
+            @BindsInstance applicationInfo: ApplicationInfo,
             @BindsInstance applicationContext: Context,
         ): AppComponent
     }
