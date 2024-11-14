@@ -55,24 +55,17 @@ internal fun PinScreen(viewModel: PinViewModel) {
         topBar = {
             AppNavBar(
                 state = AppNavBarState(
-                    rightPart = AppNavBarState.RightPart(
-                        iconRes = LibUiR.drawable.ic_24dp_actions_settings,
-                        elementColor = AppTheme.palette.icon.primary,
-                        onClick = {
-                            viewModel.onEvent(PinEvent.Ui.OnOpenTechClick)
-                        },
-                    ),
-//                    rightPart = if (state.value.isTechVisible) {
-//                        AppNavBarState.RightPart(
-//                            iconRes = LibUiR.drawable.ic_24dp_actions_settings,
-//                            elementColor = AppTheme.palette.icon.primary,
-//                            onClick = {
-//                                viewModel.onEvent(PinEvent.Ui.OnOpenTechClick)
-//                            },
-//                        )
-//                    } else {
-//                        null
-//                    },
+                    rightPart = if (state.value.isTechVisible) {
+                        AppNavBarState.RightPart(
+                            iconRes = LibUiR.drawable.ic_24dp_actions_settings,
+                            elementColor = AppTheme.palette.icon.primary,
+                            onClick = {
+                                viewModel.onEvent(PinEvent.Ui.OnOpenTechClick)
+                            },
+                        )
+                    } else {
+                        null
+                    },
                     leftPart = null,
                     middlePart = AppNavBarState.MiddlePart(
                         title = stringResource(id = R.string.authentication_pin_title),
