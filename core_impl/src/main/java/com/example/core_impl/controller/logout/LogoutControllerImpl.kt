@@ -16,6 +16,6 @@ class LogoutControllerImpl @Inject constructor(
     override fun logout() {
         authenticationInteractor.clearRefreshToken()
         authenticationInteractor.clearPin()
-        sessionController.disable()
+        sessionController.logoutSession()
     }
 }

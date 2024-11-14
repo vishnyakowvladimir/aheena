@@ -43,7 +43,7 @@ internal class SettingsUiSideEffectHandler @Inject constructor(
 
     private fun handleLogout(): Flow<SettingsEvent> {
         return flow {
-            userSessionController.disable()
+            userSessionController.logoutSession()
             emit(SettingsEvent.None)
         }
     }
