@@ -2,10 +2,12 @@ package com.example.aheena.di.modules
 
 import com.example.aheena.BuildConfig
 import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.InterceptorProvider
 import com.example.core_api.network.OkHttpClientBuilderFactory
 import com.example.core_api.network.RetrofitBuilderFactory
 import com.example.core_api.utils.shared_preferences.AndroidPreferencesProvider
+import com.example.core_impl.network.ExceptionHandlerImpl
 import com.example.core_impl.network.InterceptorProviderImpl
 import com.example.core_impl.network.OkHttpClientBuilderFactoryImpl
 import com.example.core_impl.network.RetrofitBuilderFactoryImpl
@@ -27,6 +29,9 @@ interface NetworkModule {
 
     @Binds
     fun bindInterceptorProvider(provider: InterceptorProviderImpl): InterceptorProvider
+
+    @Binds
+    fun bindExceptionHandler(handler: ExceptionHandlerImpl): ExceptionHandler
 
     companion object {
 

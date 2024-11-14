@@ -1,20 +1,20 @@
 package com.example.core_impl.network.interceptor
 
+import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.model.BaseApiException
 import com.example.core_api.utils.connectivity_checker.ConnectivityChecker
-import com.example.core_api.utils.eventbus.AppEventBus
-import com.example.core_api.utils.eventbus.model.AppEvent
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class ConnectivityInterceptor(
     private val connectivityChecker: ConnectivityChecker,
-    private val eventBus: AppEventBus,
+    private val exceptionHandler: ExceptionHandler,
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!connectivityChecker.isNetworkAvailable()) {
-            eventBus.sendEvent(AppEvent.OnNoInternetConnection)
-            throw BaseApiException.ConnectivityException()
+            val connectivityException = BaseApiException.ConnectivityException()
+            exceptionHandler.onException(connectivityException)
+            throw connectivityException
         }
 
         val httpUrlBuilder = chain

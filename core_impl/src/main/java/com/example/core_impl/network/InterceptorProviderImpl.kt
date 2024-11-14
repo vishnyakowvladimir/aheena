@@ -3,9 +3,9 @@ package com.example.core_impl.network
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.core_api.application_info.ApplicationInfo
+import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.InterceptorProvider
 import com.example.core_api.utils.connectivity_checker.ConnectivityChecker
-import com.example.core_api.utils.eventbus.AppEventBus
 import com.example.core_impl.network.interceptor.BrewHostInterceptor
 import com.example.core_impl.network.interceptor.ConnectivityInterceptor
 import com.example.core_impl.network.interceptor.ExceptionInterceptor
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class InterceptorProviderImpl @Inject constructor(
     private val urlProvider: UrlProvider,
     private val connectivityChecker: ConnectivityChecker,
-    private val eventBus: AppEventBus,
+    private val exceptionHandler: ExceptionHandler,
     private val context: Context,
     private val applicationInfo: ApplicationInfo,
 ) : InterceptorProvider {
@@ -50,7 +50,7 @@ class InterceptorProviderImpl @Inject constructor(
     override fun provideConnectivityInterceptor(): Interceptor {
         return ConnectivityInterceptor(
             connectivityChecker = connectivityChecker,
-            eventBus = eventBus,
+            exceptionHandler = exceptionHandler,
         )
     }
 

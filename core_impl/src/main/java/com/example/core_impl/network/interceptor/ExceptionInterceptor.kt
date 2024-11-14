@@ -15,6 +15,7 @@ class ExceptionInterceptor() : Interceptor {
             response
         } catch (exception: Exception) {
             throw BaseApiException.DefaultApiException(message = exception.message)
+//            throw BaseApiException.DefaultApiException(message = exception.message)
         }
     }
 

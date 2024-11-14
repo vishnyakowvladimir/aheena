@@ -9,4 +9,5 @@ sealed class BaseApiException(message: String?, throwable: Throwable?) : IOExcep
         message: String? = null,
         throwable: Throwable? = null,
     ) : BaseApiException(message, throwable)
+    class AuthenticationException(message: String? = null) : BaseApiException(message, null)
 }
