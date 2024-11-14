@@ -1,6 +1,7 @@
 package com.example.feature_tech.presentation.select_url
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +19,11 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.example.core_api.utils.extension.collectAsStateLifecycleAware
 import com.example.data_source_api.models.network.UrlsType
@@ -31,6 +34,7 @@ import com.example.lib_ui.components.nav_bar.AppNavBar
 import com.example.lib_ui.components.nav_bar.AppNavBarState
 import com.example.lib_ui.theme.AppTheme
 import com.example.lib_ui.utils.SetSystemBarsColor
+import com.example.lib_ui.R as LibUiR
 
 @Composable
 internal fun SelectUrlScreen(viewModel: SelectUrlViewModel) {
@@ -50,7 +54,12 @@ internal fun SelectUrlScreen(viewModel: SelectUrlViewModel) {
             AppNavBar(
                 state = AppNavBarState(
                     rightPart = null,
-                    leftPart = null,
+                    leftPart = AppNavBarState.LeftPart(
+                        iconRes = LibUiR.drawable.ic_24dp_navigation_back,
+                        onClick = {
+                            viewModel.onEvent(SelectUrlEvent.Ui.OnBackPressed)
+                        },
+                    ),
                     middlePart = AppNavBarState.MiddlePart(
                         title = stringResource(id = R.string.tech_select_url_title)
                     ),
@@ -103,6 +112,9 @@ private fun RadioButtonBlock(
             .fillMaxWidth()
             .selectable(
                 selected = state.isSelected,
+                role = Role.RadioButton,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
                 onClick = {
                     onClick(state.urlsType)
                 },
