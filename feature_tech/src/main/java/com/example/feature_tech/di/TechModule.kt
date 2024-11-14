@@ -10,6 +10,7 @@ import com.example.core_api.navigation.router.NavControllerHolderImpl
 import com.example.core_api.navigation.router.NavRouter
 import com.example.core_api.utils.view_model_factory.AppViewModelFactory
 import com.example.feature_tech.presentation.container.TechContainerViewModel
+import com.example.feature_tech.presentation.select_url.SelectUrlViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -32,4 +33,9 @@ internal interface TechModule {
     @IntoMap
     @ViewModelKey(TechContainerViewModel::class)
     fun bindTechContainerViewModel(viewModel: TechContainerViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectUrlViewModel::class)
+    fun bindSelectUrlViewModel(viewModel: SelectUrlViewModel): ViewModel
 }

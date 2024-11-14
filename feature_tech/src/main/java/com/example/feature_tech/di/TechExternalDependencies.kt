@@ -5,6 +5,7 @@ import com.example.core_api.di.qualifier.MainRouter
 import com.example.core_api.holder.ActivityHolder
 import com.example.core_api.navigation.router.NavRouter
 import com.example.core_api.utils.string_provider.StringProvider
+import com.example.data_source_api.storage.network.UrlProvider
 import javax.inject.Inject
 
 class TechExternalDependencies @Inject constructor(
@@ -12,4 +13,5 @@ class TechExternalDependencies @Inject constructor(
     val activityHolder: ActivityHolder,
     @get:MainRouter @MainRouter val mainRouter: NavRouter,
     val stringProvider: StringProvider,
+    val urlProvider: UrlProvider,
 )

@@ -36,7 +36,7 @@ internal fun TechContainer() {
         startDestination = LocalDestinationTech.SelectUrl,
     ) {
         composable<LocalDestinationTech.SelectUrl> {
-            SelectUrlScreen()
+            SelectUrlScreen(viewModel = viewModel(factory = viewModelFactory))
         }
     }
 }

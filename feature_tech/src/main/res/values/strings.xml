@@ -1,0 +1,6 @@
+<resources>
+    <string name="tech_select_url_title">Выбор хоста</string>
+    <string name="tech_select_url_type_prod_title">Прод</string>
+    <string name="tech_select_url_type_test_title">Тест</string>
+    <string name="tech_select_url_type_incorrect_title">Некорректные</string>
+</resources>
