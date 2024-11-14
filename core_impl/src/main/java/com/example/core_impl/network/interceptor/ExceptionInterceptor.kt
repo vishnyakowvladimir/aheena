@@ -1,10 +1,13 @@
 package com.example.core_impl.network.interceptor
 
+import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.model.BaseApiException
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ExceptionInterceptor() : Interceptor {
+class ExceptionInterceptor(
+    private val exceptionHandler: ExceptionHandler,
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
@@ -14,16 +17,19 @@ class ExceptionInterceptor() : Interceptor {
             throwExceptionWhenResponseIsNotSuccessful(response)
             response
         } catch (exception: Exception) {
-            throw BaseApiException.DefaultApiException(message = exception.message)
-//            throw BaseApiException.DefaultApiException(message = exception.message)
+            val defaultException = BaseApiException.DefaultApiException(message = exception.message)
+            exceptionHandler.onException(defaultException)
+            throw defaultException
         }
     }
 
     private fun throwExceptionWhenResponseIsNotSuccessful(response: Response) {
         if (!response.isSuccessful) {
-            throw BaseApiException.DefaultApiException(
+            val defaultException = BaseApiException.DefaultApiException(
                 message = response.message,
             )
+            exceptionHandler.onException(defaultException)
+            throw defaultException
         }
     }
 }

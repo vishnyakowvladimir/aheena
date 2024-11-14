@@ -16,7 +16,7 @@ class ExceptionHandlerImpl @Inject constructor(
         when (exception) {
             is BaseApiException.ConnectivityException -> onConnectivityException()
             is BaseApiException.AuthenticationException -> onAuthenticationException()
-            else -> Unit
+            else -> onAuthenticationException()
         }
     }
 

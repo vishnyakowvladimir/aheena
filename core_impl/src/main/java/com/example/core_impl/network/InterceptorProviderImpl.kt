@@ -55,6 +55,8 @@ class InterceptorProviderImpl @Inject constructor(
     }
 
     override fun provideExceptionInterceptor(): Interceptor {
-        return ExceptionInterceptor()
+        return ExceptionInterceptor(
+            exceptionHandler = exceptionHandler,
+        )
     }
 }

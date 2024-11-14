@@ -1,5 +1,7 @@
 package com.example.core_impl.controller.session
 
+import android.os.Handler
+import android.os.Looper
 import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.di.qualifier.MainRouter
 import com.example.core_api.navigation.feature_destination.FeaturesDestination
@@ -14,7 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 // если пользователь неактивен(не нажимал экран) в течение этого времени,
@@ -41,8 +42,10 @@ class UserSessionControllerImpl @Inject constructor(
     }
 
     override fun logoutSession() {
-        isEnabledFlow.tryEmit(false)
-        mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
+        Handler(Looper.getMainLooper()).post {
+            isEnabledFlow.tryEmit(false)
+            mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
+        }
     }
 
     private fun subscribeUserActivity() {
@@ -52,9 +55,7 @@ class UserSessionControllerImpl @Inject constructor(
             .flowOn(Dispatchers.Default)
             .withLatestFrom(isEnabledFlow) { _, isEnabled ->
                 if (isEnabled) {
-                    withContext(Dispatchers.Main) {
-                        logoutSession()
-                    }
+                    logoutSession()
                 }
             }
             .launchIn(appCoroutineScope)
