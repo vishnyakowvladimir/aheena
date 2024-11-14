@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 // если пользователь неактивен(не нажимал экран) в течение этого времени,
 // тогда закрываем сессию(открываем экран ввода пин-кода)
-private const val CRITICAL_USER_INACTIVITY_DURATION = 300000L
+private const val CRITICAL_USER_INACTIVITY_DURATION = 10000L
 
 @OptIn(FlowPreview::class)
 class UserSessionControllerImpl @Inject constructor(
@@ -42,6 +42,7 @@ class UserSessionControllerImpl @Inject constructor(
 
     override fun disable() {
         isEnabledFlow.tryEmit(false)
+        mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
     }
 
     private fun subscribeUserActivity() {
@@ -51,9 +52,8 @@ class UserSessionControllerImpl @Inject constructor(
             .flowOn(Dispatchers.Default)
             .withLatestFrom(isEnabledFlow) { _, isEnabled ->
                 if (isEnabled) {
-                    disable()
                     withContext(Dispatchers.Main) {
-                        mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
+                        disable()
                     }
                 }
             }

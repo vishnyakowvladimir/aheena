@@ -1,6 +1,6 @@
 package com.example.feature_main.presentation.settings.mvi.handler
 
-import com.example.core_api.controller.logout.LogoutController
+import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.controller.theme.ThemeManager
 import com.example.feature_main.presentation.settings.mvi.model.SettingsEvent
 import com.example.feature_main.presentation.settings.mvi.model.SettingsSideEffect
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SettingsUiSideEffectHandler @Inject constructor(
-    private val logoutController: LogoutController,
+    private val userSessionController: UserSessionController,
     private val themeManager: ThemeManager,
 ) : SideEffectHandler<SettingsEvent, SettingsSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<SettingsSideEffect.Ui>(Int.MAX_VALUE)
@@ -43,7 +43,7 @@ internal class SettingsUiSideEffectHandler @Inject constructor(
 
     private fun handleLogout(): Flow<SettingsEvent> {
         return flow {
-            logoutController.logout()
+            userSessionController.disable()
             emit(SettingsEvent.None)
         }
     }
