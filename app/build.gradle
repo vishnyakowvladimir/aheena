@@ -27,12 +27,6 @@ android {
     }
 
     signingConfigs {
-//        release {
-//            storeFile file('/Users/vladimir/projects/aheena/key_store/keystore.jks')
-//            storePassword '123456'
-//            keyAlias 'aheenaAlias'
-//            keyPassword '123456'
-//        }
         release {
             File signFile = file(appRootPath("keystore/release_keystore.properties"))
             Properties props = new Properties()
