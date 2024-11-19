@@ -6,10 +6,10 @@ import com.example.core_api.application_info.ApplicationInfo
 import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.InterceptorProvider
 import com.example.core_api.utils.connectivity_checker.ConnectivityChecker
-import com.example.core_impl.network.interceptor.BrewHostInterceptor
-import com.example.core_impl.network.interceptor.ConnectivityInterceptor
-import com.example.core_impl.network.interceptor.ExceptionInterceptor
-import com.example.core_impl.network.interceptor.ItunesHostInterceptor
+import com.example.core_impl.network.interceptor.url.BrewHostInterceptor
+import com.example.core_impl.network.interceptor.exception.ConnectivityInterceptor
+import com.example.core_impl.network.interceptor.exception.ExceptionInterceptor
+import com.example.core_impl.network.interceptor.url.ItunesHostInterceptor
 import com.example.data_source_api.storage.network.UrlProvider
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor

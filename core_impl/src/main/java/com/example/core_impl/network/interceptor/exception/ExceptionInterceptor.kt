@@ -1,4 +1,4 @@
-package com.example.core_impl.network.interceptor
+package com.example.core_impl.network.interceptor.exception
 
 import com.example.core_api.network.ExceptionHandler
 import com.example.core_api.network.model.BaseApiException

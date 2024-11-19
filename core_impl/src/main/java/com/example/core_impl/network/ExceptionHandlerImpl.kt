@@ -10,13 +10,13 @@ import javax.inject.Inject
 class ExceptionHandlerImpl @Inject constructor(
     private val eventBus: AppEventBus,
     private val logoutController: LogoutController,
-): ExceptionHandler {
+) : ExceptionHandler {
 
     override fun onException(exception: Exception) {
         when (exception) {
             is BaseApiException.ConnectivityException -> onConnectivityException()
             is BaseApiException.AuthenticationException -> onAuthenticationException()
-            else -> onAuthenticationException()
+            else -> Unit
         }
     }
 
