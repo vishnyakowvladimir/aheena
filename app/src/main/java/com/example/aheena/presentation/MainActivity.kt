@@ -1,5 +1,6 @@
 package com.example.aheena.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
@@ -58,6 +59,7 @@ internal class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
 
         setContent {
@@ -77,6 +79,13 @@ internal class MainActivity : BaseActivity() {
                 navController = navController,
             )
         }
+
+        checkDeeplink()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        checkDeeplink(intent)
+        super.onNewIntent(intent)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -87,6 +96,17 @@ internal class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         clear()
+    }
+
+    private fun checkDeeplink(newIntent: Intent = intent): Boolean {
+        val uri = newIntent.data
+
+        if (newIntent.action == Intent.ACTION_VIEW && uri != null) {
+            newIntent.data = null
+            // тут надо добавить обработку диплинка (пока не разработана)
+        }
+
+        return uri != null
     }
 
     private fun clear() {
