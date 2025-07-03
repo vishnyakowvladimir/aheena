@@ -34,6 +34,9 @@ fun AuthenticationContainer() {
         LocalDestinationAuthentication.PhoneAndPassword
     }
 
+    // TODO работает некорректно
+    // отписка происходит быстрее, чем вызывается onDestroy
+    // поэтому onDestroy не вызывается
     ComposableLifecycle(
         onDestroy = {
             context.clearComponent<AuthenticationComponent>()
