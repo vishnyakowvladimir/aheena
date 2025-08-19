@@ -48,6 +48,10 @@ class UserSessionControllerImpl @Inject constructor(
         }
     }
 
+    override fun isEnabled(): Boolean {
+        return isEnabledFlow.value
+    }
+
     private fun subscribeUserActivity() {
         userActivityInteractor
             .getLastUserActivityTime()
