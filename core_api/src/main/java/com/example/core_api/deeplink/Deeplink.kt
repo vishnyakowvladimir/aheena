@@ -6,7 +6,6 @@ interface Deeplink {
 
     val scheme: String
     val host: String
-    val requireAuth: Boolean
     val launchMode: DeeplinkLaunchMode
 
     fun follow(uri: Uri): Boolean
