@@ -21,7 +21,7 @@ internal class MainDomainReducer @Inject constructor(
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event) {
             is MainEvent.Domain.OnLoadDataNeeded -> reduceOnLoadDataNeeded()
-            is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded()
+            is MainEvent.Domain.OnDataLoaded -> reduceOnDataLoaded(state)
             is MainEvent.Domain.OnScaleChanged -> reduceOnScaleChanged(state, event)
             is MainEvent.Domain.OnNoInternetConnection -> reduceOnNoInternetConnection()
         }
@@ -33,8 +33,11 @@ internal class MainDomainReducer @Inject constructor(
         )
     }
 
-    private fun reduceOnDataLoaded(): Update<MainDomainState, MainSideEffect, MainUiCommand> {
-        return Update.sideEffects(
+    private fun reduceOnDataLoaded(state: MainDomainState): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        return Update.stateWithSideEffects(
+            state = state.copy(
+                data = "data",
+            ),
             sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
         )
     }

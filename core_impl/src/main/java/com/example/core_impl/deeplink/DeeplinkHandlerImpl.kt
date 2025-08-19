@@ -11,5 +11,16 @@ class DeeplinkHandlerImpl @Inject constructor(
 
     override fun handle(uri: Uri) {
 
+
+    }
+
+    private fun getDeeplink(uri: Uri): Deeplink? {
+        return deeplinks.firstOrNull { deeplink ->
+            deeplink.host.lowercase() == getHost(uri)
+        }
+    }
+
+    private fun getHost(uri: Uri): String {
+        return "${uri.host}${uri.path}".lowercase()
     }
 }

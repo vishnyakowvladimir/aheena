@@ -24,6 +24,7 @@ internal class MainUiReducer @Inject constructor(
             is MainEvent.Ui.OnThemeApplied -> reduceOnThemeApplied()
             is MainEvent.Ui.OnChangeScaleNeeded -> reduceOnChangeScaleNeeded(event)
             is MainEvent.Ui.OnTouch -> reduceOnTouch()
+            is MainEvent.Ui.OnDeeplink -> reduceOnDeeplink(state, event)
         }
     }
 
@@ -57,5 +58,12 @@ internal class MainUiReducer @Inject constructor(
         return Update.sideEffects(
             sideEffects = listOf(MainSideEffect.Domain.SaveUserActivity(appSystemClock.getCurrentTimeMillis())),
         )
+    }
+
+    private fun reduceOnDeeplink(
+        state: MainDomainState,
+        event: MainEvent.Ui.OnDeeplink,
+    ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
+        return Update.nothing()
     }
 }

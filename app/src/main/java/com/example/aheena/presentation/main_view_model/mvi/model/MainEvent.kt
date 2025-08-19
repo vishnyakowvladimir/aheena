@@ -1,5 +1,6 @@
 package com.example.aheena.presentation.main_view_model.mvi.model
 
+import android.net.Uri
 import com.example.domain_models.theme.ViewScaleDomain
 
 internal sealed interface MainEvent {
@@ -12,6 +13,7 @@ internal sealed interface MainEvent {
         data object OnThemeApplied : Ui
         data class OnChangeScaleNeeded(val scale: ViewScaleDomain) : Ui
         data object OnTouch : Ui
+        data class OnDeeplink(val uri: Uri) : Ui
     }
 
     sealed interface Domain : MainEvent {
