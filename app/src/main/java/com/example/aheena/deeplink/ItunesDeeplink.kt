@@ -1,4 +1,4 @@
-package com.example.deeplink.deeplinks
+package com.example.aheena.deeplink
 
 import android.net.Uri
 import com.example.core_api.deeplink.AheenaDeeplink

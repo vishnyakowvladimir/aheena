@@ -133,7 +133,6 @@ dependencies {
 
     implementation project(":ui:aheena-lib-ui")
     implementation project(':core_impl')
-    implementation project(':deeplink')
     implementation project(':domain_models')
     implementation project(':data_sdk_impl')
     implementation project(':data_source_impl')
