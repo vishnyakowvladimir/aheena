@@ -3,6 +3,7 @@ package com.example.aheena.presentation.main_view_model.mvi.handler
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
 import com.example.core_api.controller.theme.ThemeManager
+import com.example.core_api.deeplink.DeeplinkHandler
 import com.example.core_api.di.qualifier.MainRouter
 import com.example.core_api.navigation.feature_destination.FeaturesDestination
 import com.example.core_api.navigation.router.NavRouter
@@ -20,6 +21,7 @@ import javax.inject.Inject
 internal class MainUiSideEffectHandler @Inject constructor(
     @MainRouter private val mainRouter: NavRouter,
     private val themeManager: ThemeManager,
+    private val deeplinkHandler: DeeplinkHandler,
 ) : SideEffectHandler<MainEvent, MainSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -37,6 +39,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
                 is MainSideEffect.Ui.Back -> handleBack()
                 is MainSideEffect.Ui.ApplyTheme -> handleApplyTheme()
                 is MainSideEffect.Ui.OpenAuthentication -> handleOpenAuthentication()
+                is MainSideEffect.Ui.HandleDeeplink -> handleDeeplink(sideEffect)
             }
         }
             .flowOn(Dispatchers.Main)
@@ -59,6 +62,13 @@ internal class MainUiSideEffectHandler @Inject constructor(
     private fun handleOpenAuthentication(): Flow<MainEvent> {
         return flow {
             mainRouter.replace(FeaturesDestination.AuthenticationDestination)
+            emit(MainEvent.None)
+        }
+    }
+
+    private fun handleDeeplink(effect: MainSideEffect.Ui.HandleDeeplink): Flow<MainEvent> {
+        return flow {
+            deeplinkHandler.handle(effect.uri)
             emit(MainEvent.None)
         }
     }

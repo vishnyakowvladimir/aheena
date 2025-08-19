@@ -10,7 +10,7 @@ import com.example.mvi.model.Update
 import javax.inject.Inject
 
 internal class MainUiReducer @Inject constructor(
-    val appSystemClock: AppSystemClock,
+    private val appSystemClock: AppSystemClock,
 ) :
     Reducer<MainEvent.Ui, MainDomainState, MainSideEffect, MainUiCommand> {
 
@@ -64,6 +64,16 @@ internal class MainUiReducer @Inject constructor(
         state: MainDomainState,
         event: MainEvent.Ui.OnDeeplink,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
-        return Update.nothing()
+        return if (state.data.isEmpty()) {
+            Update.state(
+                state.copy(
+                    deeplinkState = MainDomainState.DeeplinkState(uri = event.uri),
+                )
+            )
+        } else {
+            Update.sideEffects(
+                sideEffects = listOf(MainSideEffect.Ui.HandleDeeplink(event.uri)),
+            )
+        }
     }
 }

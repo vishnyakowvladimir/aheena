@@ -2,7 +2,6 @@ package com.example.aheena.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -105,7 +104,6 @@ internal class MainActivity : BaseActivity() {
         if (newIntent.action == Intent.ACTION_VIEW && uri != null) {
             newIntent.data = null
             mainViewModel.onEvent(MainEvent.Ui.OnDeeplink(uri))
-            // тут надо добавить обработку диплинка (пока не разработана)
         }
 
         return uri != null

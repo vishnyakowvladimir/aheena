@@ -34,12 +34,24 @@ internal class MainDomainReducer @Inject constructor(
     }
 
     private fun reduceOnDataLoaded(state: MainDomainState): Update<MainDomainState, MainSideEffect, MainUiCommand> {
-        return Update.stateWithSideEffects(
-            state = state.copy(
-                data = "data",
-            ),
-            sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
-        )
+        return if (state.deeplinkState != null) {
+            val uri = state.deeplinkState.uri
+
+            Update.stateWithSideEffects(
+                state = state.copy(
+                    data = "data",
+                    deeplinkState = null,
+                ),
+                sideEffects = listOf(MainSideEffect.Ui.HandleDeeplink(uri)),
+            )
+        } else {
+            Update.stateWithSideEffects(
+                state = state.copy(
+                    data = "data",
+                ),
+                sideEffects = listOf(MainSideEffect.Ui.OpenAuthentication),
+            )
+        }
     }
 
     private fun reduceOnScaleChanged(
