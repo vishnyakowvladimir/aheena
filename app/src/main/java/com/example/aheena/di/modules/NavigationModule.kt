@@ -5,7 +5,9 @@ import com.example.core_api.di.scope.ApplicationScope
 import com.example.core_api.navigation.router.NavControllerHolder
 import com.example.core_api.navigation.router.NavControllerHolderImpl
 import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.pending_navigation.PendingNavigationManager
 import com.example.core_impl.navigation.AppRouterImpl
+import com.example.core_impl.pending_navigation.PendingNavigationManagerImpl
 import dagger.Binds
 import dagger.Module
 
@@ -20,4 +22,8 @@ interface NavigationModule {
     @ApplicationScope
     @Binds
     fun bindNavControllerHolder(holder: NavControllerHolderImpl): NavControllerHolder
+
+    @ApplicationScope
+    @Binds
+    fun bindPendingNavigationManager(manager: PendingNavigationManagerImpl): PendingNavigationManager
 }

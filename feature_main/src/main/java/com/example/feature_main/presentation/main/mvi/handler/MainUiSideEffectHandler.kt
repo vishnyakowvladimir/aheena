@@ -2,6 +2,7 @@ package com.example.feature_main.presentation.main.mvi.handler
 
 import com.example.core_api.di.qualifier.MainRouter
 import com.example.core_api.navigation.router.NavRouter
+import com.example.core_api.pending_navigation.PendingNavigationManager
 import com.example.feature_main.presentation.main.mvi.model.MainEvent
 import com.example.feature_main.presentation.main.mvi.model.MainSideEffect
 import com.example.mvi.SideEffectHandler
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MainUiSideEffectHandler @Inject constructor(
     @MainRouter private val mainRouter: NavRouter,
+    private val pendingNavigationManager: PendingNavigationManager,
 ) : SideEffectHandler<MainEvent, MainSideEffect.Ui> {
     private val sideEffectSharedFlow = MutableSharedFlow<MainSideEffect.Ui>(Int.MAX_VALUE)
 
@@ -32,6 +34,7 @@ internal class MainUiSideEffectHandler @Inject constructor(
         return sideEffectSharedFlow.flatMapMerge { sideEffect ->
             when (sideEffect) {
                 is MainSideEffect.Ui.Back -> handleBack()
+                is MainSideEffect.Ui.PendingNavigationAction -> handlePendingNavigationAction(sideEffect)
             }
         }
             .flowOn(Dispatchers.Main)
@@ -40,6 +43,15 @@ internal class MainUiSideEffectHandler @Inject constructor(
     private fun handleBack(): Flow<MainEvent> {
         return flow {
             mainRouter.popBackStack()
+            emit(MainEvent.None)
+        }
+    }
+
+    private fun handlePendingNavigationAction(
+        effect: MainSideEffect.Ui.PendingNavigationAction,
+    ): Flow<MainEvent> {
+        return flow {
+            pendingNavigationManager.saveState(effect.state)
             emit(MainEvent.None)
         }
     }

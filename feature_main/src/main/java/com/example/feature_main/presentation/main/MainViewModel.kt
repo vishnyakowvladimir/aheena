@@ -1,6 +1,7 @@
 package com.example.feature_main.presentation.main
 
 import androidx.lifecycle.viewModelScope
+import com.example.core_api.pending_navigation.PendingNavigationManager
 import com.example.core_api.presentation.base.BaseViewModel
 import com.example.core_api.utils.extension.mapData
 import com.example.feature_main.presentation.main.mapper.MainMapper
@@ -22,6 +23,7 @@ internal class MainViewModel @Inject constructor(
     private val mapper: MainMapper,
     private val sideEffectHandler: MainSideEffectHandler,
     private val reducer: MainReducer,
+    private val pendingNavigationManager: PendingNavigationManager,
 ) : BaseViewModel() {
     private val uiEvent = MutableSharedFlow<MainEvent>(replay = Int.MAX_VALUE)
 
@@ -33,10 +35,19 @@ internal class MainViewModel @Inject constructor(
 
     init {
         createMvi()
+        subscribePendingNavigation()
     }
 
     fun onEvent(event: MainEvent) {
         viewModelScope.launch { uiEvent.emit(event) }
+    }
+
+    private fun subscribePendingNavigation() {
+        viewModelScope.launch {
+            pendingNavigationManager.actionState.collect { state ->
+                onEvent(MainEvent.Ui.OnPendingNavigation(state))
+            }
+        }
     }
 
     private fun createMvi() {
