@@ -6,6 +6,7 @@ import com.example.aheena.di.modules.ApiModule
 import com.example.aheena.di.modules.CacheModule
 import com.example.aheena.di.modules.ControllerModule
 import com.example.aheena.di.modules.CryptoModule
+import com.example.aheena.di.modules.DeeplinkModule
 import com.example.aheena.di.modules.FeatureComposablesModule
 import com.example.aheena.di.modules.InteractorModule
 import com.example.aheena.di.modules.NavigationModule
@@ -40,6 +41,7 @@ import dagger.Component
         PresentationModule::class,
         CryptoModule::class,
         ControllerModule::class,
+        DeeplinkModule::class,
     ],
 )
 internal interface AppComponent : DaggerComponent, FeaturesDependenciesProvider {

@@ -1,0 +1,6 @@
+applyAndroidConfiguration(this, "com.example.deeplink")
+applyDagger(this)
+
+dependencies {
+    implementation project(':core_api')
+}
