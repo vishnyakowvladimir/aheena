@@ -38,12 +38,16 @@ class DeeplinkHandlerImpl @Inject constructor(
              * Если дефолтный режим, то авторизирован или нет - не имеет значения.
              * Просто переходим на экран.
              * */
-            deeplink.launchMode == DeeplinkLaunchMode.DEFAULT -> deeplink.follow(uri)
+            deeplink.launchMode == DeeplinkLaunchMode.DEFAULT -> {
+                deeplink.follow(uri)
+            }
 
             /**
              * Если сессия активна, то просто переходим на экран.
              * */
-            userSessionController.isEnabled() -> Unit
+            userSessionController.isEnabled() -> {
+                deeplink.follow(uri)
+            }
 
             /**
              * Сюда попадаем, если сессия неактивна и нужна авторизация.

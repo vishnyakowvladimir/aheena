@@ -84,8 +84,8 @@ internal class MainActivity : BaseActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        checkDeeplink(intent)
         super.onNewIntent(intent)
+        checkDeeplink(intent)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

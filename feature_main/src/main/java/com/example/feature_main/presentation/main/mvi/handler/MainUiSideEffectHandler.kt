@@ -3,6 +3,7 @@ package com.example.feature_main.presentation.main.mvi.handler
 import com.example.core_api.di.qualifier.MainRouter
 import com.example.core_api.navigation.router.NavRouter
 import com.example.core_api.pending_navigation.PendingNavigationManager
+import com.example.core_api.pending_navigation.model.PendingNavigationState
 import com.example.feature_main.presentation.main.mvi.model.MainEvent
 import com.example.feature_main.presentation.main.mvi.model.MainSideEffect
 import com.example.mvi.SideEffectHandler
@@ -51,7 +52,8 @@ internal class MainUiSideEffectHandler @Inject constructor(
         effect: MainSideEffect.Ui.PendingNavigationAction,
     ): Flow<MainEvent> {
         return flow {
-            pendingNavigationManager.saveState(effect.state)
+            pendingNavigationManager.saveState(PendingNavigationState.None)
+            effect.state.action.invoke()
             emit(MainEvent.None)
         }
     }
