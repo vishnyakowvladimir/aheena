@@ -116,14 +116,6 @@ internal class MainActivity : BaseActivity() {
     private fun clear() {
         activityHolder.activity = null
         navControllerHolder.navHostController = null
-    }
-
-    private fun setNew(
-        activity: BaseActivity,
-        navController: NavHostController,
-    ) {
-        activityHolder.activity = activity
-        navControllerHolder.navHostController = navController
 
         /**
          * При закрытии активити процесс приложения продолжает жить, и, следовательно, продолжают жить и синглтоны.
@@ -133,6 +125,14 @@ internal class MainActivity : BaseActivity() {
          * Поэтому нужно закрыть сессию.
          */
         userSessionController.logoutSession(openAuthentication = false)
+    }
+
+    private fun setNew(
+        activity: BaseActivity,
+        navController: NavHostController,
+    ) {
+        activityHolder.activity = activity
+        navControllerHolder.navHostController = navController
     }
 }
 
