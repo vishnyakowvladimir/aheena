@@ -17,7 +17,10 @@ class AppRouterImpl @Inject constructor(
         return if (isPopUp) {
             true
         } else {
-            activityHolder.activity?.finish()
+            /**
+             * finishAndRemoveTask() - закрывает активити и удаляет из списка задач
+             */
+            activityHolder.activity?.finishAndRemoveTask()
             activityHolder.activity != null
         }
     }
