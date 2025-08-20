@@ -28,6 +28,7 @@ import com.example.aheena.navigation.FeatureComposablesHolder
 import com.example.aheena.presentation.main_view_model.MainViewModel
 import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
 import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.di.extension.getComponent
 import com.example.core_api.holder.ActivityHolder
 import com.example.core_api.navigation.router.NavControllerHolder
@@ -53,6 +54,9 @@ internal class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var userSessionController: UserSessionController
 
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
@@ -120,6 +124,15 @@ internal class MainActivity : BaseActivity() {
     ) {
         activityHolder.activity = activity
         navControllerHolder.navHostController = navController
+
+        /**
+         * При закрытии активити процесс приложения продолжает жить, и, следовательно, продолжают жить и синглтоны.
+         * При повторном запуске объекты не пересоздаются с начальными состояниями, а остаются прежние объекты
+         * с прежними состояниями.
+         * Как пример, контроллер сессии - при закрытии активити, объект не удаляется и сессия остается активной.
+         * Поэтому нужно закрыть сессию.
+         */
+        userSessionController.logoutSession(openAuthentication = false)
     }
 }
 

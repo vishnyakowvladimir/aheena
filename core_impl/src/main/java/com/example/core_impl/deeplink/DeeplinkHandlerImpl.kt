@@ -43,6 +43,7 @@ class DeeplinkHandlerImpl @Inject constructor(
                     userSessionController.isEnabled() -> {
                         router.navigate(deeplink.destination(uri))
                     }
+
                     else -> {
                         router.replaceAll(FeaturesDestination.AuthenticationDestination)
                         router.navigate(deeplink.destination(uri))

@@ -2,6 +2,6 @@ package com.example.core_api.controller.session
 
 interface UserSessionController {
     fun enable()
-    fun logoutSession()
+    fun logoutSession(openAuthentication: Boolean = true)
     fun isEnabled(): Boolean
 }

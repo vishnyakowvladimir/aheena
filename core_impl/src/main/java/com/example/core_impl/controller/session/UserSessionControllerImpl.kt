@@ -18,8 +18,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
-// если пользователь неактивен(не нажимал экран) в течение этого времени,
-// тогда закрываем сессию(открываем экран ввода пин-кода)
+/**
+ * Если пользователь неактивен(не нажимал экран) в течение этого времени,
+ * тогда закрываем сессию(открываем экран ввода пин-кода)
+ * */
 private const val CRITICAL_USER_INACTIVITY_DURATION = 300000L
 
 @OptIn(FlowPreview::class)
@@ -41,10 +43,13 @@ class UserSessionControllerImpl @Inject constructor(
         userActivityInteractor.setLastUserActivityTime(systemClock.getCurrentTimeMillis())
     }
 
-    override fun logoutSession() {
+    override fun logoutSession(openAuthentication: Boolean) {
         Handler(Looper.getMainLooper()).post {
             isEnabledFlow.tryEmit(false)
-            mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
+
+            if (openAuthentication) {
+                mainRouter.replaceAll(FeaturesDestination.AuthenticationDestination)
+            }
         }
     }
 
