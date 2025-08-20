@@ -2,17 +2,15 @@ package com.example.core_impl.pending_navigation
 
 import com.example.core_api.pending_navigation.PendingNavigationManager
 import com.example.core_api.pending_navigation.model.PendingNavigationState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.example.core_api.utils.coroutines.OneTimeSharedFlow
 import javax.inject.Inject
 
-class PendingNavigationManagerImpl @Inject constructor(): PendingNavigationManager {
+class PendingNavigationManagerImpl @Inject constructor() : PendingNavigationManager {
 
-    private val _actionState = MutableStateFlow<PendingNavigationState>(PendingNavigationState.None)
-    override val actionState = _actionState.asStateFlow()
+    private val _pendingNavigationState = OneTimeSharedFlow<PendingNavigationState>()
+    override val pendingNavigationState = _pendingNavigationState.flow
 
     override fun saveState(state: PendingNavigationState) {
-        _actionState.update { state }
+        _pendingNavigationState.emit(state)
     }
 }

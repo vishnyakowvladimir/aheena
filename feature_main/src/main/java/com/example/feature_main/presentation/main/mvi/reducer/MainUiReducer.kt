@@ -52,10 +52,6 @@ internal class MainUiReducer @Inject constructor() :
         event: MainEvent.Ui.OnPendingNavigation,
     ): Update<MainDomainState, MainSideEffect, MainUiCommand> {
         return when (event.state) {
-            is PendingNavigationState.None -> {
-                Update.nothing()
-            }
-
             is PendingNavigationState.Destination -> {
                 Update.sideEffects(
                     sideEffects = listOf(MainSideEffect.Ui.PendingNavigationAction(event.state)),

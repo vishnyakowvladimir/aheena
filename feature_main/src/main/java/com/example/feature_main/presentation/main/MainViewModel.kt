@@ -44,7 +44,7 @@ internal class MainViewModel @Inject constructor(
 
     private fun subscribePendingNavigation() {
         viewModelScope.launch {
-            pendingNavigationManager.actionState.collect { state ->
+            pendingNavigationManager.pendingNavigationState.collect { state ->
                 onEvent(MainEvent.Ui.OnPendingNavigation(state))
             }
         }
