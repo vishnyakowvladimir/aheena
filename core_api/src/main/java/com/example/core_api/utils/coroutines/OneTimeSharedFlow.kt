@@ -5,6 +5,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.transform
 
+/**
+ * Кастомный SharedFlow с однократной доставкой события подписчику.
+ * Событие доставляется одному подписчику только один раз.
+ * Отличие от Channel в том, что событие доставится, если подписка была сделана позже, чем отправлено событие.
+ */
 class OneTimeSharedFlow<T> {
     private val shared = MutableSharedFlow<T>(
         replay = 1,
