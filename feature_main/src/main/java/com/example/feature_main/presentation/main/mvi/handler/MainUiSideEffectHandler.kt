@@ -52,8 +52,8 @@ internal class MainUiSideEffectHandler @Inject constructor(
         effect: MainSideEffect.Ui.PendingNavigationAction,
     ): Flow<MainEvent> {
         return flow {
+            mainRouter.navigate(effect.state.destination)
             pendingNavigationManager.saveState(PendingNavigationState.None)
-            effect.state.action.invoke()
             emit(MainEvent.None)
         }
     }

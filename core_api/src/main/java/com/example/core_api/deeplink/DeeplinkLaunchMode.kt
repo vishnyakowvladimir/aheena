@@ -10,5 +10,5 @@ enum class DeeplinkLaunchMode {
     /**
      * Требуется авторизация. После авторизации отображается главный экран и открывается экран для диплинка
      */
-    WITH_AUTHENTICATION,
+    NEED_FOR_AUTHENTICATION,
 }

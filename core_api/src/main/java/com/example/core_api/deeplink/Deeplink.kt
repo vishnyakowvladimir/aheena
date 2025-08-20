@@ -1,6 +1,7 @@
 package com.example.core_api.deeplink
 
 import android.net.Uri
+import com.example.core_api.navigation.base.BaseDestination
 
 interface Deeplink {
 
@@ -8,7 +9,7 @@ interface Deeplink {
     val host: String
     val launchMode: DeeplinkLaunchMode
 
-    fun follow(uri: Uri): Boolean
+    fun destination(uri: Uri): BaseDestination
 
     fun isEnabled(): Boolean = true
 

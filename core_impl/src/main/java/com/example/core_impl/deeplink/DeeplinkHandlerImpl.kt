@@ -39,14 +39,23 @@ class DeeplinkHandlerImpl @Inject constructor(
              * Просто переходим на экран.
              * */
             deeplink.launchMode == DeeplinkLaunchMode.DEFAULT -> {
-                deeplink.follow(uri)
+                when {
+                    userSessionController.isEnabled() -> {
+                        router.navigate(deeplink.destination(uri))
+                    }
+                    else -> {
+                        router.replaceAll(FeaturesDestination.AuthenticationDestination)
+                        router.navigate(deeplink.destination(uri))
+                    }
+                }
+
             }
 
             /**
              * Если сессия активна, то просто переходим на экран.
              * */
             userSessionController.isEnabled() -> {
-                deeplink.follow(uri)
+                router.navigate(deeplink.destination(uri))
             }
 
             /**
@@ -56,7 +65,7 @@ class DeeplinkHandlerImpl @Inject constructor(
              * */
             else -> {
                 pendingNavigationManager.saveState(
-                    PendingNavigationState.Action { deeplink.follow(uri) },
+                    PendingNavigationState.Destination(deeplink.destination(uri)),
                 )
                 router.replaceAll(FeaturesDestination.AuthenticationDestination)
             }

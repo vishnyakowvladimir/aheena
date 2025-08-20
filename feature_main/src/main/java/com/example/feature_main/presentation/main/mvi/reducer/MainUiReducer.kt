@@ -56,7 +56,7 @@ internal class MainUiReducer @Inject constructor() :
                 Update.nothing()
             }
 
-            is PendingNavigationState.Action -> {
+            is PendingNavigationState.Destination -> {
                 Update.sideEffects(
                     sideEffects = listOf(MainSideEffect.Ui.PendingNavigationAction(event.state)),
                 )
