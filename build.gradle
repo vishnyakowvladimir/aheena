@@ -19,6 +19,7 @@ plugins {
     id 'com.android.library' version "$agpVersionExt" apply false
     id "org.jetbrains.kotlin.android" version "$kotlinVersionExt" apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinVersionExt" apply false
+    id 'com.google.gms.google-services' version "$googleServicesPluginVersion" apply false
 }
 
 applyKtlint(this)
