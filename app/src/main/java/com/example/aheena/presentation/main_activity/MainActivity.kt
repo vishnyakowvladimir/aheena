@@ -1,6 +1,7 @@
 package com.example.aheena.presentation.main_activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
@@ -94,12 +95,12 @@ internal class MainActivity : BaseActivity() {
             )
         }
 
-        checkDeeplink()
+        handleIntent()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        checkDeeplink(intent)
+        handleIntent(intent)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -112,15 +113,20 @@ internal class MainActivity : BaseActivity() {
         clear()
     }
 
-    private fun checkDeeplink(newIntent: Intent = intent): Boolean {
+    private fun handleIntent(newIntent: Intent = intent) {
         val uri = newIntent.data
 
-        if (newIntent.action == Intent.ACTION_VIEW && uri != null) {
-            newIntent.data = null
-            mainViewModel.onEvent(MainEvent.Ui.OnDeeplink(uri))
+        when (newIntent.action) {
+            Intent.ACTION_VIEW -> handleDeeplink(uri)
         }
 
-        return uri != null
+        newIntent.data = null
+    }
+
+    private fun handleDeeplink(uri: Uri?) {
+        if (uri != null) {
+            mainViewModel.onEvent(MainEvent.Ui.OnDeeplink(uri))
+        }
     }
 
     private fun clear() {
