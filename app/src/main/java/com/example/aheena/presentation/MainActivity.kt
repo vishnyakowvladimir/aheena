@@ -1,12 +1,15 @@
 package com.example.aheena.presentation
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -20,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -63,10 +67,17 @@ internal class MainActivity : BaseActivity() {
 
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
+    private val postNotificationsPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted ->
+        handlePermissionResult(isGranted)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         getComponent<AppComponent>().inject(this)
         super.onCreate(savedInstanceState)
         prepareFirebaseMessaging()
+        askNotificationPermission()
 
         enableEdgeToEdge()
 
@@ -149,6 +160,38 @@ internal class MainActivity : BaseActivity() {
             AppLogger.log("Init FCM Token: $token")
             /* Отправка токена на бэк */
         }
+    }
+
+    private fun askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+                    /**
+                     * Пользователь уже дал разрешение
+                     * */
+                }
+
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                    /**
+                     * Пользователь ОТКАЗАЛ хотя бы один раз → нужно объяснить, зачем это разрешение
+                     * */
+                }
+
+                else -> {
+                    /**
+                     * Первый запрос ИЛИ отказ с "Never ask again" → сразу показываем системный диалог
+                     * */
+                    postNotificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+    private fun handlePermissionResult(isGranted: Boolean) {
+        /**
+         * Обработка результата
+         * */
     }
 }
 
