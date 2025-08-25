@@ -11,9 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import androidx.core.net.toUri
 import com.example.core_api.log.AppLogger
-
-internal const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
-internal const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
+import com.example.feature_push.utils.PUSH_NOTIFICATION_CHANNEL_ID
 
 class AheenaFirebaseMessagingService : FirebaseMessagingService() {
 

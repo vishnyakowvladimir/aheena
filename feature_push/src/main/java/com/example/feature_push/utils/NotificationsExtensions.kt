@@ -1,7 +1,6 @@
 package com.example.feature_push.utils
 
 import android.Manifest
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -12,10 +11,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.core_api.log.AppLogger
-import com.example.core_api.presentation.base.BaseActivity
-import com.example.feature_push.service.PUSH_NOTIFICATION_CHANNEL_ID
-import com.example.feature_push.service.PUSH_NOTIFICATION_CHANNEL_NAME
 import com.google.firebase.messaging.FirebaseMessaging
+
+internal const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
+private const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
 
 /**
  * Создание Channel для пуш-уведомлений
