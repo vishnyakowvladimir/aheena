@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -32,6 +31,37 @@ fun Context.createNotificationChannel() {
 }
 
 /**
+ * Запрашивает разрешение на уведомления
+ * */
+fun AppCompatActivity.askPostNotificationsPermission(
+    launcher: ActivityResultLauncher<String>,
+) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED -> {
+                /**
+                 * Пользователь уже дал разрешение
+                 * */
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                /**
+                 * Пользователь ОТКАЗАЛ хотя бы один раз → нужно объяснить, зачем это разрешение
+                 * */
+            }
+
+            else -> {
+                /**
+                 * Первый запрос ИЛИ отказ с "Never ask again" → сразу показываем системный диалог
+                 * */
+                launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+}
+
+/**
  * Подготовка FCM.
  * Получение токена устройства и отправка токена на бэк.
  * */
@@ -47,39 +77,5 @@ fun prepareFirebaseMessaging() {
          * */
         val token = task.result
         AppLogger.log("Init FCM Token: $token")
-    }
-}
-
-/**
- * Запрашивает разрешение на уведомления
- * */
-fun AppCompatActivity.askPostNotificationsPermission(
-    launcher: ActivityResultLauncher<String>,
-) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED -> {
-                Log.d("check111", "granted")
-                /**
-                 * Пользователь уже дал разрешение
-                 * */
-            }
-
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                Log.d("check111", "shouldShowRequestPermissionRationale")
-                /**
-                 * Пользователь ОТКАЗАЛ хотя бы один раз → нужно объяснить, зачем это разрешение
-                 * */
-            }
-
-            else -> {
-                /**
-                 * Первый запрос ИЛИ отказ с "Never ask again" → сразу показываем системный диалог
-                 * */
-                Log.d("check111", "postNotificationsPermissionLauncher")
-                launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
     }
 }
