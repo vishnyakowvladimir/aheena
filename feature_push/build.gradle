@@ -1,1 +1,6 @@
 applyAndroidConfiguration(this, "com.example.feature_push")
+
+dependencies {
+    implementation firebaseMessaging
+    implementation project(':core_api')
+}
