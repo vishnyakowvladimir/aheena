@@ -6,7 +6,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresPermission
@@ -18,6 +17,7 @@ import com.google.firebase.messaging.RemoteMessage
 import androidx.core.net.toUri
 
 private const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
+private const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
 
 class AheenaFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -34,7 +34,7 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
         val title = message.data["title"] ?: ""
         val description = message.data["description"] ?: ""
         val url = message.data["url"] ?: ""
-        showNotification(
+        handleMessage(
             title = title,
             description = description,
             url = url,
@@ -42,32 +42,55 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    private fun showNotification(
+    private fun handleMessage(
         title: String,
         description: String,
         url: String,
     ) {
+        createNotificationChannel()
+        showNotification(
+            title = title,
+            description = description,
+            pendingIntent = buildPendingIntent(url),
+        )
+    }
 
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 PUSH_NOTIFICATION_CHANNEL_ID,
-                "Push Notifications",
+                PUSH_NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
         }
+    }
 
+    private fun buildPendingIntent(url: String): PendingIntent {
         val intent = Intent("android.intent.action.MAIN").apply {
             data = url.toUri()
-            setPackage(packageName) // обязательно, чтобы не ловили чужие приложения
+
+            /**
+             * обязательно, чтобы не ловили чужие приложения
+             */
+            setPackage(packageName)
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+        return PendingIntent.getActivity(
+            this,
+            0,
+            intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+    }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    private fun showNotification(
+        title: String,
+        description: String,
+        pendingIntent: PendingIntent,
+    ) {
         val notification = NotificationCompat.Builder(this, PUSH_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_dialog_info)
             .setContentTitle(title)
