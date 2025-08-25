@@ -32,7 +32,7 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
 import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.di.extension.getComponent
 import com.example.core_api.holder.ActivityHolder
-import com.example.core_api.log.LOG_TAG
+import com.example.core_api.log.AppLogger
 import com.example.core_api.navigation.router.NavControllerHolder
 import com.example.core_api.presentation.base.BaseActivity
 import com.example.core_api.utils.extension.collectAsStateLifecycleAware
@@ -142,11 +142,11 @@ internal class MainActivity : BaseActivity() {
     private fun prepareFirebaseMessaging() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.d(LOG_TAG, "Fetching FCM registration token failed", task.exception)
+                AppLogger.log("Fetching FCM registration token failed: ${task.exception?.message}")
                 return@addOnCompleteListener
             }
             val token = task.result
-            Log.d(LOG_TAG, "Init FCM Token: $token")
+            AppLogger.log("Init FCM Token: $token")
             /* Отправка токена на бэк */
         }
     }

@@ -11,10 +11,10 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.core_api.log.LOG_TAG
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import androidx.core.net.toUri
+import com.example.core_api.log.AppLogger
 
 private const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
 private const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
@@ -23,14 +23,14 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d(LOG_TAG, "New FCM Token: $token")
+        AppLogger.log("New FCM Token: $token")
         /* Отправка токена на бэк */
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        Log.d(LOG_TAG, "message: $message")
+        AppLogger.log("message: $message")
         val title = message.data["title"] ?: ""
         val description = message.data["description"] ?: ""
         val url = message.data["url"] ?: ""
