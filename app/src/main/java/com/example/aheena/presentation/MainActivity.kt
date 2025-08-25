@@ -36,15 +36,14 @@ import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
 import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.di.extension.getComponent
 import com.example.core_api.holder.ActivityHolder
-import com.example.core_api.log.AppLogger
 import com.example.core_api.navigation.router.NavControllerHolder
 import com.example.core_api.presentation.base.BaseActivity
 import com.example.core_api.utils.extension.collectAsStateLifecycleAware
+import com.example.feature_push.utils.prepareFirebaseMessaging
 import com.example.lib_ui.R
 import com.example.lib_ui.components.snackbar.AppSnackbarVisuals
 import com.example.lib_ui.components.snackbar.AppSwipeableSnackbarHost
 import com.example.lib_ui.theme.AppThemeContainer
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -148,21 +147,6 @@ internal class MainActivity : BaseActivity() {
     ) {
         activityHolder.activity = activity
         navControllerHolder.navHostController = navController
-    }
-
-    private fun prepareFirebaseMessaging() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                AppLogger.log("Fetching FCM registration token failed: ${task.exception?.message}")
-                return@addOnCompleteListener
-            }
-
-            /**
-             * Отправка токена на бэк
-             * */
-            val token = task.result
-            AppLogger.log("Init FCM Token: $token")
-        }
     }
 
     private fun askNotificationPermission() {
