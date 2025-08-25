@@ -2,12 +2,8 @@ package com.example.feature_push.service
 
 import android.Manifest
 import android.R
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -16,8 +12,8 @@ import com.google.firebase.messaging.RemoteMessage
 import androidx.core.net.toUri
 import com.example.core_api.log.AppLogger
 
-private const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
-private const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
+internal const val PUSH_NOTIFICATION_CHANNEL_ID = "PUSH_NOTIFICATION_CHANNEL_ID"
+internal const val PUSH_NOTIFICATION_CHANNEL_NAME = "Aheena Уведомления"
 
 class AheenaFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -51,25 +47,14 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
         description: String,
         url: String,
     ) {
-        createNotificationChannel()
+        val pendingIntent = buildPendingIntent(url)
         showNotification(
             title = title,
             description = description,
-            pendingIntent = buildPendingIntent(url),
+            pendingIntent = pendingIntent,
         )
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                PUSH_NOTIFICATION_CHANNEL_ID,
-                PUSH_NOTIFICATION_CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
-        }
-    }
 
     private fun buildPendingIntent(url: String): PendingIntent {
         val intent = Intent(Intent.ACTION_VIEW).apply {

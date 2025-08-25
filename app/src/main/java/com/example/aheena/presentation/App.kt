@@ -7,6 +7,7 @@ import com.example.core_api.application_info.ApplicationInfo
 import com.example.core_api.di.component.ComponentLifecycle
 import com.example.core_api.di.component.DaggerComponent
 import com.example.core_api.presentation.base.BaseApplication
+import com.example.feature_push.utils.createNotificationChannel
 import kotlin.reflect.KClass
 
 internal class App : BaseApplication(), ComponentLifecycle {
@@ -23,6 +24,11 @@ internal class App : BaseApplication(), ComponentLifecycle {
         )
     }
     private val applicationComponentHolder by lazy { ApplicationComponentHolder(appComponent) }
+
+    override fun onCreate() {
+        super.onCreate()
+        createNotificationChannel()
+    }
 
     override fun getComponent(
         className: KClass<out DaggerComponent>,
