@@ -1,10 +1,18 @@
 package com.example.feature_push.utils
 
+import android.Manifest
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.core_api.log.AppLogger
+import com.example.core_api.presentation.base.BaseActivity
 import com.example.feature_push.service.PUSH_NOTIFICATION_CHANNEL_ID
 import com.example.feature_push.service.PUSH_NOTIFICATION_CHANNEL_NAME
 import com.google.firebase.messaging.FirebaseMessaging
@@ -40,5 +48,39 @@ fun prepareFirebaseMessaging() {
          * */
         val token = task.result
         AppLogger.log("Init FCM Token: $token")
+    }
+}
+
+/**
+ * Запрашивает разрешение на уведомления
+ * */
+fun AppCompatActivity.askPostNotificationsPermission(
+    launcher: ActivityResultLauncher<String>,
+) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED -> {
+                Log.d("check111", "granted")
+                /**
+                 * Пользователь уже дал разрешение
+                 * */
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                Log.d("check111", "shouldShowRequestPermissionRationale")
+                /**
+                 * Пользователь ОТКАЗАЛ хотя бы один раз → нужно объяснить, зачем это разрешение
+                 * */
+            }
+
+            else -> {
+                /**
+                 * Первый запрос ИЛИ отказ с "Never ask again" → сразу показываем системный диалог
+                 * */
+                Log.d("check111", "postNotificationsPermissionLauncher")
+                launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 applyAndroidConfiguration(this, "com.example.feature_push")
 
 dependencies {
+    implementation androidXAppCompat
     implementation(platform(firebaseBom))
     implementation firebase
     implementation project(':core_api')

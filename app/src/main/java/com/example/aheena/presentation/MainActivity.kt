@@ -1,9 +1,6 @@
 package com.example.aheena.presentation
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
@@ -23,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -39,6 +35,7 @@ import com.example.core_api.holder.ActivityHolder
 import com.example.core_api.navigation.router.NavControllerHolder
 import com.example.core_api.presentation.base.BaseActivity
 import com.example.core_api.utils.extension.collectAsStateLifecycleAware
+import com.example.feature_push.utils.askPostNotificationsPermission
 import com.example.feature_push.utils.prepareFirebaseMessaging
 import com.example.lib_ui.R
 import com.example.lib_ui.components.snackbar.AppSnackbarVisuals
@@ -76,7 +73,7 @@ internal class MainActivity : BaseActivity() {
         getComponent<AppComponent>().inject(this)
         super.onCreate(savedInstanceState)
         prepareFirebaseMessaging()
-        askPostNotificationsPermission()
+        askPostNotificationsPermission(postNotificationsPermissionLauncher)
 
         enableEdgeToEdge()
 
@@ -147,32 +144,6 @@ internal class MainActivity : BaseActivity() {
     ) {
         activityHolder.activity = activity
         navControllerHolder.navHostController = navController
-    }
-
-    private fun askPostNotificationsPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED -> {
-                    /**
-                     * Пользователь уже дал разрешение
-                     * */
-                }
-
-                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    /**
-                     * Пользователь ОТКАЗАЛ хотя бы один раз → нужно объяснить, зачем это разрешение
-                     * */
-                }
-
-                else -> {
-                    /**
-                     * Первый запрос ИЛИ отказ с "Never ask again" → сразу показываем системный диалог
-                     * */
-                    postNotificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-        }
     }
 
     private fun handlePermissionResult(isGranted: Boolean) {
