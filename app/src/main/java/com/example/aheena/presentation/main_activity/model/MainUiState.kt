@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.main_view_model.model
+package com.example.aheena.presentation.main_activity.model
 
 import com.example.lib_ui.theme.typography.ViewScale
 

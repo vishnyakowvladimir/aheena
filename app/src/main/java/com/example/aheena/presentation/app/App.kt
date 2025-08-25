@@ -1,4 +1,4 @@
-package com.example.aheena.presentation
+package com.example.aheena.presentation.app
 
 import com.example.aheena.BuildConfig
 import com.example.aheena.di.AppComponent

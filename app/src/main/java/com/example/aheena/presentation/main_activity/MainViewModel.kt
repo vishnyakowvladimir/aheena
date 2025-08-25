@@ -1,11 +1,11 @@
-package com.example.aheena.presentation.main_view_model
+package com.example.aheena.presentation.main_activity
 
 import androidx.lifecycle.viewModelScope
-import com.example.aheena.presentation.main_view_model.mapper.MainMapper
-import com.example.aheena.presentation.main_view_model.mvi.handler.MainSideEffectHandler
-import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
-import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
-import com.example.aheena.presentation.main_view_model.mvi.reducer.MainReducer
+import com.example.aheena.presentation.main_activity.mapper.MainMapper
+import com.example.aheena.presentation.main_activity.mvi.handler.MainSideEffectHandler
+import com.example.aheena.presentation.main_activity.mvi.model.MainEvent
+import com.example.aheena.presentation.main_activity.mvi.model.MainUiCommand
+import com.example.aheena.presentation.main_activity.mvi.reducer.MainReducer
 import com.example.core_api.presentation.base.BaseViewModel
 import com.example.core_api.utils.eventbus.AppEventBus
 import com.example.core_api.utils.eventbus.model.AppEvent

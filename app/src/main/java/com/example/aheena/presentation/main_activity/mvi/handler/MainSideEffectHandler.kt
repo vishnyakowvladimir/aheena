@@ -1,7 +1,7 @@
-package com.example.aheena.presentation.main_view_model.mvi.handler
+package com.example.aheena.presentation.main_activity.mvi.handler
 
-import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
-import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
+import com.example.aheena.presentation.main_activity.mvi.model.MainEvent
+import com.example.aheena.presentation.main_activity.mvi.model.MainSideEffect
 import com.example.mvi.SideEffectHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.merge

@@ -1,4 +1,4 @@
-package com.example.aheena.presentation.main_view_model.mvi.model
+package com.example.aheena.presentation.main_activity.mvi.model
 
 import android.net.Uri
 import com.example.domain_models.theme.ViewScaleDomain

@@ -16,7 +16,7 @@ import com.example.aheena.di.modules.RepositoryModule
 import com.example.aheena.di.modules.StorageModule
 import com.example.aheena.di.modules.UtilsModule
 import com.example.aheena.di.modules.ViewModelsModule
-import com.example.aheena.presentation.MainActivity
+import com.example.aheena.presentation.main_activity.MainActivity
 import com.example.core_api.application_info.ApplicationInfo
 import com.example.core_api.di.component.DaggerComponent
 import com.example.core_api.di.scope.ApplicationScope

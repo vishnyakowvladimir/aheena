@@ -1,7 +1,7 @@
 package com.example.aheena.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.example.aheena.presentation.main_view_model.MainViewModel
+import com.example.aheena.presentation.main_activity.MainViewModel
 import com.example.core_api.di.key.ViewModelKey
 import dagger.Binds
 import dagger.Module

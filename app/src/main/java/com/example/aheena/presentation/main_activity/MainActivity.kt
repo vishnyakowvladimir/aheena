@@ -1,4 +1,4 @@
-package com.example.aheena.presentation
+package com.example.aheena.presentation.main_activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,9 +26,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.aheena.di.AppComponent
 import com.example.aheena.navigation.AppNavGraph
 import com.example.aheena.navigation.FeatureComposablesHolder
-import com.example.aheena.presentation.main_view_model.MainViewModel
-import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
-import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.aheena.presentation.main_activity.mvi.model.MainEvent
+import com.example.aheena.presentation.main_activity.mvi.model.MainUiCommand
 import com.example.core_api.controller.session.UserSessionController
 import com.example.core_api.di.extension.getComponent
 import com.example.core_api.holder.ActivityHolder

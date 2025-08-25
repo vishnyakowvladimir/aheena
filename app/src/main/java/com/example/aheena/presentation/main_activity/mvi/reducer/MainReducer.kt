@@ -1,9 +1,9 @@
-package com.example.aheena.presentation.main_view_model.mvi.reducer
+package com.example.aheena.presentation.main_activity.mvi.reducer
 
-import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
-import com.example.aheena.presentation.main_view_model.mvi.model.MainEvent
-import com.example.aheena.presentation.main_view_model.mvi.model.MainSideEffect
-import com.example.aheena.presentation.main_view_model.mvi.model.MainUiCommand
+import com.example.aheena.presentation.main_activity.mvi.model.MainDomainState
+import com.example.aheena.presentation.main_activity.mvi.model.MainEvent
+import com.example.aheena.presentation.main_activity.mvi.model.MainSideEffect
+import com.example.aheena.presentation.main_activity.mvi.model.MainUiCommand
 import com.example.core_api.controller.theme.ThemeManager
 import com.example.mvi.Reducer
 import com.example.mvi.model.Update

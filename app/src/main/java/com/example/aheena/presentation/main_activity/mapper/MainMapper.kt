@@ -1,7 +1,7 @@
-package com.example.aheena.presentation.main_view_model.mapper
+package com.example.aheena.presentation.main_activity.mapper
 
-import com.example.aheena.presentation.main_view_model.model.MainUiState
-import com.example.aheena.presentation.main_view_model.mvi.model.MainDomainState
+import com.example.aheena.presentation.main_activity.model.MainUiState
+import com.example.aheena.presentation.main_activity.mvi.model.MainDomainState
 import com.example.core_api.controller.theme.mapToUi
 import javax.inject.Inject
 
