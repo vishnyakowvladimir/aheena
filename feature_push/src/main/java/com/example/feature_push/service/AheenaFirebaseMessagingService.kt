@@ -23,17 +23,21 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+
+        /**
+         *  Отправка токена на бэк
+         *  */
         AppLogger.log("New FCM Token: $token")
-        /* Отправка токена на бэк */
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        AppLogger.log("message: $message")
+
         val title = message.data["title"] ?: ""
         val description = message.data["description"] ?: ""
         val url = message.data["url"] ?: ""
+
         handleMessage(
             title = title,
             description = description,
@@ -68,7 +72,7 @@ class AheenaFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun buildPendingIntent(url: String): PendingIntent {
-        val intent = Intent("android.intent.action.MAIN").apply {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
             data = url.toUri()
 
             /**

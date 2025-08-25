@@ -156,9 +156,12 @@ internal class MainActivity : BaseActivity() {
                 AppLogger.log("Fetching FCM registration token failed: ${task.exception?.message}")
                 return@addOnCompleteListener
             }
+
+            /**
+             * Отправка токена на бэк
+             * */
             val token = task.result
             AppLogger.log("Init FCM Token: $token")
-            /* Отправка токена на бэк */
         }
     }
 
