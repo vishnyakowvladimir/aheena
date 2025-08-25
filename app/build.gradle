@@ -130,7 +130,6 @@ dependencies {
     debugImplementation leakCanary
     implementation(platform(firebaseBom))
     implementation firebase
-    implementation firebaseMessaging
 
     implementation project(":ui:aheena-lib-ui")
     implementation project(':core_impl')
