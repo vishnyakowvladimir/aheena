@@ -76,7 +76,7 @@ internal class MainActivity : BaseActivity() {
         getComponent<AppComponent>().inject(this)
         super.onCreate(savedInstanceState)
         prepareFirebaseMessaging()
-        askNotificationPermission()
+        askPostNotificationsPermission()
 
         enableEdgeToEdge()
 
@@ -149,7 +149,7 @@ internal class MainActivity : BaseActivity() {
         navControllerHolder.navHostController = navController
     }
 
-    private fun askNotificationPermission() {
+    private fun askPostNotificationsPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
