@@ -12,6 +12,7 @@ class ItunesMapper @Inject constructor() {
                 trackId = track.trackId,
                 name = track.trackName.orEmpty(),
                 artistName = track.artistName.orEmpty(),
+                previewUrl = track.previewUrl.orEmpty(),
             )
         }.orEmpty()
     }

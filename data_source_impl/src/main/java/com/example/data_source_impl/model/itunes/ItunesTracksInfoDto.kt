@@ -13,5 +13,6 @@ class ItunesTracksInfoDto(
         val trackId: Long,
         val trackName: String?,
         val artistName: String?,
+        val previewUrl: String?,
     )
 }

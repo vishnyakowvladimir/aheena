@@ -4,4 +4,5 @@ data class ItunesTrack(
     val trackId: Long,
     val name: String,
     val artistName: String,
+    val previewUrl: String,
 )
