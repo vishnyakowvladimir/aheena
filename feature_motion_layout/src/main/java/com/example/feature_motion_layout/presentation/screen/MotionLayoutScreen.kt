@@ -70,10 +70,11 @@ fun MotionLayoutScreen() {
 
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
-    val sheetFraction = (topFraction + progressRange * progress).coerceIn(topFraction, bottomFraction)
+    val sheetFraction =
+        (topFraction + progressRange * progress).coerceIn(topFraction, bottomFraction)
     val imageAlpha = if (sheetFraction <= middleFraction) {
         val t = (sheetFraction - topFraction) / (middleFraction - topFraction)
-        (minImageAlpha + (1f -minImageAlpha) * t).coerceIn(minImageAlpha, 1f)
+        (minImageAlpha + (1f - minImageAlpha) * t).coerceIn(minImageAlpha, 1f)
     } else {
         1f
     }
@@ -88,13 +89,24 @@ fun MotionLayoutScreen() {
         ConstraintSet {
             val bottomSheet = createRefFor("bottomSheet")
             val bottomPlate = createRefFor("bottomPlate")
+            val imageId = createRefFor("imageId")
             val sheetGuide = createGuidelineFromTop(topFraction)
 
             constrain(bottomSheet) {
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
-                top.linkTo(sheetGuide)
+//                top.linkTo(sheetGuide)
+                top.linkTo(parent.top, 30.dp)
                 bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+
+            constrain(imageId) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                bottom.linkTo(bottomPlate.top, 80.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
@@ -113,13 +125,24 @@ fun MotionLayoutScreen() {
         ConstraintSet {
             val bottomSheet = createRefFor("bottomSheet")
             val bottomPlate = createRefFor("bottomPlate")
+            val imageId = createRefFor("imageId")
             val sheetGuide = createGuidelineFromTop(bottomFraction)
 
             constrain(bottomSheet) {
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
-                top.linkTo(sheetGuide)
+                top.linkTo(bottomPlate.top, (-40).dp)
+//                top.linkTo(sheetGuide)
                 bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+
+            constrain(imageId) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                bottom.linkTo(bottomPlate.top, 80.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
@@ -139,15 +162,6 @@ fun MotionLayoutScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        AsyncImage(
-            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(imageHeightDp)
-                .alpha(imageAlpha),
-            contentScale = ContentScale.Crop
-        )
 
         MotionLayout(
             start = startConstraints,
@@ -155,6 +169,15 @@ fun MotionLayoutScreen() {
             progress = progress,
             modifier = Modifier.fillMaxSize()
         ) {
+            AsyncImage(
+                model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
+                contentDescription = null,
+                modifier = Modifier
+                    .layoutId("imageId")
+                    .alpha(imageAlpha),
+                contentScale = ContentScale.Crop
+            )
+
             Column(
                 modifier = Modifier
                     .layoutId("bottomSheet")
@@ -242,7 +265,12 @@ fun ProductCard(contentAlpha: Float = 1f, index: Int = 0) {
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "2 141 ₽", fontSize = 8.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+            Text(
+                text = "2 141 ₽",
+                fontSize = 8.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
             Text(text = "Товар для примера", fontSize = 8.sp, maxLines = 1)
             Spacer(modifier = Modifier.height(8.dp))
             Button(
