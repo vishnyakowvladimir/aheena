@@ -1,5 +1,6 @@
 package com.example.feature_motion_layout.presentation.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
@@ -48,8 +49,6 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
@@ -58,46 +57,41 @@ fun MotionLayoutScreen() {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
 
+    val topFraction = 0.1f
+    val middleFraction = 0.5f
+    val bottomFraction = 0.75f
+    val progressRange = bottomFraction - topFraction
+    val initialProgress = (middleFraction - topFraction) / progressRange
+    val minImageAlpha = 0.3f
+    val minListAlpha = 0.5f
+
     val screenHeightPx = remember(configuration, density) {
         with(density) { configuration.screenHeightDp.dp.toPx() }
     }
-
-    val topFraction = 0.2f
-    val middleFraction = 0.5f
-    val bottomFraction = 1f
-    val progressRange = bottomFraction - topFraction
-    val initialProgress = (middleFraction - topFraction) / progressRange
+    val imageHeightDp = remember(configuration, density) {
+        with(density) { (configuration.screenHeightDp.dp * bottomFraction) }
+    }
 
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
     val sheetFraction = (topFraction + progressRange * progress).coerceIn(topFraction, bottomFraction)
     val imageAlpha = if (sheetFraction <= middleFraction) {
         val t = (sheetFraction - topFraction) / (middleFraction - topFraction)
-        (0.2f + (1f - 0.2f) * t).coerceIn(0.2f, 1f)
+        (minImageAlpha + (1f -minImageAlpha) * t).coerceIn(minImageAlpha, 1f)
     } else {
         1f
     }
     val listAlpha = if (sheetFraction >= middleFraction) {
         val t = (sheetFraction - middleFraction) / (bottomFraction - middleFraction)
-        (1f - 0.5f * t).coerceIn(0.5f, 1f)
+        (1f - (1f - minListAlpha) * t).coerceIn(minListAlpha, 1f)
     } else {
         1f
     }
 
     val startConstraints = remember {
         ConstraintSet {
-            val mainImage = createRefFor("mainImage")
             val bottomSheet = createRefFor("bottomSheet")
             val sheetGuide = createGuidelineFromTop(topFraction)
-
-            constrain(mainImage) {
-                width = Dimension.fillToConstraints
-                height = Dimension.percent(0.75f)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
 
             constrain(bottomSheet) {
                 width = Dimension.fillToConstraints
@@ -112,18 +106,8 @@ fun MotionLayoutScreen() {
 
     val endConstraints = remember {
         ConstraintSet {
-            val mainImage = createRefFor("mainImage")
             val bottomSheet = createRefFor("bottomSheet")
             val sheetGuide = createGuidelineFromTop(bottomFraction)
-
-            constrain(mainImage) {
-                width = Dimension.fillToConstraints
-                height = Dimension.percent(0.75f)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
 
             constrain(bottomSheet) {
                 width = Dimension.fillToConstraints
@@ -136,110 +120,101 @@ fun MotionLayoutScreen() {
         }
     }
 
-    MotionLayout(
-        start = startConstraints,
-        end = endConstraints,
-        progress = progress,
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFE91E63))
-                .padding(12.dp)
-                .zIndex(2f)
-        ) {
-            Text(
-                text = "DEBUG: MotionLayoutScreen visible",
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        AsyncImage(
-            model = ImageRequest.Builder(context)
-                .data("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop")
-                .crossfade(true)
-                .build(),
+        Image(
+            painter = ColorPainter(Color(0xFFF3E5F5)),
             contentDescription = null,
             modifier = Modifier
-                .layoutId("mainImage")
                 .fillMaxWidth()
+                .height(imageHeightDp)
                 .alpha(imageAlpha),
             contentScale = ContentScale.Crop
         )
 
-        Column(
-            modifier = Modifier
-                .layoutId("bottomSheet")
-                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                .background(Color.White)
-                .zIndex(1f)
-                .pointerInput(Unit) {
-                    detectVerticalDragGestures { change, dragAmount ->
-                        change.consume()
-                        val delta = dragAmount / (screenHeightPx * progressRange)
-                        progress = (progress + delta).coerceIn(0f, 1f)
-                    }
-                }
+        MotionLayout(
+            start = startConstraints,
+            end = endConstraints,
+            progress = progress,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .padding(vertical = 12.dp)
-                    .size(40.dp, 4.dp)
-                    .background(Color.LightGray, RoundedCornerShape(2.dp))
-                    .align(Alignment.CenterHorizontally)
-            )
-
-            Box(modifier = Modifier.weight(1f)) {
-                LazyColumn(
+                    .layoutId("bottomSheet")
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(Color.White)
+                    .zIndex(1f)
+                    .pointerInput(Unit) {
+                        detectVerticalDragGestures { change, dragAmount ->
+                            change.consume()
+                            val delta = dragAmount / (screenHeightPx * progressRange)
+                            progress = (progress + delta).coerceIn(0f, 1f)
+                        }
+                    }
+            ) {
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .alpha(listAlpha),
-                    contentPadding = PaddingValues(bottom = 100.dp)
-                ) {
-                    items(5) { rowIndex ->
-                        Text(
-                            text = "Образ ${rowIndex + 1}",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        LazyRow(
-                            contentPadding = PaddingValues(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(4) {
-                                ProductCard()
+                        .padding(vertical = 12.dp)
+                        .size(40.dp, 4.dp)
+                        .background(Color.LightGray, RoundedCornerShape(2.dp))
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = 100.dp)
+                    ) {
+                        items(5) { rowIndex ->
+                            Text(
+                                text = "Образ ${rowIndex + 1}",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .alpha(listAlpha)
+                            )
+                            LazyRow(
+                                modifier = Modifier.alpha(listAlpha),
+                                contentPadding = PaddingValues(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                items(4) {
+                                    ProductCard(contentAlpha = listAlpha)
+                                }
                             }
                         }
                     }
-                }
 
-                BottomPlate(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .fillMaxWidth()
-                        .background(Color.White)
-                        .padding(16.dp)
-                )
+                    BottomPlate(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .background(Color.White)
+                            .padding(16.dp)
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun ProductCard() {
+fun ProductCard(contentAlpha: Float = 1f) {
     Card(
-        modifier = Modifier.width(160.dp),
+        modifier = Modifier
+            .width(160.dp)
+            .alpha(contentAlpha),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            AsyncImage(
-                model = "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=200&auto=format&fit=crop",
+            Image(
+                painter = ColorPainter(Color(0xFFEDE7F6)),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -276,8 +251,8 @@ fun BottomPlate(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AsyncImage(
-                model = "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop",
+            Image(
+                painter = ColorPainter(Color(0xFFD1C4E9)),
                 contentDescription = null,
                 modifier = Modifier
                     .size(20.dp)
@@ -293,14 +268,14 @@ fun BottomPlate(modifier: Modifier = Modifier) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Купить", color = Color.White)
+                Text("Купить", color = Color.White, fontSize = 8.sp)
             }
             Button(
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9C27B0)),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("В корзину", color = Color.White)
+                Text("В корзину", color = Color.White, fontSize = 8.sp)
             }
         }
     }
