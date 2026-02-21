@@ -1,0 +1,5 @@
+applyAndroidConfiguration(this, "com.example.feature_motion_layout_api")
+
+dependencies {
+    implementation project(':core_api')
+}

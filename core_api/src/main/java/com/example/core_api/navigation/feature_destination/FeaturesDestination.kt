@@ -19,4 +19,7 @@ sealed interface FeaturesDestination : BaseDestination {
 
     @Serializable
     data object ItunesDestination : FeaturesDestination
+
+    @Serializable
+    data object MotionLayoutDestination : FeaturesDestination
 }

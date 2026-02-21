@@ -4,6 +4,7 @@ import com.example.aheena.di.component_builder.factory.ApplicationFactory
 import com.example.aheena.di.component_builder.factory.AuthenticationFactory
 import com.example.aheena.di.component_builder.factory.ItunesFactory
 import com.example.aheena.di.component_builder.factory.MainFactory
+import com.example.aheena.di.component_builder.factory.MotionLayoutFactory
 import com.example.aheena.di.component_builder.factory.TechFactory
 import com.example.core_api.di.component.ComponentLifecycle
 import com.example.core_api.di.component.CompositeKey
@@ -14,6 +15,7 @@ import com.example.core_api.di.component.createFactoryKey
 import com.example.feature_authentication.di.AuthenticationComponent
 import com.example.feature_itunes.di.ItunesComponent
 import com.example.feature_main.di.MainComponent
+import com.example.feature_motion_layout.di.MotionLayoutComponent
 import com.example.feature_tech.di.TechComponent
 import kotlin.reflect.KClass
 
@@ -28,6 +30,7 @@ internal class ApplicationComponentHolder(appComponent: AppComponent) : Componen
             MainComponent::class.createFactoryKey() to MainFactory(),
             TechComponent::class.createFactoryKey() to TechFactory(),
             ItunesComponent::class.createFactoryKey() to ItunesFactory(),
+            MotionLayoutComponent::class.createFactoryKey() to MotionLayoutFactory(),
         )
     }
 

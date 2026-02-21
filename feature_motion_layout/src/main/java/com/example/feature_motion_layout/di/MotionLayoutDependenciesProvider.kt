@@ -1,0 +1,3 @@
+package com.example.feature_motion_layout.di
+
+interface MotionLayoutDependenciesProvider

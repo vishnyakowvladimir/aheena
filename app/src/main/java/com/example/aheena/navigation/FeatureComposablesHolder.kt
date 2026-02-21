@@ -3,6 +3,7 @@ package com.example.aheena.navigation
 import com.example.feature_authentication_api.FeatureComposableAuthentication
 import com.example.feature_itunes_api.FeatureComposableItunes
 import com.example.feature_main_api.FeatureComposableMain
+import com.example.feature_motion_layout_api.FeatureComposableMotionLayout
 import com.example.feature_splash_api.FeatureComposableSplash
 import com.example.feature_tech_api.FeatureComposableTech
 import javax.inject.Inject
@@ -13,6 +14,7 @@ class FeatureComposablesHolder @Inject constructor(
     featureComposableMain: FeatureComposableMain,
     featureComposableTech: FeatureComposableTech,
     featureComposableItunes: FeatureComposableItunes,
+    featureComposableMotionLayout: FeatureComposableMotionLayout,
 ) {
 
     val composables = setOf(
@@ -21,5 +23,6 @@ class FeatureComposablesHolder @Inject constructor(
         featureComposableMain,
         featureComposableItunes,
         featureComposableTech,
+        featureComposableMotionLayout,
     )
 }

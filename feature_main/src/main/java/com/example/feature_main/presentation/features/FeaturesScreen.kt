@@ -42,7 +42,7 @@ internal fun FeaturesScreen(viewModel: FeaturesViewModel) {
                 onClick = { viewModel.onEvent(FeaturesEvent.Ui.OnItemClick(feature)) },
             )
 
-            if (index <= state.value.featuresScreens.size - 2) {
+            if (index <= state.value.featuresScreens.size - 1) {
                 Divider()
             }
         }
@@ -90,7 +90,7 @@ private fun Cell(
 private fun Divider() {
     Box(
         modifier = Modifier
-            .height(1.dp)
+            .height(20.dp)
             .fillMaxWidth(),
     )
 }

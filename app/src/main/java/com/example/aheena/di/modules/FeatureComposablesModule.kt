@@ -6,6 +6,8 @@ import com.example.feature_itunes.navigation.FeatureComposableItunesImpl
 import com.example.feature_itunes_api.FeatureComposableItunes
 import com.example.feature_main.navigation.FeatureComposableMainImpl
 import com.example.feature_main_api.FeatureComposableMain
+import com.example.feature_motion_layout.navigation.FeatureComposableMotionLayoutImpl
+import com.example.feature_motion_layout_api.FeatureComposableMotionLayout
 import com.example.feature_splash_api.FeatureComposableSplash
 import com.example.feature_tech.navigation.FeatureComposableTechImpl
 import com.example.feature_tech_api.FeatureComposableTech
@@ -30,4 +32,7 @@ internal interface FeatureComposablesModule {
 
     @Binds
     fun bindItunes(composable: FeatureComposableItunesImpl): FeatureComposableItunes
+
+    @Binds
+    fun bindMotionLayout(composable: FeatureComposableMotionLayoutImpl): FeatureComposableMotionLayout
 }

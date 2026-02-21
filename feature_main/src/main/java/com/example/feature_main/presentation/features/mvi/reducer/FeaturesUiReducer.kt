@@ -27,6 +27,7 @@ internal class FeaturesUiReducer @Inject constructor() :
     ): Update<FeaturesDomainState, FeaturesSideEffect, FeaturesUiCommand> {
         val destination = when (event.featureScreen) {
             FeatureScreen.ITUNES -> FeaturesDestination.ItunesDestination
+            FeatureScreen.MOTION_LAYOUT -> FeaturesDestination.MotionLayoutDestination
         }
 
         return Update.sideEffects(listOf(FeaturesSideEffect.Ui.OpenFeature(destination)))
