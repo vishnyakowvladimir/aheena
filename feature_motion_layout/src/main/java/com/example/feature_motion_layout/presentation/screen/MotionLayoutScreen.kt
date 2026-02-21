@@ -157,84 +157,79 @@ fun MotionLayoutScreen() {
         }
     }
 
-    Box(
+    MotionLayout(
+        start = startConstraints,
+        end = endConstraints,
+        progress = progress,
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
+        AsyncImage(
+            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
+            contentDescription = null,
+            modifier = Modifier
+                .layoutId("imageId")
+                .alpha(imageAlpha),
+            contentScale = ContentScale.Crop
+        )
 
-        MotionLayout(
-            start = startConstraints,
-            end = endConstraints,
-            progress = progress,
-            modifier = Modifier.fillMaxSize()
+        Column(
+            modifier = Modifier
+                .layoutId("bottomSheet")
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .background(Color.White)
+                .pointerInput(Unit) {
+                    detectVerticalDragGestures { change, dragAmount ->
+                        change.consume()
+                        val delta = dragAmount / (screenHeightPx * progressRange)
+                        progress = (progress + delta).coerceIn(0f, 1f)
+                    }
+                }
         ) {
-            AsyncImage(
-                model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
-                contentDescription = null,
+            Box(
                 modifier = Modifier
-                    .layoutId("imageId")
-                    .alpha(imageAlpha),
-                contentScale = ContentScale.Crop
+                    .padding(vertical = 12.dp)
+                    .size(40.dp, 4.dp)
+                    .background(Color.LightGray, RoundedCornerShape(2.dp))
+                    .align(Alignment.CenterHorizontally)
             )
 
-            Column(
-                modifier = Modifier
-                    .layoutId("bottomSheet")
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .background(Color.White)
-                    .pointerInput(Unit) {
-                        detectVerticalDragGestures { change, dragAmount ->
-                            change.consume()
-                            val delta = dragAmount / (screenHeightPx * progressRange)
-                            progress = (progress + delta).coerceIn(0f, 1f)
-                        }
-                    }
-            ) {
-                Box(
+            Box(modifier = Modifier.weight(1f)) {
+                LazyColumn(
                     modifier = Modifier
-                        .padding(vertical = 12.dp)
-                        .size(40.dp, 4.dp)
-                        .background(Color.LightGray, RoundedCornerShape(2.dp))
-                        .align(Alignment.CenterHorizontally)
-                )
-
-                Box(modifier = Modifier.weight(1f)) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentPadding = PaddingValues(bottom = 100.dp)
-                    ) {
-                        items(5) { rowIndex ->
-                            Text(
-                                text = "Образ ${rowIndex + 1}",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .alpha(listAlpha)
-                            )
-                            LazyRow(
-                                modifier = Modifier.alpha(listAlpha),
-                                contentPadding = PaddingValues(horizontal = 16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                items(4) {
-                                    ProductCard(contentAlpha = listAlpha)
-                                }
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 100.dp)
+                ) {
+                    items(5) { rowIndex ->
+                        Text(
+                            text = "Образ ${rowIndex + 1}",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .alpha(listAlpha)
+                        )
+                        LazyRow(
+                            modifier = Modifier.alpha(listAlpha),
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(4) {
+                                ProductCard(contentAlpha = listAlpha)
                             }
                         }
                     }
-
                 }
-            }
 
-            BottomPlate(
-                modifier = Modifier
-                    .layoutId("bottomPlate")
-                    .background(Color.White)
-            )
+            }
         }
+
+        BottomPlate(
+            modifier = Modifier
+                .layoutId("bottomPlate")
+                .background(Color.White)
+        )
     }
 }
 
