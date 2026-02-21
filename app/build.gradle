@@ -118,6 +118,7 @@ dependencies {
     implementation androidXComposeMaterial3
     implementation androidXAppCompat
     implementation androidXNavigation
+    implementation androidXConstraintLayoutCompose
     debugImplementation androidXComposeUiDebug
     implementation(platform(androidXComposePlatform))
     implementation kotlinX
