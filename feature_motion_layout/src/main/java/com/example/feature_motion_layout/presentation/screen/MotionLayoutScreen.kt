@@ -1,6 +1,5 @@
 package com.example.feature_motion_layout.presentation.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -34,12 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.ColorPainter
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -49,21 +46,21 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
 fun MotionLayoutScreen() {
-    val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
 
     val topFraction = 0.1f
     val middleFraction = 0.5f
-    val bottomFraction = 0.75f
+    val bottomFraction = 0.8f
     val progressRange = bottomFraction - topFraction
     val initialProgress = (middleFraction - topFraction) / progressRange
-    val minImageAlpha = 0.3f
-    val minListAlpha = 0.5f
+    val minImageAlpha = 0.2f
+    val minListAlpha = 0.2f
 
     val screenHeightPx = remember(configuration, density) {
         with(density) { configuration.screenHeightDp.dp.toPx() }
@@ -125,8 +122,8 @@ fun MotionLayoutScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Image(
-            painter = ColorPainter(Color(0xFFF3E5F5)),
+        AsyncImage(
+            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -203,8 +200,15 @@ fun MotionLayoutScreen() {
     }
 }
 
+private val productImages = listOf(
+    "https://s4.fotokto.ru/photo/full/869/8695883.jpg",
+    "https://s3.fotokto.ru/photo/full/869/8695882.jpg",
+    "https://s2.fotokto.ru/photo/full/867/8675155.jpg",
+    "https://s3.fotokto.ru/photo/full/869/8696169.jpg"
+)
+
 @Composable
-fun ProductCard(contentAlpha: Float = 1f) {
+fun ProductCard(contentAlpha: Float = 1f, index: Int = 0) {
     Card(
         modifier = Modifier
             .width(160.dp)
@@ -213,8 +217,8 @@ fun ProductCard(contentAlpha: Float = 1f) {
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Image(
-                painter = ColorPainter(Color(0xFFEDE7F6)),
+            AsyncImage(
+                model = productImages[index % productImages.size],
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -251,8 +255,8 @@ fun BottomPlate(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Image(
-                painter = ColorPainter(Color(0xFFD1C4E9)),
+            AsyncImage(
+                model = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
                 contentDescription = null,
                 modifier = Modifier
                     .size(20.dp)
