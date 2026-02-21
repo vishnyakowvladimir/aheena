@@ -1,0 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+applyAndroidConfiguration(this, "com.example.feature_motion_layout")
+applyCompose(this, KotlinCompile)
+
+dependencies {
+    implementation androidXAppCompat
+
+    implementation project(':core_api')
+    implementation project(':mvi')
+    implementation project(":ui:aheena-lib-ui")
+}

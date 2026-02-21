@@ -143,6 +143,7 @@ dependencies {
     implementation project(':feature_authentication')
     implementation project(':feature_main')
     implementation project(':feature_itunes')
+    implementation project(':feature_motion_layout')
     implementation project(':feature_tech_api')
     releaseImplementation project(':feature_tech_stub')
     debugImplementation project(':feature_tech')
