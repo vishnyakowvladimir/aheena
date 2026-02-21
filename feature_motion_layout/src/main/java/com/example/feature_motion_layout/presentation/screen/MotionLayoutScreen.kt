@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -88,6 +87,7 @@ fun MotionLayoutScreen() {
     val startConstraints = remember {
         ConstraintSet {
             val bottomSheet = createRefFor("bottomSheet")
+            val bottomPlate = createRefFor("bottomPlate")
             val sheetGuide = createGuidelineFromTop(topFraction)
 
             constrain(bottomSheet) {
@@ -98,18 +98,35 @@ fun MotionLayoutScreen() {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
+
+            constrain(bottomPlate) {
+                width = Dimension.fillToConstraints
+                height = Dimension.wrapContent
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
         }
     }
 
     val endConstraints = remember {
         ConstraintSet {
             val bottomSheet = createRefFor("bottomSheet")
+            val bottomPlate = createRefFor("bottomPlate")
             val sheetGuide = createGuidelineFromTop(bottomFraction)
 
             constrain(bottomSheet) {
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
                 top.linkTo(sheetGuide)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+
+            constrain(bottomPlate) {
+                width = Dimension.fillToConstraints
+                height = Dimension.wrapContent
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
@@ -143,7 +160,6 @@ fun MotionLayoutScreen() {
                     .layoutId("bottomSheet")
                     .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .background(Color.White)
-                    .zIndex(1f)
                     .pointerInput(Unit) {
                         detectVerticalDragGestures { change, dragAmount ->
                             change.consume()
@@ -187,15 +203,14 @@ fun MotionLayoutScreen() {
                         }
                     }
 
-                    BottomPlate(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .background(Color.White)
-                            .padding(16.dp)
-                    )
                 }
             }
+
+            BottomPlate(
+                modifier = Modifier
+                    .layoutId("bottomPlate")
+                    .background(Color.White)
+            )
         }
     }
 }
