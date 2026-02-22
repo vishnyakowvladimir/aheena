@@ -28,8 +28,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -75,52 +77,53 @@ fun MotionLayoutScreen() {
     }
 
     val listState = rememberLazyListState()
-    // Используем Animatable для плавной анимации и поддержки инерции
-    val progressAnimatable = remember { Animatable(initialProgress) }
-    val progress = progressAnimatable.value
+
+    // Используем обычный mutableState для мгновенного (синхронного) обновления во время свайпа
+    var progress by remember { mutableFloatStateOf(initialProgress) }
 
     val snapPoints = listOf(0f, 0.5f, 1f)
 
-    // Функция для плавного доведения до ближайшей точки с учетом скорости
+    // Функция плавной доводки (snapping), вызывается только при отпускании пальца
     suspend fun settle(velocity: Float) {
-        val current = progressAnimatable.value
-        val target = if (velocity > 800) { // Свайп вниз
-            snapPoints.filter { it > current + 0.05f }.minOrNull() ?: 1f
-        } else if (velocity < -800) { // Свайп вверх
-            snapPoints.filter { it < current - 0.05f }.maxOrNull() ?: 0f
-        } else {
-            snapPoints.minByOrNull { Math.abs(it - current) } ?: 0f
+        val target = when {
+            velocity > 800 -> snapPoints.filter { it > progress + 0.05f }.minOrNull() ?: 1f
+            velocity < -800 -> snapPoints.filter { it < progress - 0.05f }.maxOrNull() ?: 0f
+            else -> snapPoints.minByOrNull { Math.abs(it - progress) } ?: 0f
         }
 
-        progressAnimatable.animateTo(
+        // Анимируем из текущего значения в цель
+        Animatable(progress).animateTo(
             targetValue = target,
             initialVelocity = velocity / (screenHeightPx * progressRange),
             animationSpec = spring(
                 dampingRatio = Spring.DampingRatioNoBouncy,
-                stiffness = Spring.StiffnessLow // Аналог maxAcceleration
+                stiffness = Spring.StiffnessLow // Регулирует скорость "доводки" (аналог maxAcceleration)
             )
-        )
+        ) {
+            progress = value // Обновляем состояние MotionLayout на каждом кадре анимации
+        }
     }
 
     val nestedScrollConnection = remember(screenHeightPx, progressRange, listState) {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.y
-                if (delta < 0 && progressAnimatable.value > 0f) {
+
+                // 1. Раскрываем шторку (палец вверх)
+                if (delta < 0 && progress > 0f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
-                    val newProgress = (progressAnimatable.value + progressDelta).coerceIn(0f, 1f)
-                    val consumed = newProgress - progressAnimatable.value
-                    coroutineScope.launch { progressAnimatable.snapTo(newProgress) }
-                    return Offset(0f, consumed * (screenHeightPx * progressRange))
+                    val oldProgress = progress
+                    progress = (progress + progressDelta).coerceIn(0f, 1f)
+                    return Offset(0f, (progress - oldProgress) * (screenHeightPx * progressRange))
                 }
 
+                // 2. Сворачиваем шторку (палец вниз), если список в начале
                 val isAtTop = listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
-                if (delta > 0 && isAtTop && progressAnimatable.value < 1f) {
+                if (delta > 0 && isAtTop && progress < 1f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
-                    val newProgress = (progressAnimatable.value + progressDelta).coerceIn(0f, 1f)
-                    val consumed = newProgress - progressAnimatable.value
-                    coroutineScope.launch { progressAnimatable.snapTo(newProgress) }
-                    return Offset(0f, consumed * (screenHeightPx * progressRange))
+                    val oldProgress = progress
+                    progress = (progress + progressDelta).coerceIn(0f, 1f)
+                    return Offset(0f, (progress - oldProgress) * (screenHeightPx * progressRange))
                 }
                 return Offset.Zero
             }
@@ -132,97 +135,87 @@ fun MotionLayoutScreen() {
         }
     }
 
-    val scene = remember {
-        MotionScene {
-            val imageId = createRefFor("imageId")
-            val bottomSheet = createRefFor("bottomSheet")
-            val bottomPlate = createRefFor("bottomPlate")
-            val listContent = createRefFor("listContent")
-
-            val start = constraintSet("start") {
-                constrain(bottomSheet) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(parent.top, 30.dp)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
+    // Описание сцены через JSON
+    val scene =
+        MotionScene(
+            content = """
+            {
+              "ConstraintSets": {
+                "start": {
+                  "bottomSheet": {
+                    "width": "spread", "height": "spread",
+                    "top": ["parent", "top", 30], "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], "end": ["parent", "end"]
+                  },
+                  "listContent": {
+                    "width": "spread", "height": "spread",
+                    "top": ["bottomSheet", "top", 40], "bottom": ["bottomSheet", "bottom"],
+                    "start": ["bottomSheet", "start"], "end": ["bottomSheet", "end"],
+                    "alpha": 1
+                  },
+                  "imageId": {
+                    "width": "spread", "height": "spread",
+                    "top": ["parent", "top"], "bottom": ["bottomPlate", "top", 80],
+                    "start": ["parent", "start"], "end": ["parent", "end"],
+                    "alpha": 0.2
+                  },
+                  "bottomPlate": {
+                    "width": "spread", "height": "wrap",
+                    "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], "end": ["parent", "end"]
+                  }
+                },
+                "end": {
+                  "bottomSheet": {
+                    "width": "spread", "height": "spread",
+                    "top": ["bottomPlate", "top", -40], "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], "end": ["parent", "end"]
+                  },
+                  "listContent": {
+                    "width": "spread", "height": "spread",
+                    "top": ["bottomSheet", "top", 40], "bottom": ["bottomSheet", "bottom"],
+                    "start": ["bottomSheet", "start"], "end": ["bottomSheet", "end"],
+                    "alpha": 0.2
+                  },
+                  "imageId": {
+                    "width": "spread", "height": "spread",
+                    "top": ["parent", "top"], "bottom": ["bottomPlate", "top", 80],
+                    "start": ["parent", "start"], "end": ["parent", "end"],
+                    "alpha": 1
+                  },
+                  "bottomPlate": {
+                    "width": "spread", "height": "wrap",
+                    "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], "end": ["parent", "end"]
+                  }
                 }
-                constrain(listContent) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(bottomSheet.top, 40.dp)
-                    bottom.linkTo(bottomSheet.bottom)
-                    start.linkTo(bottomSheet.start)
-                    end.linkTo(bottomSheet.end)
-                    alpha = 1f
+              },
+              "Transitions": {
+                "default": {
+                  "from": "start",
+                  "to": "end",
+                  "onSwipe": {
+                    "anchor": "bottomSheet",
+                    "side": "top",
+                    "direction": "up",
+                    "maxAcceleration": 40,
+                    "moveWhenScrollAtTop": true
+                  },
+                  "KeyFrames": {
+                    "KeyAttributes": [
+                      {
+                        "target": ["imageId", "listContent"],
+                        "frames": [50],
+                        "alpha": [1]
+                      }
+                    ]
+                  }
                 }
-                constrain(imageId) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(parent.top)
-                    bottom.linkTo(bottomPlate.top, 80.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    alpha = 0.2f
-                }
-                constrain(bottomPlate) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.wrapContent
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+              }
             }
+        """.trimIndent()
+        )
 
-            val end = constraintSet("end") {
-                constrain(bottomSheet) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(bottomPlate.top, (-40).dp)
-                    bottom.linkTo(parent.bottom)
-                    this.start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                constrain(listContent) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(bottomSheet.top, 40.dp)
-                    bottom.linkTo(bottomSheet.bottom)
-                    this.start.linkTo(bottomSheet.start)
-                    end.linkTo(bottomSheet.end)
-                    alpha = 0.2f
-                }
-                constrain(imageId) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                    top.linkTo(parent.top)
-                    bottom.linkTo(bottomPlate.top, 80.dp)
-                    this.start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    alpha = 1f
-                }
-                constrain(bottomPlate) {
-                    width = Dimension.fillToConstraints
-                    height = Dimension.wrapContent
-                    bottom.linkTo(parent.bottom)
-                    this.start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-            }
-
-            transition(start, end, "default") {
-                keyAttributes(imageId) {
-                    frame(0) { alpha = 0.2f }
-                    frame(50) { alpha = 1f }
-                }
-                keyAttributes(listContent) {
-                    frame(50) { alpha = 1f }
-                    frame(100) { alpha = 0.2f }
-                }
-            }
-        }
-    }
 
     MotionLayout(
         motionScene = scene,
@@ -249,9 +242,7 @@ fun MotionLayoutScreen() {
                         onVerticalDrag = { change, dragAmount ->
                             velocityTracker.addPointerInputChange(change)
                             val delta = dragAmount / (screenHeightPx * progressRange)
-                            coroutineScope.launch {
-                                progressAnimatable.snapTo((progressAnimatable.value + delta).coerceIn(0f, 1f))
-                            }
+                            progress = (progress + delta).coerceIn(0f, 1f) // Мгновенное обновление
                         },
                         onDragEnd = {
                             val velocity = velocityTracker.calculateVelocity().y
@@ -280,20 +271,8 @@ fun MotionLayoutScreen() {
                 contentPadding = PaddingValues(bottom = 100.dp)
             ) {
                 items(5) { rowIndex ->
-                    Text(
-                        text = "Образ ${rowIndex + 1}",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        items(4) {
-                            ProductCard()
-                        }
-                    }
+                    Text(text = "Образ ${rowIndex + 1}", modifier = Modifier.padding(16.dp))
+                    LazyRow { items(4) { ProductCard() } }
                 }
             }
         }
