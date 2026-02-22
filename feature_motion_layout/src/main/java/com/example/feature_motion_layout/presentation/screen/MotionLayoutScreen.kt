@@ -242,7 +242,8 @@ fun MotionLayoutScreen() {
             .background(Color.White)
     ) {
         AsyncImage(
-            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
+//            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
+            model = "https://basket-34.wbbasket.ru/vol7328/part732854/732854608/images/big/1.webp",
             contentDescription = null,
             modifier = Modifier.layoutId("imageId"),
             contentScale = ContentScale.Crop
@@ -309,37 +310,38 @@ private val productImages = listOf(
 fun ProductCard(contentAlpha: Float = 1f, index: Int = 0) {
     Card(
         modifier = Modifier
-            .width(160.dp)
             .alpha(contentAlpha),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
-        shape = RoundedCornerShape(12.dp)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(6.dp)
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(2.dp)) {
             AsyncImage(
-                model = productImages[index % productImages.size],
+                model = "https://basket-27.wbbasket.ru/vol4963/part496350/496350181/images/hq/1.webp",
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
+                    .width(90.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "2 141 ₽",
-                fontSize = 8.sp,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
-            Text(text = "Товар для примера", fontSize = 8.sp, maxLines = 1)
-            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Товар для примера", fontSize = 10.sp, maxLines = 1)
+            Spacer(modifier = Modifier.height(4.dp))
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(horizontal = 4.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9C27B0))
             ) {
-                Text("В корзину", fontSize = 12.sp)
+                Text("В корзину", fontSize = 10.sp)
             }
         }
     }
