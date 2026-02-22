@@ -31,13 +31,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.Dimension
@@ -62,8 +67,45 @@ fun MotionLayoutScreen() {
         with(density) { configuration.screenHeightDp.dp.toPx() }
     }
 
-    // Используем обычный state для мгновенной реакции на движение пальца
     var progress by remember { mutableFloatStateOf(initialProgress) }
+
+    // Логика вложенной прокрутки
+    val nestedScrollConnection = remember(screenHeightPx, progressRange) {
+        object : NestedScrollConnection {
+            // Перед тем как список прокрутится сам (палец вверх - скролл вниз)
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                // Если тянем вверх (delta < 0) и шторка не до конца раскрыта (progress > 0)
+                if (delta < 0 && progress > 0f) {
+                    val progressDelta = delta / (screenHeightPx * progressRange)
+                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
+                    val consumed = newProgress - progress
+                    progress = newProgress
+                    // Возвращаем количество "поглощенных" пикселей
+                    return Offset(0f, consumed * (screenHeightPx * progressRange))
+                }
+                return Offset.Zero
+            }
+
+            // После того как список прокрутился (палец вниз - скролл вверх до упора)
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                val delta = available.y
+                // Если тянем вниз (delta > 0), а список уже на самом верху (available.y > 0)
+                if (delta > 0 && progress < 1f) {
+                    val progressDelta = delta / (screenHeightPx * progressRange)
+                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
+                    val consumedByProgress = newProgress - progress
+                    progress = newProgress
+                    return Offset(0f, consumedByProgress * (screenHeightPx * progressRange))
+                }
+                return Offset.Zero
+            }
+        }
+    }
 
     val scene = remember {
         MotionScene {
@@ -81,11 +123,10 @@ fun MotionLayoutScreen() {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-                // listContent теперь отдельный элемент, привязанный к sheet
                 constrain(listContent) {
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
-                    top.linkTo(bottomSheet.top, 40.dp) // Отступ под "ручку"
+                    top.linkTo(bottomSheet.top, 40.dp)
                     bottom.linkTo(bottomSheet.bottom)
                     start.linkTo(bottomSheet.start)
                     end.linkTo(bottomSheet.end)
@@ -146,32 +187,12 @@ fun MotionLayoutScreen() {
             }
 
             transition(start, end, "default") {
-                // Промежуточные состояния (KeyFrames)
                 keyAttributes(imageId) {
                     frame(0) { alpha = 0.2f }
-                }
-                keyAttributes(imageId) {
-                    frame(30) { alpha = 1f }
-                }
-
-                keyAttributes(imageId) {
-                    frame(50) { alpha = 1f }
-                }
-                keyAttributes(imageId) {
-                    frame(100) { alpha = 1f }
-                }
-
-                keyAttributes(listContent) {
-                    frame(0) { alpha = 1f }
+                    frame(35) { alpha = 1f }
                 }
                 keyAttributes(listContent) {
-                    frame(50) { alpha = 1f }
-                }
-
-                keyAttributes(listContent) {
-                    frame(70) { alpha = 1f }
-                }
-                keyAttributes(listContent) {
+                    frame(65) { alpha = 1f }
                     frame(100) { alpha = 0.2f }
                 }
             }
@@ -192,7 +213,6 @@ fun MotionLayoutScreen() {
             contentScale = ContentScale.Crop
         )
 
-        // Фон шторки и "ручка"
         Box(
             modifier = Modifier
                 .layoutId("bottomSheet")
@@ -215,9 +235,11 @@ fun MotionLayoutScreen() {
             )
         }
 
-        // Контент списка (вынесен в корень MotionLayout для работы alpha)
+        // Контейнер списка теперь с поддержкой Nested Scroll
         Box(
-            modifier = Modifier.layoutId("listContent")
+            modifier = Modifier
+                .layoutId("listContent")
+                .nestedScroll(nestedScrollConnection)
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -249,6 +271,8 @@ fun MotionLayoutScreen() {
         )
     }
 }
+
+// ... Остальные компоненты (ProductCard, BottomPlate) остаются без изменений ...
 
 private val productImages = listOf(
     "https://s4.fotokto.ru/photo/full/869/8695883.jpg",
