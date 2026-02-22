@@ -294,11 +294,7 @@ fun MotionLayoutScreen() {
             }
         }
 
-        BottomPlate(
-            modifier = Modifier
-                .layoutId("bottomPlate")
-                .background(Color.White)
-        )
+        BottomPlate()
     }
 }
 
@@ -350,44 +346,45 @@ fun ProductCard(contentAlpha: Float = 1f, index: Int = 0) {
 }
 
 @Composable
-fun BottomPlate(modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(16.dp)
+fun BottomPlate() {
+    Row(
+        modifier = Modifier
+            .layoutId("bottomPlate")
+            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+            .background(Color.White)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        AsyncImage(
+            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
+            contentDescription = null,
+            modifier = Modifier
+                .height(40.dp)
+                .width(30.dp)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = "2 456 ₽", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            Text(text = "Послезавтра", fontSize = 12.sp, color = Color.Gray)
+        }
+
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
+            shape = RoundedCornerShape(8.dp)
         ) {
-            AsyncImage(
-                model = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
-                contentDescription = null,
-                modifier = Modifier
-                    .size(20.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = "2 456 ₽", fontSize = 8.sp, fontWeight = FontWeight.Bold)
-                Text(text = "Послезавтра", fontSize = 8.sp, color = Color.Gray)
-            }
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text("Купить", color = Color.White, fontSize = 8.sp)
-            }
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9C27B0)),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text("В корзину", color = Color.White, fontSize = 8.sp)
-            }
+            Text("Купить", color = Color.White, fontSize = 12.sp)
+        }
+
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9C27B0)),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text("В корзину", color = Color.White, fontSize = 12.sp)
         }
     }
 }
