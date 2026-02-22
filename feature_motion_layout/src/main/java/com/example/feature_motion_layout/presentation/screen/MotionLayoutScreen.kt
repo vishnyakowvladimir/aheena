@@ -40,15 +40,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
-import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
-import androidx.constraintlayout.compose.OnSwipe
-import androidx.constraintlayout.compose.SwipeDirection
-import androidx.constraintlayout.compose.SwipeSide
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMotionApi::class)
@@ -67,9 +62,9 @@ fun MotionLayoutScreen() {
         with(density) { configuration.screenHeightDp.dp.toPx() }
     }
 
+    // Используем обычный state для мгновенной реакции на движение пальца
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
-    // Создаем MotionScene с Transition и KeyFrames
     val scene = remember {
         MotionScene {
             val imageId = createRefFor("imageId")
@@ -86,6 +81,16 @@ fun MotionLayoutScreen() {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
+                // listContent теперь отдельный элемент, привязанный к sheet
+                constrain(listContent) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(bottomSheet.top, 40.dp) // Отступ под "ручку"
+                    bottom.linkTo(bottomSheet.bottom)
+                    start.linkTo(bottomSheet.start)
+                    end.linkTo(bottomSheet.end)
+                    alpha = 1f
+                }
                 constrain(imageId) {
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
@@ -93,7 +98,7 @@ fun MotionLayoutScreen() {
                     bottom.linkTo(bottomPlate.top, 80.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    alpha = 0.2f // Начальная прозрачность
+                    alpha = 0.2f
                 }
                 constrain(bottomPlate) {
                     width = Dimension.fillToConstraints
@@ -101,9 +106,6 @@ fun MotionLayoutScreen() {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
-                constrain(listContent) {
-                    alpha = 1f
                 }
             }
 
@@ -116,6 +118,15 @@ fun MotionLayoutScreen() {
                     this.start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
+                constrain(listContent) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(bottomSheet.top, 40.dp)
+                    bottom.linkTo(bottomSheet.bottom)
+                    this.start.linkTo(bottomSheet.start)
+                    end.linkTo(bottomSheet.end)
+                    alpha = 0.2f
+                }
                 constrain(imageId) {
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
@@ -123,7 +134,7 @@ fun MotionLayoutScreen() {
                     bottom.linkTo(bottomPlate.top, 80.dp)
                     this.start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    alpha = 1f // Конечная прозрачность
+                    alpha = 1f
                 }
                 constrain(bottomPlate) {
                     width = Dimension.fillToConstraints
@@ -132,30 +143,37 @@ fun MotionLayoutScreen() {
                     this.start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-                constrain(listContent) {
-                    alpha = 0.2f
-                }
             }
 
             transition(start, end, "default") {
-                // Аналог KeyFrameSet в XML
+                // Промежуточные состояния (KeyFrames)
                 keyAttributes(imageId) {
-                    frame(57) { // 57% соответствует middleFraction (0.4/0.7)
-                        alpha = 1f
-                    }
+                    frame(0) { alpha = 0.2f }
                 }
-                keyAttributes(listContent) {
-                    frame(57) {
-                        alpha = 1f
-                    }
+                keyAttributes(imageId) {
+                    frame(30) { alpha = 1f }
                 }
 
-                // Описание свайпа (метаданные для MotionLayout)
-                onSwipe = OnSwipe(
-                    anchor = bottomSheet,
-                    side = SwipeSide.Top,
-                    direction = SwipeDirection.Down // Т.к. переход от Start (вверху) к End (внизу)
-                )
+                keyAttributes(imageId) {
+                    frame(50) { alpha = 1f }
+                }
+                keyAttributes(imageId) {
+                    frame(100) { alpha = 1f }
+                }
+
+                keyAttributes(listContent) {
+                    frame(0) { alpha = 1f }
+                }
+                keyAttributes(listContent) {
+                    frame(50) { alpha = 1f }
+                }
+
+                keyAttributes(listContent) {
+                    frame(70) { alpha = 1f }
+                }
+                keyAttributes(listContent) {
+                    frame(100) { alpha = 0.2f }
+                }
             }
         }
     }
@@ -174,7 +192,8 @@ fun MotionLayoutScreen() {
             contentScale = ContentScale.Crop
         )
 
-        Column(
+        // Фон шторки и "ручка"
+        Box(
             modifier = Modifier
                 .layoutId("bottomSheet")
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
@@ -182,8 +201,6 @@ fun MotionLayoutScreen() {
                 .pointerInput(Unit) {
                     detectVerticalDragGestures { change, dragAmount ->
                         change.consume()
-                        // В Compose мы пока вручную меняем прогресс,
-                        // но KeyFrames теперь отрабатывают автоматически
                         val delta = dragAmount / (screenHeightPx * progressRange)
                         progress = (progress + delta).coerceIn(0f, 1f)
                     }
@@ -194,32 +211,31 @@ fun MotionLayoutScreen() {
                     .padding(vertical = 12.dp)
                     .size(40.dp, 4.dp)
                     .background(Color.LightGray, RoundedCornerShape(2.dp))
-                    .align(Alignment.CenterHorizontally)
+                    .align(Alignment.TopCenter)
             )
+        }
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .layoutId("listContent") // Привязываем прозрачность к этому контейнеру
+        // Контент списка (вынесен в корень MotionLayout для работы alpha)
+        Box(
+            modifier = Modifier.layoutId("listContent")
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 100.dp)
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 100.dp)
-                ) {
-                    items(5) { rowIndex ->
-                        Text(
-                            text = "Образ ${rowIndex + 1}",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        LazyRow(
-                            contentPadding = PaddingValues(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(4) {
-                                ProductCard()
-                            }
+                items(5) { rowIndex ->
+                    Text(
+                        text = "Образ ${rowIndex + 1}",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(4) {
+                            ProductCard()
                         }
                     }
                 }
