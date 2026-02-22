@@ -160,50 +160,88 @@ fun MotionLayoutScreen() {
               "ConstraintSets": {
                 "start": {
                   "bottomSheet": {
-                    "width": "spread", "height": "spread",
-                    "top": ["parent", "top", 30], "bottom": ["parent", "bottom"],
-                    "start": ["parent", "start"], "end": ["parent", "end"]
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["parent", "top", 30], 
+                    "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"]
                   },
                   "listContent": {
-                    "width": "spread", "height": "spread",
-                    "top": ["bottomSheet", "top", 40], "bottom": ["bottomSheet", "bottom"],
-                    "start": ["bottomSheet", "start"], "end": ["bottomSheet", "end"],
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["bottomSheet", "top", 16], 
+                    "bottom": ["bottomSheet", "bottom"],
+                    "start": ["bottomSheet", "start"], 
+                    "end": ["bottomSheet", "end"],
                     "alpha": 1
                   },
+                  "listContentBackground": {
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["listContent", "top"], 
+                    "bottom": ["listContent", "bottom"],
+                    "start": ["listContent", "start"], 
+                    "end": ["listContent", "end"],
+                  },
                   "imageId": {
-                    "width": "spread", "height": "spread",
-                    "top": ["parent", "top"], "bottom": ["bottomPlate", "top", 80],
-                    "start": ["parent", "start"], "end": ["parent", "end"],
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["parent", "top"], 
+                    "bottom": ["bottomPlate", "top", 80],
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"],
                     "alpha": 0.2
                   },
                   "bottomPlate": {
-                    "width": "spread", "height": "wrap",
+                    "width": "spread", 
+                    "height": "wrap",
                     "bottom": ["parent", "bottom"],
-                    "start": ["parent", "start"], "end": ["parent", "end"]
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"]
                   }
                 },
                 "end": {
                   "bottomSheet": {
-                    "width": "spread", "height": "spread",
-                    "top": ["bottomPlate", "top", -40], "bottom": ["parent", "bottom"],
-                    "start": ["parent", "start"], "end": ["parent", "end"]
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["bottomPlate", "top", -40], 
+                    "bottom": ["parent", "bottom"],
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"]
                   },
                   "listContent": {
-                    "width": "spread", "height": "spread",
-                    "top": ["bottomSheet", "top", 40], "bottom": ["bottomSheet", "bottom"],
-                    "start": ["bottomSheet", "start"], "end": ["bottomSheet", "end"],
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["bottomSheet", "top", 16], 
+                    "bottom": ["bottomSheet", "bottom"],
+                    "start": ["bottomSheet", "start"], 
+                    "end": ["bottomSheet", "end"],
                     "alpha": 0.2
                   },
+                  "listContentBackground": {
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["listContent", "top"], 
+                    "bottom": ["listContent", "bottom"],
+                    "start": ["listContent", "start"], 
+                    "end": ["listContent", "end"],
+                  },
                   "imageId": {
-                    "width": "spread", "height": "spread",
-                    "top": ["parent", "top"], "bottom": ["bottomPlate", "top", 80],
-                    "start": ["parent", "start"], "end": ["parent", "end"],
+                    "width": "spread", 
+                    "height": "spread",
+                    "top": ["parent", "top"], 
+                    "bottom": ["bottomPlate", "top", 80],
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"],
                     "alpha": 1
                   },
                   "bottomPlate": {
-                    "width": "spread", "height": "wrap",
+                    "width": "spread", 
+                    "height": "wrap",
                     "bottom": ["parent", "bottom"],
-                    "start": ["parent", "start"], "end": ["parent", "end"]
+                    "start": ["parent", "start"], 
+                    "end": ["parent", "end"]
                   }
                 }
               },
@@ -253,7 +291,7 @@ fun MotionLayoutScreen() {
             modifier = Modifier
                 .layoutId("bottomSheet")
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                .background(Color.White)
+//                .background(Color.White)
                 .pointerInput(Unit) {
                     val velocityTracker = VelocityTracker()
                     detectVerticalDragGestures(
@@ -271,7 +309,6 @@ fun MotionLayoutScreen() {
         ) {
             Box(
                 modifier = Modifier
-                    .padding(vertical = 12.dp)
                     .size(40.dp, 4.dp)
                     .background(Color.LightGray, RoundedCornerShape(2.dp))
                     .align(Alignment.TopCenter)
@@ -280,7 +317,16 @@ fun MotionLayoutScreen() {
 
         Box(
             modifier = Modifier
+                .layoutId("listContentBackground")
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .background(Color.White)
+        )
+
+        Box(
+            modifier = Modifier
                 .layoutId("listContent")
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .background(Color.White)
                 .nestedScroll(nestedScrollConnection)
         ) {
             LazyColumn(
