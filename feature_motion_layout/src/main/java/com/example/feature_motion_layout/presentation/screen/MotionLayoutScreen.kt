@@ -58,6 +58,7 @@ import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
@@ -96,11 +97,12 @@ fun MotionLayoutScreen() {
             // Если сильно толкнули вверх
             velocity < -1000 -> snapPoints.filter { it < current }.maxOrNull() ?: 0f
             // Если просто отпустили — ищем ближайшую
-            else -> snapPoints.minByOrNull { Math.abs(it - current) } ?: 0f
+//            else -> current
+            else -> snapPoints.minByOrNull { abs(it - current) } ?: 0f
         }
 
         // Если мы уже в целевой точке, ничего не делаем
-        if (target == current && Math.abs(velocity) < 100) return
+        if (target == current && abs(velocity) < 100) return
 
         // Вот это — наш "движок" из XML
         Animatable(current).animateTo(
@@ -112,7 +114,7 @@ fun MotionLayoutScreen() {
                 dampingRatio = Spring.DampingRatioNoBouncy,
                 // Stiffness — это и есть ваш maxAcceleration.
                 // StiffnessLow = плавно и вальяжно, StiffnessMedium = быстрее.
-                stiffness = 40f // Можно подобрать число для идеального ощущения
+                stiffness = 100f // Можно подобрать число для идеального ощущения
             )
         ) {
             progress = value // Синхронизируем каждый кадр
