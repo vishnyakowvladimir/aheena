@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -57,6 +58,7 @@ import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import coil.compose.AsyncImage
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -83,50 +85,46 @@ fun MotionLayoutScreen() {
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
     val snapPoints = listOf(0f, 0.5f, 1f)
+    val settleJob = remember { mutableStateOf<Job?>(null) }
 
     // Функция плавной доводки (snapping), вызывается только при отпускании пальца
 // Внутри MotionLayoutScreen
 
-    suspend fun settle(velocity: Float) {
-        val current = progress
+    fun startSettle(velocity: Float) {
+        settleJob.value?.cancel() // Отменяем старую анимацию, если она есть
+        settleJob.value = coroutineScope.launch {
+            val current = progress
+            val target = when {
+                velocity > 1000 -> snapPoints.filter { it > current }.minOrNull() ?: 1f
+                velocity < -1000 -> snapPoints.filter { it < current }.maxOrNull() ?: 0f
+                else -> snapPoints.minByOrNull { kotlin.math.abs(it - current) } ?: 0f
+            }
+            if (target == current && kotlin.math.abs(velocity) < 100) return@launch
 
-        // Выбираем цель на основе скорости (fling) или близости
-        val target = when {
-            // Если сильно толкнули вниз
-            velocity > 1000 -> snapPoints.filter { it > current }.minOrNull() ?: 1f
-            // Если сильно толкнули вверх
-            velocity < -1000 -> snapPoints.filter { it < current }.maxOrNull() ?: 0f
-            // Если просто отпустили — ищем ближайшую
-//            else -> current
-            else -> snapPoints.minByOrNull { abs(it - current) } ?: 0f
-        }
-
-        // Если мы уже в целевой точке, ничего не делаем
-        if (target == current && abs(velocity) < 100) return
-
-        // Вот это — наш "движок" из XML
-        Animatable(current).animateTo(
-            targetValue = target,
-            // Переводим пиксельную скорость в прогресс-скорость (как в XML)
-            initialVelocity = velocity / (screenHeightPx * progressRange),
-            animationSpec = spring(
-                // DampingRatioNoBouncy — без лишних колебаний (как в шторках)
-                dampingRatio = Spring.DampingRatioNoBouncy,
-                // Stiffness — это и есть ваш maxAcceleration.
-                // StiffnessLow = плавно и вальяжно, StiffnessMedium = быстрее.
-                stiffness = 100f // Можно подобрать число для идеального ощущения
-            )
-        ) {
-            progress = value // Синхронизируем каждый кадр
+            Animatable(current).animateTo(
+                targetValue = target,
+                initialVelocity = velocity / (screenHeightPx * progressRange),
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioNoBouncy,
+                    stiffness = 800f
+                )
+            ) {
+                progress = value
+            }
         }
     }
 
     val nestedScrollConnection = remember(screenHeightPx, progressRange, listState) {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                // При любом новом свайпе отменяем автоматическую доводку
+                if (source == NestedScrollSource.Drag) {
+                    settleJob.value?.cancel()
+                }
+
                 val delta = available.y
 
-                // 1. Раскрываем шторку (палец вверх)
+                // Раскрываем (двигаем вверх)
                 if (delta < 0 && progress > 0f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
                     val oldProgress = progress
@@ -134,8 +132,8 @@ fun MotionLayoutScreen() {
                     return Offset(0f, (progress - oldProgress) * (screenHeightPx * progressRange))
                 }
 
-                // 2. Сворачиваем шторку (палец вниз), если список в начале
-                val isAtTop = listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                // Сворачиваем (двигаем вниз) - используем canScrollBackward для надежности
+                val isAtTop = !listState.canScrollBackward
                 if (delta > 0 && isAtTop && progress < 1f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
                     val oldProgress = progress
@@ -146,7 +144,7 @@ fun MotionLayoutScreen() {
             }
 
             override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                settle(available.y)
+                startSettle(available.y)
                 return available
             }
         }
@@ -205,7 +203,7 @@ fun MotionLayoutScreen() {
                   "bottomSheet": {
                     "width": "spread", 
                     "height": "spread",
-                    "top": ["bottomPlate", "top", -40], 
+                    "top": ["imageId", "bottom", -40], 
                     "bottom": ["parent", "bottom"],
                     "start": ["parent", "start"], 
                     "end": ["parent", "end"]
@@ -280,7 +278,6 @@ fun MotionLayoutScreen() {
             .background(Color.White)
     ) {
         AsyncImage(
-//            model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
             model = "https://basket-34.wbbasket.ru/vol7328/part732854/732854608/images/big/1.webp",
             contentDescription = null,
             modifier = Modifier.layoutId("imageId"),
@@ -296,13 +293,14 @@ fun MotionLayoutScreen() {
                     val velocityTracker = VelocityTracker()
                     detectVerticalDragGestures(
                         onVerticalDrag = { change, dragAmount ->
+                            settleJob.value?.cancel() // Важно!
                             velocityTracker.addPointerInputChange(change)
                             val delta = dragAmount / (screenHeightPx * progressRange)
-                            progress = (progress + delta).coerceIn(0f, 1f) // Мгновенное обновление
+                            progress = (progress + delta).coerceIn(0f, 1f)
                         },
                         onDragEnd = {
                             val velocity = velocityTracker.calculateVelocity().y
-                            coroutineScope.launch { settle(velocity) }
+                            startSettle(velocity)
                         }
                     )
                 }
