@@ -45,6 +45,10 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
+import androidx.constraintlayout.compose.OnSwipe
+import androidx.constraintlayout.compose.SwipeDirection
+import androidx.constraintlayout.compose.SwipeSide
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMotionApi::class)
@@ -58,108 +62,106 @@ fun MotionLayoutScreen() {
     val bottomFraction = 0.8f
     val progressRange = bottomFraction - topFraction
     val initialProgress = (middleFraction - topFraction) / progressRange
-    val minImageAlpha = 0.2f
-    val minListAlpha = 0.2f
 
     val screenHeightPx = remember(configuration, density) {
         with(density) { configuration.screenHeightDp.dp.toPx() }
     }
-    val imageHeightDp = remember(configuration, density) {
-        with(density) { (configuration.screenHeightDp.dp * bottomFraction) }
-    }
 
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
-    val sheetFraction =
-        (topFraction + progressRange * progress).coerceIn(topFraction, bottomFraction)
-    val imageAlpha = if (sheetFraction <= middleFraction) {
-        val t = (sheetFraction - topFraction) / (middleFraction - topFraction)
-        (minImageAlpha + (1f - minImageAlpha) * t).coerceIn(minImageAlpha, 1f)
-    } else {
-        1f
-    }
-    val listAlpha = if (sheetFraction >= middleFraction) {
-        val t = (sheetFraction - middleFraction) / (bottomFraction - middleFraction)
-        (1f - (1f - minListAlpha) * t).coerceIn(minListAlpha, 1f)
-    } else {
-        1f
-    }
-
-    val startConstraints = remember {
-        ConstraintSet {
+    // Создаем MotionScene с Transition и KeyFrames
+    val scene = remember {
+        MotionScene {
+            val imageId = createRefFor("imageId")
             val bottomSheet = createRefFor("bottomSheet")
             val bottomPlate = createRefFor("bottomPlate")
-            val imageId = createRefFor("imageId")
-            val sheetGuide = createGuidelineFromTop(topFraction)
+            val listContent = createRefFor("listContent")
 
-            constrain(bottomSheet) {
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-//                top.linkTo(sheetGuide)
-                top.linkTo(parent.top, 30.dp)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+            val start = constraintSet("start") {
+                constrain(bottomSheet) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top, 30.dp)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                constrain(imageId) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    bottom.linkTo(bottomPlate.top, 80.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    alpha = 0.2f // Начальная прозрачность
+                }
+                constrain(bottomPlate) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                constrain(listContent) {
+                    alpha = 1f
+                }
             }
 
-            constrain(imageId) {
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-                top.linkTo(parent.top)
-                bottom.linkTo(bottomPlate.top, 80.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+            val end = constraintSet("end") {
+                constrain(bottomSheet) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(bottomPlate.top, (-40).dp)
+                    bottom.linkTo(parent.bottom)
+                    this.start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                constrain(imageId) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    bottom.linkTo(bottomPlate.top, 80.dp)
+                    this.start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    alpha = 1f // Конечная прозрачность
+                }
+                constrain(bottomPlate) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    bottom.linkTo(parent.bottom)
+                    this.start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                constrain(listContent) {
+                    alpha = 0.2f
+                }
             }
 
-            constrain(bottomPlate) {
-                width = Dimension.fillToConstraints
-                height = Dimension.wrapContent
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        }
-    }
+            transition(start, end, "default") {
+                // Аналог KeyFrameSet в XML
+                keyAttributes(imageId) {
+                    frame(57) { // 57% соответствует middleFraction (0.4/0.7)
+                        alpha = 1f
+                    }
+                }
+                keyAttributes(listContent) {
+                    frame(57) {
+                        alpha = 1f
+                    }
+                }
 
-    val endConstraints = remember {
-        ConstraintSet {
-            val bottomSheet = createRefFor("bottomSheet")
-            val bottomPlate = createRefFor("bottomPlate")
-            val imageId = createRefFor("imageId")
-            val sheetGuide = createGuidelineFromTop(bottomFraction)
-
-            constrain(bottomSheet) {
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-                top.linkTo(bottomPlate.top, (-40).dp)
-//                top.linkTo(sheetGuide)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-
-            constrain(imageId) {
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-                top.linkTo(parent.top)
-                bottom.linkTo(bottomPlate.top, 80.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-
-            constrain(bottomPlate) {
-                width = Dimension.fillToConstraints
-                height = Dimension.wrapContent
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                // Описание свайпа (метаданные для MotionLayout)
+                onSwipe = OnSwipe(
+                    anchor = bottomSheet,
+                    side = SwipeSide.Top,
+                    direction = SwipeDirection.Down // Т.к. переход от Start (вверху) к End (внизу)
+                )
             }
         }
     }
 
     MotionLayout(
-        start = startConstraints,
-        end = endConstraints,
+        motionScene = scene,
         progress = progress,
         modifier = Modifier
             .fillMaxSize()
@@ -168,9 +170,7 @@ fun MotionLayoutScreen() {
         AsyncImage(
             model = "https://s4.fotokto.ru/photo/full/869/8696410.jpg",
             contentDescription = null,
-            modifier = Modifier
-                .layoutId("imageId")
-                .alpha(imageAlpha),
+            modifier = Modifier.layoutId("imageId"),
             contentScale = ContentScale.Crop
         )
 
@@ -182,6 +182,8 @@ fun MotionLayoutScreen() {
                 .pointerInput(Unit) {
                     detectVerticalDragGestures { change, dragAmount ->
                         change.consume()
+                        // В Compose мы пока вручную меняем прогресс,
+                        // но KeyFrames теперь отрабатывают автоматически
                         val delta = dragAmount / (screenHeightPx * progressRange)
                         progress = (progress + delta).coerceIn(0f, 1f)
                     }
@@ -195,10 +197,13 @@ fun MotionLayoutScreen() {
                     .align(Alignment.CenterHorizontally)
             )
 
-            Box(modifier = Modifier.weight(1f)) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .layoutId("listContent") // Привязываем прозрачность к этому контейнеру
+            ) {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 100.dp)
                 ) {
                     items(5) { rowIndex ->
@@ -206,22 +211,18 @@ fun MotionLayoutScreen() {
                             text = "Образ ${rowIndex + 1}",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .alpha(listAlpha)
+                            modifier = Modifier.padding(16.dp)
                         )
                         LazyRow(
-                            modifier = Modifier.alpha(listAlpha),
                             contentPadding = PaddingValues(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             items(4) {
-                                ProductCard(contentAlpha = listAlpha)
+                                ProductCard()
                             }
                         }
                     }
                 }
-
             }
         }
 
