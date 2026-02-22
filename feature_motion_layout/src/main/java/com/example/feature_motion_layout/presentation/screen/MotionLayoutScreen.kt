@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -67,6 +68,7 @@ fun MotionLayoutScreen() {
         with(density) { configuration.screenHeightDp.dp.toPx() }
     }
 
+    val listState = rememberLazyListState()
     var progress by remember { mutableFloatStateOf(initialProgress) }
 
     // Логика вложенной прокрутки
@@ -75,15 +77,27 @@ fun MotionLayoutScreen() {
             // Перед тем как список прокрутится сам (палец вверх - скролл вниз)
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.y
-                // Если тянем вверх (delta < 0) и шторка не до конца раскрыта (progress > 0)
+
+                // 1. Тянем вверх (delta < 0) — сначала раскрываем шторку до конца (progress до 0)
                 if (delta < 0 && progress > 0f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
                     val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
                     val consumed = newProgress - progress
                     progress = newProgress
-                    // Возвращаем количество "поглощенных" пикселей
                     return Offset(0f, consumed * (screenHeightPx * progressRange))
                 }
+
+                // 2. Тянем вниз (delta > 0) — сворачиваем шторку (progress к 1)
+                // НО только если список УЖЕ находится в самом начале
+                val isAtTop = listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                if (delta > 0 && isAtTop && progress < 1f) {
+                    val progressDelta = delta / (screenHeightPx * progressRange)
+                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
+                    val consumed = newProgress - progress
+                    progress = newProgress
+                    return Offset(0f, consumed * (screenHeightPx * progressRange))
+                }
+
                 return Offset.Zero
             }
 
@@ -93,15 +107,8 @@ fun MotionLayoutScreen() {
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                val delta = available.y
-                // Если тянем вниз (delta > 0), а список уже на самом верху (available.y > 0)
-                if (delta > 0 && progress < 1f) {
-                    val progressDelta = delta / (screenHeightPx * progressRange)
-                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
-                    val consumedByProgress = newProgress - progress
-                    progress = newProgress
-                    return Offset(0f, consumedByProgress * (screenHeightPx * progressRange))
-                }
+                // Мы удалили отсюда логику, поэтому если вы листали список и он "ударился" в верхний край,
+                // шторка не начнет сворачиваться в этом же движении.
                 return Offset.Zero
             }
         }
@@ -243,6 +250,7 @@ fun MotionLayoutScreen() {
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
+                state = listState,
                 contentPadding = PaddingValues(bottom = 100.dp)
             ) {
                 items(5) { rowIndex ->
