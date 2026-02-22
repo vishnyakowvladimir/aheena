@@ -1,5 +1,8 @@
 package com.example.feature_motion_layout.presentation.screen
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -25,20 +28,21 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.util.VelocityTracker
+import androidx.compose.ui.input.pointer.util.addPointerInputChange
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
@@ -51,12 +55,14 @@ import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
 fun MotionLayoutScreen() {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
+    val coroutineScope = rememberCoroutineScope()
 
     val topFraction = 0.1f
     val middleFraction = 0.5f
@@ -69,47 +75,59 @@ fun MotionLayoutScreen() {
     }
 
     val listState = rememberLazyListState()
-    var progress by remember { mutableFloatStateOf(initialProgress) }
+    // Используем Animatable для плавной анимации и поддержки инерции
+    val progressAnimatable = remember { Animatable(initialProgress) }
+    val progress = progressAnimatable.value
 
-    // Логика вложенной прокрутки
-    val nestedScrollConnection = remember(screenHeightPx, progressRange) {
+    val snapPoints = listOf(0f, 0.5f, 1f)
+
+    // Функция для плавного доведения до ближайшей точки с учетом скорости
+    suspend fun settle(velocity: Float) {
+        val current = progressAnimatable.value
+        val target = if (velocity > 800) { // Свайп вниз
+            snapPoints.filter { it > current + 0.05f }.minOrNull() ?: 1f
+        } else if (velocity < -800) { // Свайп вверх
+            snapPoints.filter { it < current - 0.05f }.maxOrNull() ?: 0f
+        } else {
+            snapPoints.minByOrNull { Math.abs(it - current) } ?: 0f
+        }
+
+        progressAnimatable.animateTo(
+            targetValue = target,
+            initialVelocity = velocity / (screenHeightPx * progressRange),
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessLow // Аналог maxAcceleration
+            )
+        )
+    }
+
+    val nestedScrollConnection = remember(screenHeightPx, progressRange, listState) {
         object : NestedScrollConnection {
-            // Перед тем как список прокрутится сам (палец вверх - скролл вниз)
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.y
-
-                // 1. Тянем вверх (delta < 0) — сначала раскрываем шторку до конца (progress до 0)
-                if (delta < 0 && progress > 0f) {
+                if (delta < 0 && progressAnimatable.value > 0f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
-                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
-                    val consumed = newProgress - progress
-                    progress = newProgress
+                    val newProgress = (progressAnimatable.value + progressDelta).coerceIn(0f, 1f)
+                    val consumed = newProgress - progressAnimatable.value
+                    coroutineScope.launch { progressAnimatable.snapTo(newProgress) }
                     return Offset(0f, consumed * (screenHeightPx * progressRange))
                 }
 
-                // 2. Тянем вниз (delta > 0) — сворачиваем шторку (progress к 1)
-                // НО только если список УЖЕ находится в самом начале
                 val isAtTop = listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
-                if (delta > 0 && isAtTop && progress < 1f) {
+                if (delta > 0 && isAtTop && progressAnimatable.value < 1f) {
                     val progressDelta = delta / (screenHeightPx * progressRange)
-                    val newProgress = (progress + progressDelta).coerceIn(0f, 1f)
-                    val consumed = newProgress - progress
-                    progress = newProgress
+                    val newProgress = (progressAnimatable.value + progressDelta).coerceIn(0f, 1f)
+                    val consumed = newProgress - progressAnimatable.value
+                    coroutineScope.launch { progressAnimatable.snapTo(newProgress) }
                     return Offset(0f, consumed * (screenHeightPx * progressRange))
                 }
-
                 return Offset.Zero
             }
 
-            // После того как список прокрутился (палец вниз - скролл вверх до упора)
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource
-            ): Offset {
-                // Мы удалили отсюда логику, поэтому если вы листали список и он "ударился" в верхний край,
-                // шторка не начнет сворачиваться в этом же движении.
-                return Offset.Zero
+            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+                settle(available.y)
+                return available
             }
         }
     }
@@ -196,10 +214,10 @@ fun MotionLayoutScreen() {
             transition(start, end, "default") {
                 keyAttributes(imageId) {
                     frame(0) { alpha = 0.2f }
-                    frame(35) { alpha = 1f }
+                    frame(50) { alpha = 1f }
                 }
                 keyAttributes(listContent) {
-                    frame(65) { alpha = 1f }
+                    frame(50) { alpha = 1f }
                     frame(100) { alpha = 0.2f }
                 }
             }
@@ -226,11 +244,20 @@ fun MotionLayoutScreen() {
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                 .background(Color.White)
                 .pointerInput(Unit) {
-                    detectVerticalDragGestures { change, dragAmount ->
-                        change.consume()
-                        val delta = dragAmount / (screenHeightPx * progressRange)
-                        progress = (progress + delta).coerceIn(0f, 1f)
-                    }
+                    val velocityTracker = VelocityTracker()
+                    detectVerticalDragGestures(
+                        onVerticalDrag = { change, dragAmount ->
+                            velocityTracker.addPointerInputChange(change)
+                            val delta = dragAmount / (screenHeightPx * progressRange)
+                            coroutineScope.launch {
+                                progressAnimatable.snapTo((progressAnimatable.value + delta).coerceIn(0f, 1f))
+                            }
+                        },
+                        onDragEnd = {
+                            val velocity = velocityTracker.calculateVelocity().y
+                            coroutineScope.launch { settle(velocity) }
+                        }
+                    )
                 }
         ) {
             Box(
@@ -242,7 +269,6 @@ fun MotionLayoutScreen() {
             )
         }
 
-        // Контейнер списка теперь с поддержкой Nested Scroll
         Box(
             modifier = Modifier
                 .layoutId("listContent")
@@ -279,8 +305,6 @@ fun MotionLayoutScreen() {
         )
     }
 }
-
-// ... Остальные компоненты (ProductCard, BottomPlate) остаются без изменений ...
 
 private val productImages = listOf(
     "https://s4.fotokto.ru/photo/full/869/8695883.jpg",
