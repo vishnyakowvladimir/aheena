@@ -144,7 +144,7 @@ fun MotionLayoutScreen() {
             }
 
             override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                startSettle(available.y)
+//                startSettle(available.y)
                 return available
             }
         }
@@ -247,13 +247,6 @@ fun MotionLayoutScreen() {
                 "default": {
                   "from": "start",
                   "to": "end",
-                  "onSwipe": {
-                    "anchor": "bottomSheet",
-                    "side": "top",
-                    "direction": "up",
-                    "maxAcceleration": 40,
-                    "moveWhenScrollAtTop": true
-                  },
                   "KeyFrames": {
                     "KeyAttributes": [
                       {
@@ -300,7 +293,7 @@ fun MotionLayoutScreen() {
                         },
                         onDragEnd = {
                             val velocity = velocityTracker.calculateVelocity().y
-                            startSettle(velocity)
+//                            startSettle(velocity)
                         }
                     )
                 }
