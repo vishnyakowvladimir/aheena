@@ -171,8 +171,7 @@ fun MotionLayoutScreen() {
                     "top": ["bottomSheet", "top", 16], 
                     "bottom": ["bottomSheet", "bottom"],
                     "start": ["bottomSheet", "start"], 
-                    "end": ["bottomSheet", "end"],
-                    "alpha": 1
+                    "end": ["bottomSheet", "end"]
                   },
                   "listContentBackground": {
                     "width": "spread", 
@@ -188,8 +187,7 @@ fun MotionLayoutScreen() {
                     "top": ["parent", "top"], 
                     "bottom": ["bottomPlate", "top", 80],
                     "start": ["parent", "start"], 
-                    "end": ["parent", "end"],
-                    "alpha": 0.2
+                    "end": ["parent", "end"]
                   },
                   "bottomPlate": {
                     "width": "spread", 
@@ -214,8 +212,7 @@ fun MotionLayoutScreen() {
                     "top": ["bottomSheet", "top", 16], 
                     "bottom": ["bottomSheet", "bottom"],
                     "start": ["bottomSheet", "start"], 
-                    "end": ["bottomSheet", "end"],
-                    "alpha": 0.2
+                    "end": ["bottomSheet", "end"]
                   },
                   "listContentBackground": {
                     "width": "spread", 
@@ -231,8 +228,7 @@ fun MotionLayoutScreen() {
                     "top": ["parent", "top"], 
                     "bottom": ["bottomPlate", "top", 80],
                     "start": ["parent", "start"], 
-                    "end": ["parent", "end"],
-                    "alpha": 1
+                    "end": ["parent", "end"]
                   },
                   "bottomPlate": {
                     "width": "spread", 
@@ -250,9 +246,34 @@ fun MotionLayoutScreen() {
                   "KeyFrames": {
                     "KeyAttributes": [
                       {
-                        "target": ["imageId", "listContent"],
+                        "target": ["imageId"],
+                        "frames": [0],
+                        "alpha": [0.2]
+                      },  
+                      {
+                        "target": ["imageId"],
                         "frames": [50],
                         "alpha": [1]
+                      }, 
+                      {
+                        "target": ["imageId"],
+                        "frames": [100],
+                        "alpha": [1]
+                      }, 
+                      {
+                        "target": ["listContent"],
+                        "frames": [0],
+                        "alpha": [1]
+                      },
+                                            {
+                        "target": ["listContent"],
+                        "frames": [50],
+                        "alpha": [1]
+                      },
+                                            {
+                        "target": ["listContent"],
+                        "frames": [100],
+                        "alpha": [0.2]
                       }
                     ]
                   }
