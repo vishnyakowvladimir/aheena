@@ -84,23 +84,38 @@ fun MotionLayoutScreen() {
     val snapPoints = listOf(0f, 0.5f, 1f)
 
     // Функция плавной доводки (snapping), вызывается только при отпускании пальца
+// Внутри MotionLayoutScreen
+
     suspend fun settle(velocity: Float) {
+        val current = progress
+
+        // Выбираем цель на основе скорости (fling) или близости
         val target = when {
-            velocity > 800 -> snapPoints.filter { it > progress + 0.05f }.minOrNull() ?: 1f
-            velocity < -800 -> snapPoints.filter { it < progress - 0.05f }.maxOrNull() ?: 0f
-            else -> snapPoints.minByOrNull { Math.abs(it - progress) } ?: 0f
+            // Если сильно толкнули вниз
+            velocity > 1000 -> snapPoints.filter { it > current }.minOrNull() ?: 1f
+            // Если сильно толкнули вверх
+            velocity < -1000 -> snapPoints.filter { it < current }.maxOrNull() ?: 0f
+            // Если просто отпустили — ищем ближайшую
+            else -> snapPoints.minByOrNull { Math.abs(it - current) } ?: 0f
         }
 
-        // Анимируем из текущего значения в цель
-        Animatable(progress).animateTo(
+        // Если мы уже в целевой точке, ничего не делаем
+        if (target == current && Math.abs(velocity) < 100) return
+
+        // Вот это — наш "движок" из XML
+        Animatable(current).animateTo(
             targetValue = target,
+            // Переводим пиксельную скорость в прогресс-скорость (как в XML)
             initialVelocity = velocity / (screenHeightPx * progressRange),
             animationSpec = spring(
+                // DampingRatioNoBouncy — без лишних колебаний (как в шторках)
                 dampingRatio = Spring.DampingRatioNoBouncy,
-                stiffness = Spring.StiffnessLow // Регулирует скорость "доводки" (аналог maxAcceleration)
+                // Stiffness — это и есть ваш maxAcceleration.
+                // StiffnessLow = плавно и вальяжно, StiffnessMedium = быстрее.
+                stiffness = 40f // Можно подобрать число для идеального ощущения
             )
         ) {
-            progress = value // Обновляем состояние MotionLayout на каждом кадре анимации
+            progress = value // Синхронизируем каждый кадр
         }
     }
 
