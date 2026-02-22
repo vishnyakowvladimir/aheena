@@ -348,7 +348,7 @@ fun MotionLayoutScreen() {
             ) {
                 items(5) { rowIndex ->
                     Text(text = "Образ ${rowIndex + 1}", modifier = Modifier.padding(16.dp))
-                    LazyRow { items(4) { ProductCard() } }
+                    LazyRow { items(8) { ProductCard() } }
                 }
             }
         }
